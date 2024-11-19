@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.Locale;
 import java.util.Vector;
+import com.classes.UsersDAO;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -33,28 +34,58 @@ public class UsersDAO {
 
     // Methods to add new user
     public void addUserDAO(Users users, String userType) {
-        try {
-            String query = "SELECT * FROM users WHERE name='"
-                    +users.getFullName()
-                    +"' AND location='"
-                    +users.getLocation()
-                    +"' AND phone='"
-                    +users.getPhone()
-                    +"' AND usertype='"
-                    +users.getUserType()
-                    +"'";
-            resultSet = statement.executeQuery(query);
-            if(resultSet.next())
-                JOptionPane.showMessageDialog(null, "User already exists");
-            else
-                addFunction(users, userType);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+         try {
+        // Check if the user already exists in the 'users' table
+        String queryCheck = "SELECT * FROM users WHERE username=?";
+        prepStatement = conn.prepareStatement(queryCheck);
+        prepStatement.setString(1, users.getUsername());
+        resultSet = prepStatement.executeQuery();
+
+        if (resultSet.next()) {
+            JOptionPane.showMessageDialog(null, "User already exists in the login system.");
+        } else {
+            // Insert into 'users' table
+            String queryInsertUsers = "INSERT INTO users (username, password, usertype, location, phone, fullname) VALUES(?, ?, ?, ?, ?, ?)";
+            prepStatement = conn.prepareStatement(queryInsertUsers);
+            prepStatement.setString(1, users.getUsername());
+            prepStatement.setString(2, users.getPassword());
+            prepStatement.setString(3, userType);
+            prepStatement.setString(4, users.getLocation());
+            prepStatement.setString(5, users.getPhone());
+            prepStatement.setString(6, users.getFullName());
+            prepStatement.executeUpdate();
+
+            // Show success message
+            JOptionPane.showMessageDialog(null, "User added successfully.");
         }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+}
+
+    public boolean isUsernameUnique(String username) throws SQLException {
+         try {
+        DBConnector dbConnector = new DBConnector(); // Create an instance of DBConnector
+        Connection conn = dbConnector.getConnection(); // Get the connection
+        String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+        rs.next();
+        int count = rs.getInt(1);
+        rs.close();
+        stmt.close();
+        conn.close();
+        return count == 0; // Returns true if no duplicates found
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle the exception here
+        return false; // Return false in case of error
+    }
+}
+
     public void addFunction(Users users, String userType) {
         try {
-            String username = null;
+            String username;
             String password = null;
             String oldUsername = null;
             String resQuery = "SELECT * FROM users";
@@ -77,15 +108,15 @@ public class UsersDAO {
 //                }
 //            }
 
-            String query = "INSERT INTO users (name,location,phone,username,password,usertype) " +
+            String query = "INSERT INTO users (username,password,userType,location,phone,fullname) " +
                     "VALUES(?,?,?,?,?,?)";
             prepStatement = conn.prepareStatement(query);
-            prepStatement.setString(1, users.getFullName());
-            prepStatement.setString(2, users.getLocation());
-            prepStatement.setString(3, users.getPhone());
-            prepStatement.setString(4, users.getUsername());
-            prepStatement.setString(5, users.getPassword());
-            prepStatement.setString(6, users.getUserType());
+            prepStatement.setString(1, users.getUsername());
+            prepStatement.setString(2, users.getPassword());
+            prepStatement.setString(3, userType);
+            prepStatement.setString(4, users.getLocation());
+            prepStatement.setString(5, users.getPhone());
+            prepStatement.setString(6, users.getFullName());
             prepStatement.executeUpdate();
 
             if("Administrator".equals(userType))
@@ -99,57 +130,83 @@ public class UsersDAO {
 
     // Method to edit existing user
     public void editUserDAO(Users users) {
+         try {
+        String query = "UPDATE users SET password=?, usertype=?, location=?, phone=?, fullname=? WHERE username=?";
+        prepStatement = conn.prepareStatement(query);
+        prepStatement.setString(1, users.getPassword());
+        prepStatement.setString(2, users.getUserType());
+        prepStatement.setString(3, users.getLocation());
+        prepStatement.setString(4, users.getPhone());
+        prepStatement.setString(5, users.getFullName());
+        prepStatement.setString(6, users.getUsername());
 
-        try {
-            String query = "UPDATE users SET name=?,location=?,phone=?,usertype=? WHERE username=?";
-            prepStatement = conn.prepareStatement(query);
-            prepStatement.setString(1, users.getFullName());
-            prepStatement.setString(2, users.getLocation());
-            prepStatement.setString(3, users.getPhone());
-            prepStatement.setString(4, users.getUserType());
-            prepStatement.setString(5, users.getUsername());
-            prepStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Updated Successfully.");
+        int rowsAffected = prepStatement.executeUpdate();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "User updated successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "No changes were made.");
         }
+    } catch (SQLException throwables) {
+        JOptionPane.showMessageDialog(null, "Error updating user: " + throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        throwables.printStackTrace();
     }
+}
+
 
     // Method to delete existing user
-    public void deleteUserDAO(String username) {
+    public boolean deleteUserDAO(String username) {
+        Connection conn = null;
+    PreparedStatement pstmt = null;
+    boolean isDeleted = false;
+
+    String query = "DELETE FROM users WHERE username = ?";
+    
+    try {
+        DBConnector dbConnector = new DBConnector();
+        conn = dbConnector.getConnection();
+        pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, username);
+        
+        int rowsAffected = pstmt.executeUpdate();
+        isDeleted = rowsAffected > 0; // True if at least one row was deleted
+    } catch (SQLException e) {
+        System.err.println("Error deleting user: " + e.getMessage());
+    } finally {
         try {
-            String query = "DELETE FROM users WHERE username=?";
-            prepStatement = (PreparedStatement) conn.prepareStatement(query);
-            prepStatement.setString(1, username);
-            prepStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "User Deleted.");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            System.err.println("Error closing resources: " + e.getMessage());
         }
-      
     }
 
+    return isDeleted;
+}
+    
     // Method to retrieve data set to display in table
     public ResultSet getQueryResult() {
-        try {
-            String query = "SELECT * FROM users";
-            resultSet = statement.executeQuery(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return resultSet;
+      try {
+        String query = "SELECT * FROM users";
+        resultSet = statement.executeQuery(query);
+    } catch (SQLException throwables) {
+        throwables.printStackTrace();
     }
+    return resultSet;
+}
 
     public ResultSet getUsersDAO(String username) {
-        try {
-            String query = "SELECT * FROM users WHERE username='" +username+ "'";
-            resultSet = statement.executeQuery(query);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return resultSet;
+           try {
+        String query = "SELECT * FROM users WHERE username=?";
+        prepStatement = conn.prepareStatement(query);
+        prepStatement.setString(1, username);
+        resultSet = prepStatement.executeQuery();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+    return resultSet;
+}
+    
     public void getFullName(Users users, String username) {
         try {
             String query = "SELECT * FROM users WHERE username='" +username+ "' LIMIT 1";
@@ -202,16 +259,19 @@ public class UsersDAO {
 
     public void changePassword(String username, String password) {
         try {
-            String query = "UPDATE users SET password=? WHERE username='" +username+ "'";
-            prepStatement = (PreparedStatement) conn.prepareStatement(query);
-            prepStatement.setString(1, password);
-            prepStatement.setString(2, username);
-            prepStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Password has been changed.");
-        } catch (SQLException ex){
-            ex.printStackTrace();
-        }
+        String query = "UPDATE users SET password=? WHERE username=?";
+        prepStatement = conn.prepareStatement(query);
+        prepStatement.setString(1, password);
+        prepStatement.setString(2, username);
+        prepStatement.executeUpdate();
+
+        JOptionPane.showMessageDialog(null, "Password has been changed.");
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+}
+    
+
 
     // Method to display data set in tabular form
     public DefaultTableModel buildTableModel(ResultSet resultSet) throws SQLException {

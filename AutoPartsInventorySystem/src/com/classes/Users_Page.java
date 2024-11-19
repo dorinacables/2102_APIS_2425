@@ -4,18 +4,38 @@ package com.classes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import com.classes.UsersDAO;
+import javax.swing.*;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
  * @author Elmer Reyes
  */
 public class Users_Page extends javax.swing.JFrame {
+   
+
 
     /**
      * Creates new form Users_Page
      */
     public Users_Page() {
         initComponents();
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("UserID");
+        model.addColumn("Username");
+        model.addColumn("Password");
+        model.addColumn("User Type");
+        model.addColumn("Location");
+        model.addColumn("Phone");
+        model.addColumn("Full Name");
+        tblUsers.setModel(model);
+        loadUsersToTable();
     }
 
     /**
@@ -28,7 +48,7 @@ public class Users_Page extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblUsers = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lblFullNameU = new javax.swing.JLabel();
         txtFullNameU = new javax.swing.JTextField();
@@ -47,10 +67,11 @@ public class Users_Page extends javax.swing.JFrame {
         btnClearU = new javax.swing.JButton();
         lblUsersTitle = new javax.swing.JLabel();
         btnCloseU = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -58,10 +79,15 @@ public class Users_Page extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "User ID", "Full Name", "Location", "Contact Number", "Username", "Password", "User Type"
+                "User ID", "Username", "Password", "User Type", "Location", "Contact Number", "Full Name"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsersMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblUsers);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter User Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
 
@@ -78,12 +104,32 @@ public class Users_Page extends javax.swing.JFrame {
         cmbbxUsertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Employee" }));
 
         btnAddU.setText("Add");
+        btnAddU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUActionPerformed(evt);
+            }
+        });
 
         btnDeleteU.setText("Delete");
+        btnDeleteU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUActionPerformed(evt);
+            }
+        });
 
         btnEditU.setText("Edit");
+        btnEditU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditUActionPerformed(evt);
+            }
+        });
 
         btnClearU.setText("Clear");
+        btnClearU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearUActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,31 +203,41 @@ public class Users_Page extends javax.swing.JFrame {
 
         btnCloseU.setText("Close");
 
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1005, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(lblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1005, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(9, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnCloseU)
                 .addGap(61, 61, 61))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(lblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRefresh)
+                .addGap(141, 141, 141))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(lblUsersTitle)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUsersTitle)
+                    .addComponent(btnRefresh))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,33 +249,212 @@ public class Users_Page extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+ 
+    String userType;
+    private void btnAddUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUActionPerformed
+        // TODO add your handling code here:
+          String username = txtUsernameU.getText();
+    String password = txtPasswordU.getText();
+    String userType = cmbbxUsertype.getSelectedItem().toString(); // Assuming combo box for user type
+    String location = txtLocationU.getText();
+    String phone = txtContactNumberU.getText();
+    String fullname = txtFullNameU.getText();
+
+    // Validate input (You can improve this validation depending on your needs)
+    if (username.isEmpty() || password.isEmpty() || userType.isEmpty() || location.isEmpty() || phone.isEmpty() || fullname.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields are required!");
+        return; // Exit the method if any field is empty
+    }
+
+    // SQL query to insert data into the 'users' table
+    String query = "INSERT INTO users (username, password, userType, location, phone, fullname) VALUES (?, ?, ?, ?, ?, ?)";
+
+    // Try with resources (auto-close connections)
+    try (Connection conn = new DBConnector().getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+        
+        // Set parameters for the prepared statement
+        pstmt.setString(1, username);
+        pstmt.setString(2, password);
+        pstmt.setString(3, userType);
+        pstmt.setString(4, location);
+        pstmt.setString(5, phone);
+        pstmt.setString(6, fullname);
+
+        // Execute the insert statement
+        pstmt.executeUpdate();
+
+        // Show success message
+        JOptionPane.showMessageDialog(null, "User added successfully!");
+
+        // Clear the form after submission (optional)
+        txtUsernameU.setText("");
+        txtPasswordU.setText("");
+        cmbbxUsertype.setSelectedIndex(0); // Reset combo box to default
+        txtLocationU.setText("");
+        txtContactNumberU.setText("");
+        txtFullNameU.setText("");
+    } catch (SQLException e) {
+        // Handle database errors
+        System.err.println("Error inserting user: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error adding user. Please try again.");
+    }
+
+    }//GEN-LAST:event_btnAddUActionPerformed
+
+    private void btnDeleteUActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+          int selectedRow = tblUsers.getSelectedRow(); // Get the selected row index
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a user to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Fetch the username from the selected row (assuming it's the first column)
+    DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+    String username = model.getValueAt(selectedRow, 0).toString();
+
+    // Confirmation dialog
+    int confirm = JOptionPane.showConfirmDialog(this, 
+        "Are you sure you want to delete the user '" + username + "'?", 
+        "Confirm Deletion", 
+        JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Proceed with deletion if "Yes" is selected
+        UsersDAO usersDAO = new UsersDAO();
+        boolean isDeleted = usersDAO.deleteUserDAO(username);
+
+        if (isDeleted) {
+            // Remove the row from the GUI table
+            model.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(this, "User '" + username + "' deleted successfully.");
+        } else {
+            // Error message if deletion fails
+            JOptionPane.showMessageDialog(this, "Failed to delete user.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        // If "No" is selected, show a cancellation message or do nothing
+        JOptionPane.showMessageDialog(this, "Deletion cancelled.");
+    }
+}
+       
+         
+        
+
+    private void btnEditUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUActionPerformed
+        // TODO add your handling code here:
+         int selectedRow = tblUsers.getSelectedRow();
+    
+    if (selectedRow != -1) {
+        int userID = (int) tblUsers.getValueAt(selectedRow, 0);
+        String username = txtUsernameU.getText();
+        String password = txtPasswordU.getText();
+        String userType = (String) cmbbxUsertype.getSelectedItem();  // Get userType from ComboBox
+        String location = txtLocationU.getText();
+        String phone = txtContactNumberU.getText();
+        String fullname = txtFullNameU.getText();
+
+        String updateQuery = "UPDATE users SET username = ?, password = ?, userType = ?, location = ?, phone = ?, fullname = ? WHERE userID = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement pst = conn.prepareStatement(updateQuery)) {
+
+            pst.setString(1, username);
+            pst.setString(2, password);
+            pst.setString(3, userType);
+            pst.setString(4, location);
+            pst.setString(5, phone);
+            pst.setString(6, fullname);
+            pst.setInt(7, userID);
+
+            int rowsUpdated = pst.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "User updated successfully!");
+                loadUsersToTable(); // Refresh the table after update
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No user selected for editing.");
+    }
+
+   
+    }//GEN-LAST:event_btnEditUActionPerformed
+
+    private void btnClearUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearUActionPerformed
+        // TODO add your handling code here:
+        txtFullNameU.setText("");
+        txtLocationU.setText("");
+        txtContactNumberU.setText("");
+        txtUsernameU.setText("");
+        txtPasswordU.setText("");
+    }//GEN-LAST:event_btnClearUActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+         loadUsersToTable(); 
+    }//GEN-LAST:event_btnRefreshActionPerformed
+    String username;
+    private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        // TODO add your handling code here:
+          int selectedRow = tblUsers.getSelectedRow();
+    
+    if (selectedRow != -1) {
+        // Get values from the selected row
+        int userID = (int) tblUsers.getValueAt(selectedRow, 0);
+        String username = (String) tblUsers.getValueAt(selectedRow, 1);
+        String password = (String) tblUsers.getValueAt(selectedRow, 2);
+        String userType = (String) tblUsers.getValueAt(selectedRow, 3);
+        String location = (String) tblUsers.getValueAt(selectedRow, 4);
+        String phone = (String) tblUsers.getValueAt(selectedRow, 5);
+        String fullname = (String) tblUsers.getValueAt(selectedRow, 6);
+
+        // Set values to your input fields for editing
+        txtUsernameU.setText(username);
+        txtPasswordU.setText(password);
+        txtLocationU.setText(location);
+        txtContactNumberU.setText(phone);
+        txtFullNameU.setText(fullname);
+        
+        // Set the selected userType in the ComboBox
+        cmbbxUsertype.setSelectedItem(userType);  // assuming your ComboBox is named cmbUserType
+    }
+}
+    
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Users_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Users_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Users_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Users_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void loadUsersToTable() {
+     DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+    model.setRowCount(0); // Clear the table
+    
+    String selectQuery = "SELECT * FROM users";
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pst = conn.prepareStatement(selectQuery);
+         ResultSet rs = pst.executeQuery()) {
+
+        while (rs.next()) {
+            Object[] row = new Object[7];
+            row[0] = rs.getInt("userID");
+            row[1] = rs.getString("username");
+            row[2] = rs.getString("password");
+            row[3] = rs.getString("userType");
+            row[4] = rs.getString("location");
+            row[5] = rs.getString("phone");
+            row[6] = rs.getString("fullname");
+
+            model.addRow(row);
         }
-        //</editor-fold>
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+        public static void main(String[] args) {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -229,26 +464,29 @@ public class Users_Page extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddU;
     private javax.swing.JButton btnClearU;
     private javax.swing.JButton btnCloseU;
     private javax.swing.JButton btnDeleteU;
     private javax.swing.JButton btnEditU;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JComboBox<String> cmbbxUsertype;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFullNameU;
     private javax.swing.JLabel lblLocationU;
     private javax.swing.JLabel lblPasswordU;
     private javax.swing.JLabel lblUsernameU;
     private javax.swing.JLabel lblUsersTitle;
+    private javax.swing.JTable tblUsers;
     private javax.swing.JTextField txtContactNumberU;
     private javax.swing.JTextField txtFullNameU;
     private javax.swing.JTextField txtLocationU;
     private javax.swing.JTextField txtPasswordU;
     private javax.swing.JTextField txtUsernameU;
     // End of variables declaration//GEN-END:variables
+
 }

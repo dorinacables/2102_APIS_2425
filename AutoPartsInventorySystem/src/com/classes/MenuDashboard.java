@@ -303,7 +303,7 @@ public class MenuDashboard extends javax.swing.JFrame {
      public void currentUserSession() {
         Users users = new Users(username, userSelect);
         new UsersDAO().getFullName(users, username);
-        lblUsername.setText("User: " + users.getFullName() + " ("+userSelect+")");
+        lblUsername.setText("User: " + users.getUsername() + " ("+userSelect+")");
     }
      public void notForEmployee(){
         pnlNavigate.remove(btnUsers);

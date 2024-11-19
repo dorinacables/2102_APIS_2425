@@ -11,7 +11,7 @@ package com.classes;
  */
 public class Users {
     private int UserID;
-    private String fullName, location, phone, username, password, userType;
+    private String fullname, location, phone, username, password, userType;
     private String inTime, outTime;
     
     public Users(String username, String userType) {
@@ -19,12 +19,20 @@ public class Users {
         this.userType = userType;
     }
     
+     public Users(String username, String password, String fullname, String location, String userType, String phone) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.location = location;
+        this.userType = userType;
+        this.phone = phone;
+     }  
     public void setUserID(int UserID) {
         this.UserID = UserID;
     }
     
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullName(String fullname) {
+        this.fullname = fullname;
     }
     
     public void setLocation(String location) {
@@ -61,7 +69,7 @@ public class Users {
     }
 
     public String getFullName() {
-        return fullName;
+        return fullname;
     }
 
     public String getLocation() {

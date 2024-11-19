@@ -10,10 +10,21 @@ package com.classes;
  * @author Elmer Reyes
  */
 public class Products {
-    private int productID, quantity, userID;
-    private double costPrice, sellingPrice;
-    private double totalCost, totalRevenue;
-    private String productCode, productName, supplierCode, brand;
+    private int productID, quantity;
+    private double price;
+    private String productcode, productname, suppliername, brand;
+    
+     public Products(String productcode, String productname, String suppliername, String brand, double price, int quantity) {    
+        this.productcode = productcode;
+        this.productname = productname;
+        this.suppliername = suppliername;
+        this.brand = brand;
+        this.price = price;     
+        this.quantity = quantity;
+        
+    }
+    
+    
 
     public int getProductID() {
         return productID;
@@ -31,68 +42,36 @@ public class Products {
         this.quantity = quantity;
     }
 
-    public int getUserID() {
-        return userID;
+    public double getPrice() {
+        return price;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public double getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(double costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public double getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public Double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(Double totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public Double getTotalRevenue() {
-        return totalRevenue;
-    }
-
-    public void setTotalRevenue(Double totalRevenue) {
-        this.totalRevenue = totalRevenue;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getProductCode() {
-        return productCode;
+        return productcode;
     }
 
-    public void setProdCode(String productCode) {
-        this.productCode = productCode;
+    public void setProductCode(String productcode) {
+        this.productcode = productcode;
     }
 
     public String getProductName() {
-        return productName;
+        return productname;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProductName(String productname) {
+        this.productname = productname;
     } 
   
-    public String getSupplierCode() {
-        return supplierCode;
+    public String getSupplierName() {
+        return suppliername;
     }
 
-    public void setSupplierCode(String supplierCode) {
-        this.supplierCode = supplierCode;
+    public void setSupplierName(String suppliername) {
+        this.suppliername = suppliername;
     }
 
     public String getBrand() {
@@ -103,7 +82,7 @@ public class Products {
         this.brand = brand;
     }
 }
-    
+
 
 
     

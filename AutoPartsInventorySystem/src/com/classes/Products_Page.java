@@ -4,7 +4,11 @@ package com.classes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 /**
  *
  * @author Elmer Reyes
@@ -12,8 +16,11 @@ package com.classes;
 public class Products_Page extends javax.swing.JFrame {
     Products products;
     String username = null;
-    String supplier = null;
+    String suppliercode = null;
     int userID;
+    
+    private DefaultTableModel tableModel;
+    private ProductsDAO productsDAO;
     
     public Products_Page(){}
 
@@ -39,48 +46,53 @@ public class Products_Page extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProducts = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        cmbbxSupplier = new javax.swing.JComboBox<>();
         lblProductCode = new javax.swing.JLabel();
         txtProductCode = new javax.swing.JTextField();
         lblProductName = new javax.swing.JLabel();
         txtProductName = new javax.swing.JTextField();
         lblQuantity = new javax.swing.JLabel();
         txtQuantity = new javax.swing.JTextField();
-        lblCostPrice = new javax.swing.JLabel();
-        txtCostPrice = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtSellingPrice = new javax.swing.JTextField();
+        lblPrice = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JTextField();
         lblBrand = new javax.swing.JLabel();
         txtBrand = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        lblSupplierName = new javax.swing.JLabel();
+        txtSupplierName = new javax.swing.JTextField();
+        btnIncrease = new javax.swing.JButton();
+        btnDecrease = new javax.swing.JButton();
         lblSearch = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         btnRefresh = new javax.swing.JButton();
         txtProductsTitle = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
+        btnGo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tblProducts.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Product Code", "Product Name", "Cost Price", "Selling Price", "Brand"
+                "Product ID", "Product Code", "Product Name", "Quantity", "Price", "Brand", "Supplier Name"
             }
         ));
+        tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProducts);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Product Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
-
-        cmbbxSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblProductCode.setText("Product Code: ");
 
@@ -88,36 +100,63 @@ public class Products_Page extends javax.swing.JFrame {
 
         lblQuantity.setText("Quantity:");
 
-        lblCostPrice.setText("Cost Price: ");
-
-        jLabel1.setText("Selling Price:");
+        lblPrice.setText("Price:");
 
         lblBrand.setText("Brand:");
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
+        lblSupplierName.setText("Supplier Name:");
+
+        btnIncrease.setText("Increase");
+        btnIncrease.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncreaseActionPerformed(evt);
+            }
+        });
+
+        btnDecrease.setText("Decrease");
+        btnDecrease.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDecreaseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmbbxSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtBrand, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                        .addComponent(txtSellingPrice, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnAdd)
@@ -132,17 +171,23 @@ public class Products_Page extends javax.swing.JFrame {
                         .addComponent(lblProductName, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtProductName, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblQuantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtQuantity, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblCostPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCostPrice, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(53, 53, 53)
+                            .addComponent(btnIncrease)
+                            .addGap(69, 69, 69)
+                            .addComponent(btnDecrease)))
+                    .addComponent(lblSupplierName)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtSupplierName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                        .addComponent(txtBrand, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtPrice, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(cmbbxSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(55, 55, 55)
                 .addComponent(lblProductCode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtProductCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,20 +198,23 @@ public class Products_Page extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(lblQuantity)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(lblCostPrice)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIncrease)
+                    .addComponent(btnDecrease))
+                .addGap(30, 30, 30)
+                .addComponent(lblPrice)
                 .addGap(18, 18, 18)
-                .addComponent(txtCostPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(txtSellingPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(lblBrand)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(txtBrand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(lblSupplierName)
+                .addGap(18, 18, 18)
+                .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
@@ -178,11 +226,28 @@ public class Products_Page extends javax.swing.JFrame {
         lblSearch.setText("Search: ");
 
         btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
 
         txtProductsTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtProductsTitle.setText("Products");
 
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
+
+        btnGo.setText("Go");
+        btnGo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,7 +255,7 @@ public class Products_Page extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 983, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -201,9 +266,11 @@ public class Products_Page extends javax.swing.JFrame {
                 .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGo)
+                .addGap(51, 51, 51)
                 .addComponent(btnRefresh)
-                .addGap(121, 121, 121))
+                .addGap(35, 35, 35))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +284,8 @@ public class Products_Page extends javax.swing.JFrame {
                     .addComponent(lblSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh)
-                    .addComponent(txtProductsTitle))
+                    .addComponent(txtProductsTitle)
+                    .addComponent(btnGo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -230,6 +298,389 @@ public class Products_Page extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        String productName = txtProductName.getText();
+String productCode = txtProductCode.getText();
+String priceStr = txtPrice.getText();
+String quantityStr = txtQuantity.getText();
+String brand = txtBrand.getText();
+String supplier = txtSupplierName.getText();
+
+// Validate that all fields are filled out and that price and quantity are valid
+if (productName.isEmpty() || productCode.isEmpty() || priceStr.isEmpty() || quantityStr.isEmpty() || brand.isEmpty() || supplier.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Please fill out all fields.");
+    return;  // Exit if any field is empty
+}
+
+// Try parsing price and quantity
+double price = 0;
+int quantity = 0;
+
+try {
+    price = Double.parseDouble(priceStr);
+    quantity = Integer.parseInt(quantityStr);
+} catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(this, "Please enter valid numbers for price and quantity.");
+    return;  // Exit if price or quantity is invalid
+}
+
+// SQL query to add a new product
+String insertQuery = "INSERT INTO products (product_code, product_name, price, brand, suppliername, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+
+try (Connection conn = DBConnector.getConnection();
+     PreparedStatement pst = conn.prepareStatement(insertQuery)) {
+
+    // Set the values for the prepared statement
+    pst.setString(1, productCode);
+    pst.setString(2, productName);
+    pst.setDouble(3, price);
+    pst.setString(4, brand);
+    pst.setString(5, supplier);
+    pst.setInt(6, quantity);
+
+    // Execute the insert query
+    int rowsInserted = pst.executeUpdate();
+
+    if (rowsInserted > 0) {
+        JOptionPane.showMessageDialog(this, "Product added successfully!");
+        
+        // Refresh the table after adding the product
+        refreshTable();  // Assuming you have a method to reload products in the table
+    } else {
+        JOptionPane.showMessageDialog(this, "Error: Product addition failed.");
+    }
+
+} catch (SQLException ex) {
+    ex.printStackTrace();
+    JOptionPane.showMessageDialog(this, "An error occurred: " + ex.getMessage());
+}
+       
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void tblProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductsMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tblProducts.getSelectedRow(); // Get selected row index
+if (selectedRow != -1) {
+    // Get the product details from the selected row and set them in the respective text fields
+    txtProductCode.setText(tblProducts.getValueAt(selectedRow, 1).toString());
+    txtProductName.setText(tblProducts.getValueAt(selectedRow, 2).toString());
+    txtQuantity.setText(tblProducts.getValueAt(selectedRow, 3).toString());
+    txtPrice.setText(tblProducts.getValueAt(selectedRow, 4).toString());
+    txtBrand.setText(tblProducts.getValueAt(selectedRow, 5).toString());
+    txtSupplierName.setText(tblProducts.getValueAt(selectedRow, 6).toString()); // Add the quantity here
+}
+        
+
+    }//GEN-LAST:event_tblProductsMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblProducts.getSelectedRow();
+
+// Check if any row is selected
+if (selectedRow != -1) {
+    // Retrieve the product_code from the selected row (assuming product_code is in column 1)
+    String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  // Assuming product_code is in column 1
+
+    // Get data from the input fields
+    String productName = txtProductName.getText();
+    double price = Double.parseDouble(txtPrice.getText());
+    String brand = txtBrand.getText();
+    String supplier = txtSupplierName.getText();
+    int quantity = Integer.parseInt(txtQuantity.getText());
+
+    // SQL query to update product details
+    String updateQuery = "UPDATE products SET product_name = ?, price = ?, brand = ?, suppliername = ?, quantity = ? WHERE product_code = ?";
+
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pst = conn.prepareStatement(updateQuery)) {
+
+        // Set the values for the prepared statement
+        pst.setString(1, productName);
+        pst.setDouble(2, price);
+        pst.setString(3, brand);
+        pst.setString(4, supplier);
+        pst.setInt(5, quantity);
+        pst.setString(6, productCode);  // Ensure we update the correct product by product_code
+
+        // Execute the update query
+        int rowsUpdated = pst.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Product updated successfully!");
+            
+            // Refresh the table after update
+            refreshTable();  // Assuming you have a method to reload products in the table
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: Product update failed.");
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred: " + ex.getMessage());
+    }
+} else {
+    // Display message if no row is selected
+    JOptionPane.showMessageDialog(this, "Please select a row to edit.");
+}
+       
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+         if (txtProductCode.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please select a row to delete.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try (Connection conn = new DBConnector().getConnection()) {
+                String query = "DELETE FROM products WHERE product_code=?";
+                PreparedStatement pstmt = conn.prepareStatement(query);
+
+                pstmt.setString(1, txtProductCode.getText());
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, "Product deleted successfully.");
+                    refreshTable();
+                    clearFields();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error: Product not found.");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error deleting product: " + ex.getMessage());
+            }
+        }
+    
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+         clearFields();
+    }
+
+    private void clearFields() {
+        txtProductCode.setText("");
+        txtProductName.setText("");
+        txtQuantity.setText("");
+        txtPrice.setText("");
+        txtBrand.setText("");
+        txtSupplierName.setText("");
+    
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+          refreshTable();
+    }
+
+
+private void refreshTable() {
+    try (Connection conn = new DBConnector().getConnection()) {
+        String query = "SELECT * FROM products";  // Ensure 'quantity' is part of this query
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
+        model.setRowCount(0); // Clear existing rows
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("product_id"),   // Product ID
+                rs.getString("product_code"),   // Product Code
+                rs.getString("product_name"),   // Product Name
+                rs.getInt("quantity"),   // Add Quantity here
+                rs.getDouble("price"),   // Price
+                rs.getString("brand"),   // Brand
+                rs.getString("suppliername")  // Supplier Name
+            });
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+}
+
+
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnIncreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncreaseActionPerformed
+        // TODO add your handling code here:
+          int selectedRow = tblProducts.getSelectedRow();
+
+    if (selectedRow != -1) {
+        // Retrieve the product_code from the selected row (assuming product_code is in column 1)
+        String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  // Assuming product_code is in column 1
+
+        // Get the current quantity from the input field
+        int increaseAmount = Integer.parseInt(txtQuantity.getText());
+
+        // Query to get the current quantity of the product
+        String query = "SELECT quantity FROM products WHERE product_code = ?";
+        
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            // Set the product_code to retrieve the current quantity
+            pst.setString(1, productCode);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int currentQuantity = rs.getInt("quantity");
+
+                // Calculate the new quantity after increase
+                int newQuantity = currentQuantity + increaseAmount;
+
+                // Update the quantity in the database
+                String updateQuery = "UPDATE products SET quantity = ? WHERE product_code = ?";
+                try (PreparedStatement updatePst = conn.prepareStatement(updateQuery)) {
+                    updatePst.setInt(1, newQuantity);
+                    updatePst.setString(2, productCode);
+                    int rowsUpdated = updatePst.executeUpdate();
+
+                    if (rowsUpdated > 0) {
+                        JOptionPane.showMessageDialog(this, "Quantity increased successfully!");
+                        refreshTable();  // Refresh the table after update
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No product selected for increasing quantity.");
+    }
+
+    }//GEN-LAST:event_btnIncreaseActionPerformed
+
+    private void btnDecreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecreaseActionPerformed
+        // TODO add your handling code here:
+          int selectedRow = tblProducts.getSelectedRow();
+
+    if (selectedRow != -1) {
+        // Retrieve the product_code from the selected row (assuming product_code is in column 1)
+        String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  // Assuming product_code is in column 1
+
+        // Get the current quantity from the input field
+        int decreaseAmount = Integer.parseInt(txtQuantity.getText());
+
+        // Query to get the current quantity of the product
+        String query = "SELECT quantity FROM products WHERE product_code = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            // Set the product_code to retrieve the current quantity
+            pst.setString(1, productCode);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int currentQuantity = rs.getInt("quantity");
+
+                // Check if the quantity to decrease is valid
+                if (decreaseAmount > currentQuantity) {
+                    JOptionPane.showMessageDialog(this, "Error: Cannot decrease quantity below 0.");
+                } else {
+                    // Calculate the new quantity after decrease
+                    int newQuantity = currentQuantity - decreaseAmount;
+
+                    // Update the quantity in the database
+                    String updateQuery = "UPDATE products SET quantity = ? WHERE product_code = ?";
+                    try (PreparedStatement updatePst = conn.prepareStatement(updateQuery)) {
+                        updatePst.setInt(1, newQuantity);
+                        updatePst.setString(2, productCode);
+                        int rowsUpdated = updatePst.executeUpdate();
+
+                        if (rowsUpdated > 0) {
+                            JOptionPane.showMessageDialog(this, "Quantity decreased successfully!");
+                            refreshTable();  // Refresh the table after update
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No product selected for decreasing quantity.");
+    }
+
+    }//GEN-LAST:event_btnDecreaseActionPerformed
+
+    private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
+        // TODO add your handling code here:
+          String searchQuery = txtSearch.getText().trim();  // Get search input from the text field
+        if (!searchQuery.isEmpty()) {
+            searchProducts(searchQuery);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a search term.");
+        }
+    
+    }//GEN-LAST:event_btnGoActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        
+    
+
+        
+    }//GEN-LAST:event_btnCloseActionPerformed
+    
+    private void searchProducts(String searchQuery) {
+           DefaultTableModel tableModel = (DefaultTableModel) tblProducts.getModel();
+    // Clear the existing data in the table
+    tableModel.setRowCount(0);
+
+    // Query to include product_id and other necessary columns, also search by quantity and price
+    String searchSQL = "SELECT product_id, product_code, product_name, quantity, price, brand, suppliername " +
+                       "FROM products WHERE " +
+                       "(product_name LIKE ? OR product_code LIKE ? OR brand LIKE ? OR suppliername LIKE ? " +
+                       "OR CAST(quantity AS CHAR) LIKE ? OR CAST(price AS CHAR) LIKE ?)";
+
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pst = conn.prepareStatement(searchSQL)) {
+        
+        String searchPattern = "%" + searchQuery + "%";  // Add % for partial matches
+        
+        // Set the search query parameters for all columns: product_name, product_code, brand, supplier, quantity, price
+        pst.setString(1, searchPattern);
+        pst.setString(2, searchPattern);
+        pst.setString(3, searchPattern);
+        pst.setString(4, searchPattern);
+        pst.setString(5, searchPattern);  // For quantity
+        pst.setString(6, searchPattern);  // For price
+        
+        ResultSet rs = pst.executeQuery();
+        
+        while (rs.next()) {
+            // Retrieve data from the result set
+            int productId = rs.getInt("product_id");
+            String productCode = rs.getString("product_code");
+            String productName = rs.getString("product_name");
+            double price = rs.getDouble("price");
+            String brand = rs.getString("brand");
+            String supplierName = rs.getString("suppliername");
+            int quantity = rs.getInt("quantity");
+
+            // Add the result to the table model
+            tableModel.addRow(new Object[]{productId, productCode, productName, quantity, price, brand, supplierName});
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error while searching for products: " + e.getMessage());
+    }
+    }
+       
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -269,27 +720,30 @@ public class Products_Page extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnDecrease;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnGo;
+    private javax.swing.JButton btnIncrease;
     private javax.swing.JButton btnRefresh;
-    private javax.swing.JComboBox<String> cmbbxSupplier;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBrand;
-    private javax.swing.JLabel lblCostPrice;
+    private javax.swing.JLabel lblPrice;
     private javax.swing.JLabel lblProductCode;
     private javax.swing.JLabel lblProductName;
     private javax.swing.JLabel lblQuantity;
     private javax.swing.JLabel lblSearch;
+    private javax.swing.JLabel lblSupplierName;
     private javax.swing.JTable tblProducts;
     private javax.swing.JTextField txtBrand;
-    private javax.swing.JTextField txtCostPrice;
+    private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtProductCode;
     private javax.swing.JTextField txtProductName;
     private javax.swing.JLabel txtProductsTitle;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSearch;
-    private javax.swing.JTextField txtSellingPrice;
+    private javax.swing.JTextField txtSupplierName;
     // End of variables declaration//GEN-END:variables
+
 }
