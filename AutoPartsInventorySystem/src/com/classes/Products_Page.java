@@ -313,7 +313,7 @@ if (productName.isEmpty() || productCode.isEmpty() || priceStr.isEmpty() || quan
     return;  // Exit if any field is empty
 }
 
-// Try parsing price and quantity
+// Parsing price and quantity
 double price = 0;
 int quantity = 0;
 
@@ -346,7 +346,7 @@ try (Connection conn = DBConnector.getConnection();
         JOptionPane.showMessageDialog(this, "Product added successfully!");
         
         // Refresh the table after adding the product
-        refreshTable();  // Assuming you have a method to reload products in the table
+        refreshTable();  
     } else {
         JOptionPane.showMessageDialog(this, "Error: Product addition failed.");
     }
@@ -368,7 +368,7 @@ if (selectedRow != -1) {
     txtQuantity.setText(tblProducts.getValueAt(selectedRow, 3).toString());
     txtPrice.setText(tblProducts.getValueAt(selectedRow, 4).toString());
     txtBrand.setText(tblProducts.getValueAt(selectedRow, 5).toString());
-    txtSupplierName.setText(tblProducts.getValueAt(selectedRow, 6).toString()); // Add the quantity here
+    txtSupplierName.setText(tblProducts.getValueAt(selectedRow, 6).toString()); 
 }
         
 
@@ -381,7 +381,7 @@ if (selectedRow != -1) {
 // Check if any row is selected
 if (selectedRow != -1) {
     // Retrieve the product_code from the selected row (assuming product_code is in column 1)
-    String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  // Assuming product_code is in column 1
+    String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  
 
     // Get data from the input fields
     String productName = txtProductName.getText();
@@ -402,7 +402,7 @@ if (selectedRow != -1) {
         pst.setString(3, brand);
         pst.setString(4, supplier);
         pst.setInt(5, quantity);
-        pst.setString(6, productCode);  // Ensure we update the correct product by product_code
+        pst.setString(6, productCode);  
 
         // Execute the update query
         int rowsUpdated = pst.executeUpdate();
@@ -411,7 +411,7 @@ if (selectedRow != -1) {
             JOptionPane.showMessageDialog(this, "Product updated successfully!");
             
             // Refresh the table after update
-            refreshTable();  // Assuming you have a method to reload products in the table
+            refreshTable();  
         } else {
             JOptionPane.showMessageDialog(this, "Error: Product update failed.");
         }
@@ -482,7 +482,7 @@ if (selectedRow != -1) {
 
 private void refreshTable() {
     try (Connection conn = new DBConnector().getConnection()) {
-        String query = "SELECT * FROM products";  // Ensure 'quantity' is part of this query
+        String query = "SELECT * FROM products"; 
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
@@ -491,13 +491,13 @@ private void refreshTable() {
 
         while (rs.next()) {
             model.addRow(new Object[]{
-                rs.getInt("product_id"),   // Product ID
-                rs.getString("product_code"),   // Product Code
-                rs.getString("product_name"),   // Product Name
-                rs.getInt("quantity"),   // Add Quantity here
-                rs.getDouble("price"),   // Price
-                rs.getString("brand"),   // Brand
-                rs.getString("suppliername")  // Supplier Name
+                rs.getInt("product_id"),   
+                rs.getString("product_code"),   
+                rs.getString("product_name"),  
+                rs.getInt("quantity"),   
+                rs.getDouble("price"),   
+                rs.getString("brand"),   
+                rs.getString("suppliername")  
             });
         }
     } catch (SQLException ex) {
@@ -513,7 +513,7 @@ private void refreshTable() {
 
     if (selectedRow != -1) {
         // Retrieve the product_code from the selected row (assuming product_code is in column 1)
-        String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  // Assuming product_code is in column 1
+        String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  
 
         // Get the current quantity from the input field
         int increaseAmount = Integer.parseInt(txtQuantity.getText());
@@ -543,7 +543,7 @@ private void refreshTable() {
 
                     if (rowsUpdated > 0) {
                         JOptionPane.showMessageDialog(this, "Quantity increased successfully!");
-                        refreshTable();  // Refresh the table after update
+                        refreshTable();  
                     }
                 }
             }
@@ -563,8 +563,8 @@ private void refreshTable() {
           int selectedRow = tblProducts.getSelectedRow();
 
     if (selectedRow != -1) {
-        // Retrieve the product_code from the selected row (assuming product_code is in column 1)
-        String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  // Assuming product_code is in column 1
+        // Retrieve the product_code from the selected row 
+        String productCode = (String) tblProducts.getValueAt(selectedRow, 1);  
 
         // Get the current quantity from the input field
         int decreaseAmount = Integer.parseInt(txtQuantity.getText());
@@ -598,7 +598,7 @@ private void refreshTable() {
 
                         if (rowsUpdated > 0) {
                             JOptionPane.showMessageDialog(this, "Quantity decreased successfully!");
-                            refreshTable();  // Refresh the table after update
+                            refreshTable(); 
                         }
                     }
                 }
@@ -647,15 +647,15 @@ private void refreshTable() {
     try (Connection conn = DBConnector.getConnection();
          PreparedStatement pst = conn.prepareStatement(searchSQL)) {
         
-        String searchPattern = "%" + searchQuery + "%";  // Add % for partial matches
+        String searchPattern = "%" + searchQuery + "%";  // % for partial matches
         
         // Set the search query parameters for all columns: product_name, product_code, brand, supplier, quantity, price
         pst.setString(1, searchPattern);
         pst.setString(2, searchPattern);
         pst.setString(3, searchPattern);
         pst.setString(4, searchPattern);
-        pst.setString(5, searchPattern);  // For quantity
-        pst.setString(6, searchPattern);  // For price
+        pst.setString(5, searchPattern);  
+        pst.setString(6, searchPattern);  
         
         ResultSet rs = pst.executeQuery();
         

@@ -308,7 +308,7 @@ public class MenuDashboard extends javax.swing.JFrame {
      public void notForEmployee(){
         pnlNavigate.remove(btnUsers);
         
-        //navPanel.remove(salesButton);
+       
     }
      
     /**

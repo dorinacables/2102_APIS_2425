@@ -65,8 +65,8 @@ public class UsersDAO {
 
     public boolean isUsernameUnique(String username) throws SQLException {
          try {
-        DBConnector dbConnector = new DBConnector(); // Create an instance of DBConnector
-        Connection conn = dbConnector.getConnection(); // Get the connection
+        DBConnector dbConnector = new DBConnector(); 
+        Connection conn = dbConnector.getConnection(); 
         String query = "SELECT COUNT(*) FROM users WHERE username = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, username);

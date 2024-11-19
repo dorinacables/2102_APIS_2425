@@ -255,12 +255,12 @@ public class Users_Page extends javax.swing.JFrame {
         // TODO add your handling code here:
           String username = txtUsernameU.getText();
     String password = txtPasswordU.getText();
-    String userType = cmbbxUsertype.getSelectedItem().toString(); // Assuming combo box for user type
+    String userType = cmbbxUsertype.getSelectedItem().toString(); 
     String location = txtLocationU.getText();
     String phone = txtContactNumberU.getText();
     String fullname = txtFullNameU.getText();
 
-    // Validate input (You can improve this validation depending on your needs)
+    // Validate input 
     if (username.isEmpty() || password.isEmpty() || userType.isEmpty() || location.isEmpty() || phone.isEmpty() || fullname.isEmpty()) {
         JOptionPane.showMessageDialog(null, "All fields are required!");
         return; // Exit the method if any field is empty
@@ -310,7 +310,7 @@ public class Users_Page extends javax.swing.JFrame {
         return;
     }
 
-    // Fetch the username from the selected row (assuming it's the first column)
+    // Fetch the username from the selected row 
     DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
     String username = model.getValueAt(selectedRow, 0).toString();
 
@@ -350,7 +350,7 @@ public class Users_Page extends javax.swing.JFrame {
         int userID = (int) tblUsers.getValueAt(selectedRow, 0);
         String username = txtUsernameU.getText();
         String password = txtPasswordU.getText();
-        String userType = (String) cmbbxUsertype.getSelectedItem();  // Get userType from ComboBox
+        String userType = (String) cmbbxUsertype.getSelectedItem();  
         String location = txtLocationU.getText();
         String phone = txtContactNumberU.getText();
         String fullname = txtFullNameU.getText();
@@ -421,7 +421,7 @@ public class Users_Page extends javax.swing.JFrame {
         txtFullNameU.setText(fullname);
         
         // Set the selected userType in the ComboBox
-        cmbbxUsertype.setSelectedItem(userType);  // assuming your ComboBox is named cmbUserType
+        cmbbxUsertype.setSelectedItem(userType);  
     }
 }
     

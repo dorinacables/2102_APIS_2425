@@ -2,6 +2,8 @@ package com.classes;
 
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;
+import javax.swing.*;
+
 /*/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -80,6 +82,11 @@ public class Log_In extends javax.swing.JFrame {
 
         btnSignUp.setForeground(new java.awt.Color(255, 51, 51));
         btnSignUp.setText("Sign Up");
+        btnSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignUpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,7 +183,15 @@ public class Log_In extends javax.swing.JFrame {
             if (selectExit == JOptionPane.YES_OPTION){
             System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
-    }    
+    }
+    private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
+        // TODO add your handling code here:
+        new Sign_Up().setVisible(true);
+        
+        
+
+    }//GEN-LAST:event_btnSignUpActionPerformed
+        
 
     /**
      * @param args the command line arguments

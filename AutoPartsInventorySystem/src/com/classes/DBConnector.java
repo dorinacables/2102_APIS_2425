@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;  // Make sure this is imported
+import java.sql.SQLException;  
 
 
 public class DBConnector {
@@ -44,7 +44,7 @@ public class DBConnector {
         
         String query = "SELECT * FROM users WHERE username = ? AND password = ? AND userType = ? LIMIT 1";
         
-        try (Connection conn = getConnection()) {  // Use static getConnection() here
+        try (Connection conn = getConnection()) {  
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, username);
             pstmt.setString(2, password);

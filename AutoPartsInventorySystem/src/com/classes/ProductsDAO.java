@@ -48,7 +48,7 @@ public class ProductsDAO {
             prepStatement = conn.prepareStatement(queryInsert);
             prepStatement.setString(1, products.getProductCode());
             prepStatement.setString(2, products.getProductName());
-            prepStatement.setInt(3, products.getQuantity());  // Ensure you're passing the quantity correctly
+            prepStatement.setInt(3, products.getQuantity());  // 
             prepStatement.setDouble(4, products.getPrice());
             prepStatement.setString(5, products.getBrand());
             prepStatement.setString(6, products.getSupplierName());
