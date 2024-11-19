@@ -1,0 +1,87 @@
+
+1. Engine Components
+   - Engine Block
+   - Cylinder Head
+   - Spark Plug
+   - Pistons
+   - Crankshaft
+   - Camshaft
+   - Timing Belt/Chain
+
+2. Transmission Parts
+   - Clutch
+   - Gearbox (Transmission)
+   - Drive Shaft
+   - Differential
+
+3. Electrical Components
+   - Battery
+   - Alternator
+   - Starter Motor
+   - Fuse Box
+   - ECU (Engine Control Unit)
+
+4. Suspension and Steering Parts
+   - Shock Absorbers
+   - Struts
+   - Control Arms
+   - Tie Rods
+   - Power Steering Pump
+
+5. Brake System Components
+   - Brake Pads
+   - Brake Rotors (Discs)
+   - Brake Calipers
+   - Brake Lines
+   - Master Cylinder
+
+6. Cooling System Parts
+   - Radiator
+   - Water Pump
+   - Thermostat
+   - Coolant Reservoir
+
+7. Fuel System Components
+   - Fuel Tank
+   - Fuel Pump
+   - Fuel Injectors
+   - Fuel Filter
+
+8. Exhaust System Components
+   - Exhaust Manifold
+   - Catalytic Converter
+   - Muffler
+   - Exhaust Pipe
+
+9. Body and Exterior Parts
+   - Bumpers
+   - Hood
+   - Fenders
+   - Doors
+   - Mirrors (Side/Rearview)
+
+10. Interior Components
+   - Dashboard
+   - Seats
+   - Steering Wheel
+   - Center Console
+   - Airbags
+
+11. Lighting and Visibility Components
+   - Headlights
+   - Tail Lights
+   - Turn Signals
+   - Windshield Wipers
+
+AUTO PARTS WITH BRAND NAME AND PRICE
+
+ACDelco, Battery, PHP 3,500 - PHP 10,000 
+Bosch, Wiper Blade, PHP 300 - PHP 1,000 
+Denso, Spark Plug, PHP 150 - PHP 300 
+NGK, Spark Plug, PHP 150 - PHP 500 
+Toyota Genuine Parts, Brake Pad, PHP 1,500 - PHP 3,000 
+Honda Genuine Parts, Oil Filter, PHP 300 - PHP 500 
+3M, Car Wax, PHP 500 - PHP 2,000 
+Motolite, Car Battery, PHP 4,000 - PHP 10,000 
+Mobil, Engine Oil, PHP 1,000 - PHP 2,500 
+Castrol, Engine Oil, PHP 1,200 - PHP 2,500

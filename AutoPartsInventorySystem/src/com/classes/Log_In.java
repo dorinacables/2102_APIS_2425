@@ -39,6 +39,8 @@ public class Log_In extends javax.swing.JFrame {
         btnLogIn = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
+        lblSignUp = new javax.swing.JLabel();
+        btnSignUp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,32 +76,44 @@ public class Log_In extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        lblSignUp.setText("Don't have an account?");
+
+        btnSignUp.setForeground(new java.awt.Color(255, 51, 51));
+        btnSignUp.setText("Sign Up");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(570, 570, 570)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitle)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnLogIn)
-                            .addGap(157, 157, 157)
-                            .addComponent(btnExit)
-                            .addGap(19, 19, 19))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblUsername)
-                                .addComponent(lblPassword))
-                            .addGap(48, 48, 48)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                                .addComponent(txtPassword)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(455, 455, 455)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTitle)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(8, 8, 8)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(542, Short.MAX_VALUE))
+                                    .addComponent(btnLogIn)
+                                    .addGap(157, 157, 157)
+                                    .addComponent(btnExit)
+                                    .addGap(19, 19, 19))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblUsername)
+                                        .addComponent(lblPassword))
+                                    .addGap(48, 48, 48)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtUsername)
+                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(8, 8, 8)
+                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(591, 591, 591)
+                        .addComponent(lblSignUp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSignUp)))
+                .addContainerGap(657, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +139,11 @@ public class Log_In extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogIn)
                     .addComponent(btnExit))
-                .addGap(213, 213, 213))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSignUp)
+                    .addComponent(btnSignUp))
+                .addGap(149, 149, 149))
         );
 
         pack();
@@ -198,8 +216,10 @@ public class Log_In extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogIn;
+    private javax.swing.JButton btnSignUp;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblSignUp;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPasswordField txtPassword;
