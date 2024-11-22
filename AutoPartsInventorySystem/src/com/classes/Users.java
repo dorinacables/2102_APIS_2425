@@ -4,19 +4,26 @@ package com.classes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import java.time.LocalDateTime;
 
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class Users {
     private int UserID;
     private String fullname, location, phone, username, password, userType;
-    private String inTime, outTime;
+      private LocalDateTime inTime, outTime;  
     
     public Users(String username, String userType) {
         this.username = username;
         this.userType = userType;
+    }
+    
+      public Users(String username, String fullname, String userType) {
+        this.username = username;
+        this.userType = userType;
+        this.fullname = fullname;
     }
     
      public Users(String username, String password, String fullname, String location, String userType, String phone) {
@@ -26,7 +33,15 @@ public class Users {
         this.location = location;
         this.userType = userType;
         this.phone = phone;
-     }  
+    }  
+     public Users(String username, String fullname, String userType, LocalDateTime inTime, LocalDateTime outTime) {
+        this.username = username;
+        this.fullname = fullname;
+        this.userType = userType;
+        this.inTime = inTime;
+        this.outTime = outTime;
+        
+     }
     public void setUserID(int UserID) {
         this.UserID = UserID;
     }
@@ -55,11 +70,11 @@ public class Users {
         this.userType = userType;
     }
     
-    public void setInTime(String inTime) {
+       public void setInTime(LocalDateTime inTime) {   
         this.inTime = inTime;
     }
-    
-    public void setOutTime(String outTime) {
+
+    public void setOutTime(LocalDateTime outTime) {  
         this.outTime = outTime;
     }
     
@@ -92,15 +107,13 @@ public class Users {
         return userType;
     }
     
-    public String getInTime() {
+    public LocalDateTime getInTime() {  
         return inTime;
     }
-    
-    public String getOutTime() {
-        return outTime;
-    }
-    
-}
 
-    
+    public LocalDateTime getOutTime() {  
+        return outTime;
+
+    }
+    }
 

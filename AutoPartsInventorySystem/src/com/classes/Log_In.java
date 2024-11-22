@@ -3,6 +3,8 @@ package com.classes;
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;
 import javax.swing.*;
+import java.time.format.DateTimeFormatter;
+
 
 /*/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,11 +13,12 @@ import javax.swing.*;
 
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class Log_In extends javax.swing.JFrame {
     Users users;
     LocalDateTime inTime;
+    private String username;
 
     /**
      * Creates new form Log_In
@@ -158,41 +161,52 @@ public class Log_In extends javax.swing.JFrame {
     String userType;
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         // TODO add your handling code here:
-        String username = txtUsername.getText();
-        String password = new String (txtPassword.getPassword());       
-        userType = (String) jComboBox1.getSelectedItem();
+         username = txtUsername.getText();
+    String password = new String(txtPassword.getPassword());
+    userType = (String) jComboBox1.getSelectedItem();
+
+    // Initialize the DBConnector for database operations
+    DBConnector dbConnector = new DBConnector();
+
+    // Check if the login credentials are valid
+    if (dbConnector.checkLogin(username, password, userType)) {
+        // Retrieve the fullname of the user from the database
+        String fullname = dbConnector.getFullname(username);
+
+        // Get the current time as the login time
+        inTime = LocalDateTime.now();
+
+        // Create a Users object with all the necessary details
+        Users users = new Users(username, fullname, userType);
+        users.setInTime(inTime);
+   
+        dispose();
+
+        new MenuDashboard(username, userType, users).setVisible(true);
         
-        Users users = new Users(username, userType);
-        
-        DBConnector dbConnector = new DBConnector();
-        
-        if (dbConnector.checkLogin(username, password, userType)) {        
-            inTime = LocalDateTime.now();
-            users.setInTime(String.valueOf(inTime)); 
-            dispose();                                  
-            new MenuDashboard (username, userType, users).setVisible(true);
-        } else {      
-            JOptionPane.showMessageDialog(null, "Invalid Credentials.", "Log In Failed", JOptionPane.OK_OPTION);
-        
-    }                                  
+    } else {
+        // Show error message if login fails
+        JOptionPane.showMessageDialog(null, "Invalid username or password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
-        int selectExit = JOptionPane.showConfirmDialog(null, "Do you want to exit this application? ", "Select", JOptionPane.YES_NO_OPTION);
-            if (selectExit == JOptionPane.YES_OPTION){
-            System.exit(0);
-    }//GEN-LAST:event_btnExitActionPerformed
+     int selectExit = JOptionPane.showConfirmDialog(null, "Do you want to exit this application? ", "Select", JOptionPane.YES_NO_OPTION);
+    if (selectExit == JOptionPane.YES_OPTION) {
+        DBConnector dbConnector = new DBConnector();
+        dbConnector.recordLogoutTime(username);  // Record outTime only during logout
+        System.exit(0);
     }
+
+    }//GEN-LAST:event_btnExitActionPerformed
+    
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         // TODO add your handling code here:
-        new Sign_Up().setVisible(true);
-        
-        
-
+        new Sign_Up().setVisible(true);             
     }//GEN-LAST:event_btnSignUpActionPerformed
-        
-
+       
     /**
      * @param args the command line arguments
      */

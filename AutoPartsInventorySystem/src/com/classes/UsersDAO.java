@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.Locale;
 import java.util.Vector;
-import com.classes.UsersDAO;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -13,7 +12,7 @@ import com.classes.UsersDAO;
 
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class UsersDAO {
     Connection conn = null;
@@ -22,7 +21,8 @@ public class UsersDAO {
     ResultSet resultSet = null;
     
     
-    public UsersDAO() {
+    
+    public UsersDAO() {      
         try {
             conn = new DBConnector().getConnection();
             statement = conn.createStatement();
@@ -30,7 +30,6 @@ public class UsersDAO {
             ex.printStackTrace();
         }
     }
-
 
     // Methods to add new user
     public void addUserDAO(Users users, String userType) {
@@ -153,7 +152,6 @@ public class UsersDAO {
     }
 }
 
-
     // Method to delete existing user
     public boolean deleteUserDAO(String username) {
         Connection conn = null;
@@ -219,29 +217,44 @@ public class UsersDAO {
         }
     }
 
-    public ResultSet getUserLogsDAO() {
-        try {
-            String query = "SELECT users.name,userlogs.username,in_time,out_time,location FROM userlogs" +
-                    " INNER JOIN users on userlogs.username=users.username";
-            resultSet = statement.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultSet;
-    }
     public void addUserLogin(Users users) {
-        try {
-            String query = "INSERT INTO userlogs (username, in_time, out_time) values(?,?,?)";
-            prepStatement = conn.prepareStatement(query);
-            prepStatement.setString(1, users.getUsername());
-            prepStatement.setString(2, users.getInTime());
-            prepStatement.setString(3, users.getOutTime());
-
-            prepStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    try {
+        String query = "INSERT INTO userlogs (fullname, username, userType, inTime, outTime) values(?,?,?,?,?)";
+        
+        // Prepare the statement
+        prepStatement = conn.prepareStatement(query);
+        
+        // Set the username
+        prepStatement.setString(1, users.getFullName());
+        
+        // Set the fullname
+        prepStatement.setString(2, users.getUsername());  
+        
+        // Set the userType
+        prepStatement.setString(3, users.getUserType());  
+        
+        // Convert LocalDateTime to Timestamp for inTime
+        if (users.getInTime() != null) {
+            Timestamp inTimeTimestamp = Timestamp.valueOf(users.getInTime());  // Convert LocalDateTime to Timestamp
+            prepStatement.setTimestamp(4, inTimeTimestamp);
+        } else {
+            prepStatement.setNull(4, java.sql.Types.TIMESTAMP);  // Set null if inTime is not available
         }
+        
+        // Convert LocalDateTime to Timestamp for outTime
+        if (users.getOutTime() != null) {
+            Timestamp outTimeTimestamp = Timestamp.valueOf(users.getOutTime());  // Convert LocalDateTime to Timestamp
+            prepStatement.setTimestamp(5, outTimeTimestamp);
+        } else {
+            prepStatement.setNull(5, java.sql.Types.TIMESTAMP);  // Set null if outTime is not available
+        }
+
+        // Execute the statement
+        prepStatement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
     public ResultSet getPasswordDAO(String username, String password){
         try {
@@ -270,9 +283,42 @@ public class UsersDAO {
         ex.printStackTrace();
     }
 }
-    
+     public boolean userExists(String username) {    
+    String query = "SELECT * FROM users WHERE username = ?";
+    try (Connection conn = DBConnector.getConnection(); 
+         PreparedStatement pst = conn.prepareStatement(query)) {
+        pst.setString(1, username);
+        ResultSet rs = pst.executeQuery();
+        
+        // If a result is returned, the username exists
+        return rs.next();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
+    }
+}
 
+    // Method to add a user (for your sign-up functionality)
+    public boolean addUser(Users newUsers) {
+          String insertQuery = "INSERT INTO users (username, password, phone, location, fullname, userType) VALUES (?, ?, ?, ?, ?, ?)";
+    try (Connection conn = DBConnector.getConnection(); 
+         
+        PreparedStatement pst = conn.prepareStatement(insertQuery)){
+        pst.setString(1, newUsers.getUsername());
+        pst.setString(2, newUsers.getPassword());
+        pst.setString(3, newUsers.getUserType());
+        pst.setString(4, newUsers.getLocation());
+        pst.setString(5, newUsers.getPhone());
+        pst.setString(6, newUsers.getFullName());
 
+        // Check if the insert was successful
+        int result = pst.executeUpdate();
+        return result > 0;  // If one row is updated, return true
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
+    }
+}
     // Method to display data set in tabular form
     public DefaultTableModel buildTableModel(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
