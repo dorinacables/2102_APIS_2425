@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class MenuDashboard extends javax.swing.JFrame {
     String username;
@@ -21,6 +23,7 @@ public class MenuDashboard extends javax.swing.JFrame {
     String userType;   
     String fullname;
     LocalDateTime outTime;
+    
 
     /**
      * Creates new form MenuDashboard
@@ -30,8 +33,7 @@ public class MenuDashboard extends javax.swing.JFrame {
         
         pnlNavigate.setVisible(false);
         pnlMenu.setVisible(true);
-        
-        
+               
         this.username = username;
         userSelect = userType;
         this.users = users;
@@ -39,10 +41,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             notForEmployee();
         currentUserSession();
                                        
-    }
-        
-       
-    
+    }            
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,12 +52,12 @@ public class MenuDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlNavigate = new javax.swing.JPanel();
-        btnHome = new javax.swing.JButton();
         btnProducts = new javax.swing.JButton();
         btnCurrentStocks = new javax.swing.JButton();
         btnsSuppliers = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
         btnUserLogs = new javax.swing.JButton();
+        btnReports = new javax.swing.JButton();
         pnlMenu = new javax.swing.JPanel();
         btnMenu = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -71,8 +70,6 @@ public class MenuDashboard extends javax.swing.JFrame {
         setTitle("Inventory System");
 
         pnlNavigate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btnHome.setText("Home");
 
         btnProducts.setText("Products");
         btnProducts.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +106,13 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnReports.setText("Reports");
+        btnReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlNavigateLayout = new javax.swing.GroupLayout(pnlNavigate);
         pnlNavigate.setLayout(pnlNavigateLayout);
         pnlNavigateLayout.setHorizontalGroup(
@@ -121,27 +125,26 @@ public class MenuDashboard extends javax.swing.JFrame {
                             .addComponent(btnUserLogs)
                             .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnUsers)
-                                .addComponent(btnsSuppliers))))
+                                .addComponent(btnsSuppliers)
+                                .addComponent(btnReports))))
                     .addGroup(pnlNavigateLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnProducts)
-                            .addComponent(btnHome)))
+                        .addGap(89, 89, 89)
+                        .addComponent(btnProducts))
                     .addGroup(pnlNavigateLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                        .addGap(71, 71, 71)
                         .addComponent(btnCurrentStocks)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         pnlNavigateLayout.setVerticalGroup(
             pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNavigateLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btnHome)
-                .addGap(69, 69, 69)
+                .addGap(42, 42, 42)
                 .addComponent(btnProducts)
-                .addGap(67, 67, 67)
+                .addGap(61, 61, 61)
                 .addComponent(btnCurrentStocks)
-                .addGap(73, 73, 73)
+                .addGap(63, 63, 63)
+                .addComponent(btnReports)
+                .addGap(70, 70, 70)
                 .addComponent(btnsSuppliers)
                 .addGap(74, 74, 74)
                 .addComponent(btnUsers)
@@ -228,7 +231,8 @@ public class MenuDashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
-                        .addComponent(pnlWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 785, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +245,7 @@ public class MenuDashboard extends javax.swing.JFrame {
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlNavigate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60))
                     .addGroup(layout.createSequentialGroup()
@@ -249,7 +253,7 @@ public class MenuDashboard extends javax.swing.JFrame {
                         .addComponent(pnlWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(76, 76, 76)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 552, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))))
         );
@@ -269,17 +273,28 @@ public class MenuDashboard extends javax.swing.JFrame {
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         // TODO add your handling code here:
-        int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to logout? You will have to login again.","Confirmation",JOptionPane.YES_NO_OPTION);
-        if (option == JOptionPane.YES_OPTION){
-            outTime = LocalDateTime.now();
-            users.setOutTime(String.valueOf(outTime));
-            users.setUsername(username);
-            new UsersDAO().addUserLogin(users);
-            dispose();
-            Log_In loginPage = new Log_In();
-            loginPage.setVisible(true);
+             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout? You will have to login again.", "Confirmation", JOptionPane.YES_NO_OPTION);
+    
+    if (option == JOptionPane.YES_OPTION) {
+        // Get the current time as the logout time (LocalDateTime)
+        outTime = LocalDateTime.now();
+        
+        // Set the user's outTime and username before adding to the user logs
+        users.setOutTime(outTime);  // Set LocalDateTime object as outTime
+        users.setUsername(username);
+        
+        // Add the logout event to the user logs
+        new UsersDAO().addUserLogin(users);
+        
+        // Close the current dashboard window
+        dispose();
+        
+        // Open the login page
+        Log_In loginPage = new Log_In();
+        loginPage.setVisible(true);
+    }
     }//GEN-LAST:event_btnLogOutActionPerformed
-    }     
+         
     private void btnCurrentStocksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCurrentStocksActionPerformed
         // TODO add your handling code here:
          new CurrentStocks_Page().setVisible(true);
@@ -299,6 +314,11 @@ public class MenuDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new UserLogs_Page().setVisible(true);
     }//GEN-LAST:event_btnUserLogsActionPerformed
+
+    private void btnReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsActionPerformed
+        // TODO add your handling code here:
+        new Reports_Page().setVisible(true);
+    }//GEN-LAST:event_btnReportsActionPerformed
     
      public void currentUserSession() {
         Users users = new Users(username, userSelect);
@@ -306,9 +326,7 @@ public class MenuDashboard extends javax.swing.JFrame {
         lblUsername.setText("User: " + users.getUsername() + " ("+userSelect+")");
     }
      public void notForEmployee(){
-        pnlNavigate.remove(btnUsers);
-        
-       
+        pnlNavigate.remove(btnUsers);            
     }
      
     /**
@@ -348,10 +366,10 @@ public class MenuDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCurrentStocks;
-    private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnProducts;
+    private javax.swing.JButton btnReports;
     private javax.swing.JButton btnUserLogs;
     private javax.swing.JButton btnUsers;
     private javax.swing.JButton btnsSuppliers;

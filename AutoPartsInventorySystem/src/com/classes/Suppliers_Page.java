@@ -4,18 +4,32 @@ package com.classes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import javax.swing.*;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class Suppliers_Page extends javax.swing.JFrame {
-
+ 
     /**
      * Creates new form Suppliers_Page
      */
     public Suppliers_Page() {
         initComponents();
+        
+       DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Supplier ID");
+        model.addColumn("Supplier Name");
+        model.addColumn("Location");
+        model.addColumn("Phone");
+        model.addColumn("Email");
+        tblSuppliers.setModel(model);
+        loadSuppliersToTable();
     }
 
     /**
@@ -28,44 +42,53 @@ public class Suppliers_Page extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblSupplier = new javax.swing.JTable();
+        tblSuppliers = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtSupplierCode = new javax.swing.JTextField();
         lblFullName = new javax.swing.JLabel();
-        txtFullName = new javax.swing.JTextField();
+        txtSupplierName = new javax.swing.JTextField();
         lblLocation = new javax.swing.JLabel();
         txtLocation = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtContactNumber = new javax.swing.JTextField();
+        txtPhoneS = new javax.swing.JTextField();
         btnAddS = new javax.swing.JButton();
         btnEditS = new javax.swing.JButton();
         btnDeleteS = new javax.swing.JButton();
         btnClearS = new javax.swing.JButton();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        btnGoToProducts = new javax.swing.JButton();
+        btnCloseS = new javax.swing.JButton();
         lblSearchS = new javax.swing.JLabel();
         txtSearchS = new javax.swing.JTextField();
         lblSuppliersTitle = new javax.swing.JLabel();
-        btnCloseS = new javax.swing.JButton();
+        btnRefreshS = new javax.swing.JButton();
+        btnGoS = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tblSupplier.setModel(new javax.swing.table.DefaultTableModel(
+        tblSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Supplier Code", "Full Name", "Location", "Contact Number"
+                "Supplier ID", "Supplier Name", "Location", "Phone", "Email"
             }
         ));
-        jScrollPane1.setViewportView(tblSupplier);
+        tblSuppliers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSuppliersMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblSuppliers);
+        if (tblSuppliers.getColumnModel().getColumnCount() > 0) {
+            tblSuppliers.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Supplier Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jLabel1.setText("Supplier Code:");
 
         lblFullName.setText("Full Name:");
 
@@ -74,12 +97,48 @@ public class Suppliers_Page extends javax.swing.JFrame {
         jLabel4.setText("Contact Number:");
 
         btnAddS.setText("Add");
+        btnAddS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSActionPerformed(evt);
+            }
+        });
 
         btnEditS.setText("Edit");
+        btnEditS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditSActionPerformed(evt);
+            }
+        });
 
         btnDeleteS.setText("Delete");
+        btnDeleteS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteSActionPerformed(evt);
+            }
+        });
 
         btnClearS.setText("Clear");
+        btnClearS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearSActionPerformed(evt);
+            }
+        });
+
+        lblEmail.setText("Email:");
+
+        btnGoToProducts.setText("Go Back to Products");
+        btnGoToProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoToProductsActionPerformed(evt);
+            }
+        });
+
+        btnCloseS.setText("Close");
+        btnCloseS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,53 +148,61 @@ public class Suppliers_Page extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAddS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                        .addComponent(btnEditS)
-                        .addGap(85, 85, 85)
-                        .addComponent(btnDeleteS))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSupplierCode)
-                        .addComponent(txtFullName)
-                        .addComponent(txtLocation)
-                        .addComponent(txtContactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
-                        .addComponent(lblFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClearS, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtSupplierName)
+                                .addComponent(txtLocation)
+                                .addComponent(txtPhoneS, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                                .addComponent(lblFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAddS)
+                                .addGap(33, 33, 33)
+                                .addComponent(btnEditS)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnDeleteS)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnClearS)))
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnGoToProducts)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCloseS)
+                        .addGap(37, 37, 37))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addComponent(txtSupplierCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(27, 27, 27)
                 .addComponent(lblFullName)
-                .addGap(26, 26, 26)
-                .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(18, 18, 18)
+                .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
                 .addComponent(lblLocation)
-                .addGap(32, 32, 32)
+                .addGap(27, 27, 27)
                 .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addGap(71, 71, 71)
                 .addComponent(jLabel4)
-                .addGap(29, 29, 29)
-                .addComponent(txtContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPhoneS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(lblEmail)
+                .addGap(18, 18, 18)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddS)
                     .addComponent(btnEditS)
-                    .addComponent(btnDeleteS))
-                .addGap(38, 38, 38)
-                .addComponent(btnClearS)
-                .addContainerGap(42, Short.MAX_VALUE))
+                    .addComponent(btnDeleteS)
+                    .addComponent(btnClearS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGoToProducts)
+                    .addComponent(btnCloseS))
+                .addGap(20, 20, 20))
         );
 
         lblSearchS.setText("Search: ");
@@ -143,32 +210,44 @@ public class Suppliers_Page extends javax.swing.JFrame {
         lblSuppliersTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblSuppliersTitle.setText("Suppliers");
 
-        btnCloseS.setText("Close");
+        btnRefreshS.setText("Refresh");
+        btnRefreshS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshSActionPerformed(evt);
+            }
+        });
+
+        btnGoS.setText("Go");
+        btnGoS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1007, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1007, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(41, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCloseS)
-                        .addGap(86, 86, 86))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(lblSuppliersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblSearchS, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSearchS, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblSearchS, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSearchS, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnGoS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addComponent(btnRefreshS))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(lblSuppliersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,23 +257,351 @@ public class Suppliers_Page extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSearchS)
-                            .addComponent(txtSearchS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtSearchS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRefreshS)
+                            .addComponent(btnGoS)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblSuppliersTitle)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCloseS))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSActionPerformed
+        // TODO add your handling code here:
+    String supplierName = txtSupplierName.getText().trim();
+    String location = txtLocation.getText().trim();
+    String phone = txtPhoneS.getText().trim();
+    String email = txtEmail.getText().trim();
+
+    // Validate mandatory fields
+    if (supplierName.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Supplier Name cannot be empty.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Validate other fields like location, phone, and email
+    if (location.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields must be filled.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+     try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement("INSERT INTO suppliers (suppliername, location, phone, email) VALUES (?, ?, ?, ?)")) {
+
+        // Set parameters for the SQL query
+        pstmt.setString(1, supplierName);
+        pstmt.setString(2, location);
+        pstmt.setString(3, phone);
+        pstmt.setString(4, email);
+
+        // Execute the query
+        int rowsAffected = pstmt.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Supplier added successfully!");
+            
+            // Refresh ComboBox in ProductPage
+            refreshSupplierComboBox();
+            
+            // Clear text fields after successful addition
+            txtSupplierName.setText("");
+            txtLocation.setText("");
+            txtPhoneS.setText("");
+            txtEmail.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to add supplier.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnAddSActionPerformed
+
+    private void btnEditSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditSActionPerformed
+        // TODO add your handling code here:
+         int selectedRow = tblSuppliers.getSelectedRow();
+
+    if (selectedRow != -1) {
+        // Retrieve the selected supplier ID and the input values
+        int supplierid = Integer.parseInt(tblSuppliers.getValueAt(selectedRow, 0).toString());
+        String supplierName = txtSupplierName.getText().trim();
+        String location = txtLocation.getText().trim();
+        String phone = txtPhoneS.getText().trim();
+        String email = txtEmail.getText().trim();
+
+        // Validate fields
+        if (supplierName.isEmpty() || location.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "All fields must be filled out.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Create supplier object to pass to DAO
+        Suppliers supplier = new Suppliers(supplierid, supplierName, location, phone, email);
+        SuppliersDAO suppliersDAO = new SuppliersDAO();
+
+        // Update the supplier in the database
+        boolean isUpdated = suppliersDAO.editSupplierDAO(supplier);
+
+        // Check if the update was successful
+         if (isUpdated) {
+            JOptionPane.showMessageDialog(null, "Supplier updated successfully.");
+
+            // Refresh the table with updated data
+            suppliersDAO.refreshTable((DefaultTableModel) tblSuppliers.getModel());
+        
+            refreshSupplierComboBox();                  
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Error updating supplier.", "Update Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a supplier to edit.");
+    }      
+
+    }//GEN-LAST:event_btnEditSActionPerformed
+
+    private void btnDeleteSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblSuppliers.getSelectedRow();
+
+    if (selectedRow != -1) {
+        // Retrieve the selected supplier ID from the table
+        String supplierIdString = tblSuppliers.getValueAt(selectedRow, 0).toString();
+
+        // Convert the supplier ID to an integer
+        try {
+            int supplierid = Integer.parseInt(supplierIdString);
+
+            // Confirm deletion with the user
+            int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this supplier?", 
+                                                              "Delete Supplier", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (confirmation == JOptionPane.YES_OPTION) {
+                // Create a SuppliersDAO instance to delete the supplier
+                SuppliersDAO suppliersDAO = new SuppliersDAO();
+
+                // Call deleteSupplierDAO method to delete the supplier
+                boolean isDeleted = suppliersDAO.deleteSupplierDAO(supplierid);
+
+                // Check if the deletion was successful
+                if (isDeleted) {
+                    JOptionPane.showMessageDialog(null, "Supplier deleted successfully.");
+
+                    // Refresh the supplier table to reflect the changes
+                    suppliersDAO.refreshTable((DefaultTableModel) tblSuppliers.getModel());                
+                    refreshSupplierComboBox();
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error deleting supplier. Please check if there are dependencies.", 
+                                                  "Delete Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (NumberFormatException ex) {
+            // Handle the case where the supplierId is not a valid integer
+            JOptionPane.showMessageDialog(null, "Error: Invalid supplier ID format.", 
+                                          "Delete Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a supplier to delete.");
+    }    
+
+    }//GEN-LAST:event_btnDeleteSActionPerformed
+
+    private void btnClearSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSActionPerformed
+        // TODO add your handling code here:
+    txtSupplierName.setText("");
+    txtLocation.setText("");
+    txtPhoneS.setText("");
+    txtEmail.setText("");
+    txtSearchS.setText("");
+            
+    }//GEN-LAST:event_btnClearSActionPerformed
+
+    private void btnRefreshSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshSActionPerformed
+        // TODO add your handling code here:
+    refreshSupplierComboBox();  
+    refreshSupplierTable();    
+    }//GEN-LAST:event_btnRefreshSActionPerformed
+
+    private void tblSuppliersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuppliersMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tblSuppliers.getSelectedRow();
+        
+        if (selectedRow != -1) {
+            // Retrieve data from the selected row
+            String supplierName = tblSuppliers.getValueAt(selectedRow, 1).toString(); 
+            String location = tblSuppliers.getValueAt(selectedRow, 2).toString();     
+            String phone = tblSuppliers.getValueAt(selectedRow, 3).toString();        
+            String email = tblSuppliers.getValueAt(selectedRow, 4).toString();        
+            
+            // Set the values to the corresponding text fields
+            txtSupplierName.setText(supplierName);
+            txtLocation.setText(location);
+            txtPhoneS.setText(phone);
+            txtEmail.setText(email);
+        }
+    
+    }//GEN-LAST:event_tblSuppliersMouseClicked
+
+    private void btnGoToProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoToProductsActionPerformed
+        // TODO add your handling code here:         
+    Products_Page productsPage = new Products_Page(null); 
+    productsPage.setVisible(true);
+    this.dispose(); 
+    }//GEN-LAST:event_btnGoToProductsActionPerformed
+
+    private void btnGoSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoSActionPerformed
+        // TODO add your handling code here:
+        String searchQuery = txtSearchS.getText().trim();
+
+    if (!searchQuery.isEmpty()) {
+        // Call the searchSuppliers method to perform the search
+        searchSuppliers(searchQuery);
+    } else {
+        // Show a message if no search term is entered
+        JOptionPane.showMessageDialog(null, "Please enter a search term.");
+    }
+    }
+    
+    private void searchSuppliers(String searchQuery) {
+    DefaultTableModel tableModel = (DefaultTableModel) tblSuppliers.getModel();
+    // Clear the existing data in the table
+    tableModel.setRowCount(0);
+
+    // SQL query to search suppliers by name, location, phone, or email
+    String searchSQL = "SELECT * FROM suppliers WHERE suppliername LIKE ? OR location LIKE ? OR phone LIKE ? OR email LIKE ?";
+
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pst = conn.prepareStatement(searchSQL)) {
+
+        // Set the search query parameter (the % signs are for partial matches)
+        String searchPattern = "%" + searchQuery + "%";
+        pst.setString(1, searchPattern);  
+        pst.setString(2, searchPattern); 
+        pst.setString(3, searchPattern);  
+        pst.setString(4, searchPattern);  
+
+        // Execute the query and get results
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            // Retrieve supplier details from the result set
+            int supplierId = rs.getInt("supplier_id");
+            String supplierName = rs.getString("suppliername");
+            String location = rs.getString("location");
+            String phone = rs.getString("phone");
+            String email = rs.getString("email");
+
+            // Add the result to the table model
+            tableModel.addRow(new Object[]{supplierId, supplierName, location, phone, email});
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error while searching for suppliers: " + e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnGoSActionPerformed
+
+    private void btnCloseSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseSActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCloseSActionPerformed
+
+    public void refreshSupplierComboBox() {
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement prepStatement = conn.prepareStatement("SELECT suppliername FROM suppliers");
+         ResultSet resultSet = prepStatement.executeQuery()) {
+
+        // Loop through each supplier and add it to the ComboBox
+        while (resultSet.next()) {
+            String supplierName = resultSet.getString("suppliername");
+            // Add the supplier name if it's not already in the ComboBox
+            if (!isItemInComboBox(supplierName)) {
+                supplierComboBox.addItem(supplierName);
+            }
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading suppliers into ComboBox: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+// Helper method to check if an item is already in the ComboBox
+private boolean isItemInComboBox(String item) {
+    for (int i = 0; i < supplierComboBox.getItemCount(); i++) {
+        if (supplierComboBox.getItemAt(i).equals(item)) {
+            return true; // Item already exists
+        }
+    }
+    return false; // Item doesn't exist
+}
+
+// Method to refresh the Supplier Table
+public void refreshSupplierTable() {
+    // Clear existing rows in the table (only in the table view)
+    DefaultTableModel model = (DefaultTableModel) tblSuppliers.getModel();
+    model.setRowCount(0); // Clear existing rows
+    
+    try (Connection conn = DBConnector.getConnection()) {
+        String query = "SELECT * FROM suppliers"; // Fetch all suppliers
+        PreparedStatement prepStatement = conn.prepareStatement(query);
+        ResultSet resultSet = prepStatement.executeQuery();
+
+        // Loop through and add each supplier's data into the table
+        while (resultSet.next()) {
+            int supplierId = resultSet.getInt("supplier_id"); 
+            String supplierName = resultSet.getString("suppliername");
+            String location = resultSet.getString("location");
+            String phone = resultSet.getString("phone");
+            String email = resultSet.getString("email");
+
+            // Add the supplier data into the table
+            model.addRow(new Object[] { supplierId, supplierName, location, phone, email });
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error loading suppliers into table: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+Products_Page productsPage = new Products_Page("username");
+JComboBox<String> supplierComboBox = productsPage.getSupplierComboBox();
+   
+    private void loadSuppliersToTable() {
+           DefaultTableModel model = (DefaultTableModel) tblSuppliers.getModel();
+        model.setRowCount(0);  // Clear existing data in the table
+
+        String selectQuery = "SELECT supplier_id, suppliername, location, phone, email " +
+                             "FROM suppliers";  // Query to fetch supplier details
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement pst = conn.prepareStatement(selectQuery);
+             ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Object[] row = new Object[5];
+                row[0] = rs.getInt("supplier_id");   
+                row[1] = rs.getString("suppliername"); 
+                row[2] = rs.getString("location");       
+                row[3] = rs.getString("phone");    
+                row[4] = rs.getString("email");        
+                
+                model.addRow(row);  // Add row to the table model
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading suppliers: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -236,19 +643,22 @@ public class Suppliers_Page extends javax.swing.JFrame {
     private javax.swing.JButton btnCloseS;
     private javax.swing.JButton btnDeleteS;
     private javax.swing.JButton btnEditS;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnGoS;
+    private javax.swing.JButton btnGoToProducts;
+    private javax.swing.JButton btnRefreshS;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFullName;
     private javax.swing.JLabel lblLocation;
     private javax.swing.JLabel lblSearchS;
     private javax.swing.JLabel lblSuppliersTitle;
-    private javax.swing.JTable tblSupplier;
-    private javax.swing.JTextField txtContactNumber;
-    private javax.swing.JTextField txtFullName;
+    private javax.swing.JTable tblSuppliers;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLocation;
+    private javax.swing.JTextField txtPhoneS;
     private javax.swing.JTextField txtSearchS;
-    private javax.swing.JTextField txtSupplierCode;
+    private javax.swing.JTextField txtSupplierName;
     // End of variables declaration//GEN-END:variables
 }
