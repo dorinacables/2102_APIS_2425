@@ -7,24 +7,23 @@ package com.classes;
 
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class Products {
-    private int productID, quantity;
+    private int productID, quantity, supplierid;
     private double price;
-    private String productcode, productname, suppliername, brand;
+    private String productcode, productname, brand, suppliername;
     
-     public Products(String productcode, String productname, String suppliername, String brand, double price, int quantity) {    
+     public Products(String productcode, String productname, int supplierid, String brand, double price, int quantity, String suppliername) {    
         this.productcode = productcode;
         this.productname = productname;
-        this.suppliername = suppliername;
+        this.supplierid = supplierid;
         this.brand = brand;
         this.price = price;     
         this.quantity = quantity;
+        this.suppliername = suppliername;
         
-    }
-    
-    
+    }   
 
     public int getProductID() {
         return productID;
@@ -66,12 +65,12 @@ public class Products {
         this.productname = productname;
     } 
   
-    public String getSupplierName() {
-        return suppliername;
+    public int getSupplierID() {
+        return supplierid;
     }
 
-    public void setSupplierName(String suppliername) {
-        this.suppliername = suppliername;
+    public void setSupplierID(int supplierid) {
+        this.supplierid = supplierid;
     }
 
     public String getBrand() {
@@ -80,6 +79,13 @@ public class Products {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+     public String getSupplierName() {
+        return suppliername;
+    }
+
+    public void setSupplierName(String suppliername) {
+        this.suppliername = suppliername;
     }
 }
 

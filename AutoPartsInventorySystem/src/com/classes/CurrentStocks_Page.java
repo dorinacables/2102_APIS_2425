@@ -4,10 +4,13 @@ package com.classes;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+/**
 /**
  *
- * @author Elmer Reyes
+ * 
  */
 public class CurrentStocks_Page extends javax.swing.JFrame {
 
@@ -16,6 +19,17 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
      */
     public CurrentStocks_Page() {
         initComponents();
+       
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Product ID");
+        model.addColumn("Product Code");
+        model.addColumn("Product Name");
+        model.addColumn("Quantity");
+        model.addColumn("Stock Status");  
+        model.addColumn("Supplier Name");
+        tblCurrentStocks.setModel(model);
+        refreshStocks();
+       
     }
 
     /**
@@ -27,32 +41,188 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCurrentStocks = new javax.swing.JTable();
+        lblCurrentStocks = new javax.swing.JLabel();
+        lblSearchC = new javax.swing.JLabel();
+        txtSearchC = new javax.swing.JTextField();
+        btnGoC = new javax.swing.JButton();
+        btnRefreshC = new javax.swing.JButton();
+        btnCloseC = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Current Stocks");
+        tblCurrentStocks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Product ID", "Product Code", "Product Name", "Quantity", "Stock Status", "Supplier Name"
+            }
+        ));
+        jScrollPane1.setViewportView(tblCurrentStocks);
+
+        lblCurrentStocks.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCurrentStocks.setText("Current Stocks");
+
+        lblSearchC.setText("Search:");
+
+        btnGoC.setText("Go");
+        btnGoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoCActionPerformed(evt);
+            }
+        });
+
+        btnRefreshC.setText("Refresh");
+        btnRefreshC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshCActionPerformed(evt);
+            }
+        });
+
+        btnCloseC.setText("Close");
+        btnCloseC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(343, 343, 343)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(840, Short.MAX_VALUE))
+                .addGap(84, 84, 84)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 351, Short.MAX_VALUE)
+                .addComponent(btnCloseC)
+                .addGap(48, 48, 48))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(lblCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnGoC, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(btnRefreshC)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSearchC)
+                    .addComponent(txtSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGoC)
+                    .addComponent(btnRefreshC))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCloseC)
+                .addGap(114, 114, 114))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(lblCurrentStocks)
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoCActionPerformed
+        // TODO add your handling code here:
+    String searchQuery = txtSearchC.getText();  
+    searchStocks(searchQuery);  
+    }//GEN-LAST:event_btnGoCActionPerformed
+
+    private void btnRefreshCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshCActionPerformed
+        // TODO add your handling code here:
+        refreshStocks();      
+    }//GEN-LAST:event_btnRefreshCActionPerformed
+
+    private void btnCloseCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseCActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCloseCActionPerformed
+    private void refreshStocks() {
+    DefaultTableModel model = (DefaultTableModel) tblCurrentStocks.getModel();
+    model.setRowCount(0); 
+    
+    String query = "SELECT p.product_id, p.product_code, p.product_name, p.quantity, " +
+                   "CASE " +
+                   "    WHEN p.quantity = 0 THEN 'Out of Stock' " +
+                   "    WHEN p.quantity <= 5 THEN 'Low Stock' " +
+                   "    ELSE 'In Stock' " +
+                   "END AS stock_status, " +
+                   "s.suppliername " +
+                   "FROM products p " +
+                   "JOIN suppliers s ON p.supplier_id = s.supplier_id";
+    
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pst = conn.prepareStatement(query);
+         ResultSet rs = pst.executeQuery()) {
+
+        while (rs.next()) {
+            Object[] row = new Object[6];
+            row[0] = rs.getInt("product_id");
+            row[1] = rs.getString("product_code");
+            row[2] = rs.getString("product_name");
+            row[3] = rs.getInt("quantity");
+            row[4] = rs.getString("stock_status"); 
+            row[5] = rs.getString("suppliername");
+            model.addRow(row);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading current stocks: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    private void searchStocks(String searchQuery) {
+     DefaultTableModel model = (DefaultTableModel) tblCurrentStocks.getModel();
+    model.setRowCount(0); // Clear table before adding search results
+
+    // Ensure partial search works for product_code, product_name, and suppliername
+    String searchSQL = "SELECT p.product_id, p.product_code, p.product_name, p.quantity, " +
+                       "CASE WHEN p.quantity > 0 THEN 'In Stock' ELSE 'Out of Stock' END AS stock_status, " +
+                       "s.suppliername " +
+                       "FROM products p " +
+                       "JOIN suppliers s ON p.supplier_id = s.supplier_id " +
+                       "WHERE LOWER(p.product_code) LIKE ? OR LOWER(p.product_name) LIKE ? OR LOWER(s.suppliername) LIKE ?";
+
+    try (Connection conn = DBConnector.getConnection();
+         PreparedStatement pst = conn.prepareStatement(searchSQL)) {
+        
+        String searchPattern = "%" + searchQuery.toLowerCase() + "%";  // Case insensitive search
+        pst.setString(1, searchPattern);
+        pst.setString(2, searchPattern);
+        pst.setString(3, searchPattern);
+
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            Object[] row = new Object[6];
+            row[0] = rs.getInt("product_id");
+            row[1] = rs.getString("product_code");
+            row[2] = rs.getString("product_name");
+            row[3] = rs.getInt("quantity");
+            row[4] = rs.getString("stock_status");
+            row[5] = rs.getString("suppliername");
+
+            model.addRow(row);  // Add filtered rows to the table
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error while searching stocks: " + ex.getMessage());
+    }
+}
     /**
      * @param args the command line arguments
      */
@@ -89,6 +259,13 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnCloseC;
+    private javax.swing.JButton btnGoC;
+    private javax.swing.JButton btnRefreshC;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCurrentStocks;
+    private javax.swing.JLabel lblSearchC;
+    private javax.swing.JTable tblCurrentStocks;
+    private javax.swing.JTextField txtSearchC;
     // End of variables declaration//GEN-END:variables
 }
