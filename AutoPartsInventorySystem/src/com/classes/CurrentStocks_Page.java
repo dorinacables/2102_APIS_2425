@@ -40,45 +40,64 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         lblCurrentStocks = new javax.swing.JLabel();
         lblSearchC = new javax.swing.JLabel();
         txtSearchC = new javax.swing.JTextField();
         btnGoC = new javax.swing.JButton();
         btnRefreshC = new javax.swing.JButton();
-        btnCloseC = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCurrentStocks = new javax.swing.JTable();
         btnaddquan = new javax.swing.JButton();
         btnredquan = new javax.swing.JButton();
+        btnCloseC = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1373, 689));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1370, 689));
+
+        jPanel2.setBackground(new java.awt.Color(6, 71, 71));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1411, 671));
 
         lblCurrentStocks.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCurrentStocks.setForeground(new java.awt.Color(255, 255, 255));
         lblCurrentStocks.setText("Current Stocks");
 
+        lblSearchC.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblSearchC.setForeground(new java.awt.Color(255, 255, 255));
         lblSearchC.setText("Search:");
 
+        txtSearchC.setBackground(new java.awt.Color(204, 204, 204));
+        txtSearchC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchCActionPerformed(evt);
+            }
+        });
+
+        btnGoC.setBackground(new java.awt.Color(204, 204, 204));
         btnGoC.setText("Go");
+        btnGoC.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnGoC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGoCActionPerformed(evt);
             }
         });
 
+        btnRefreshC.setBackground(new java.awt.Color(204, 204, 204));
         btnRefreshC.setText("Refresh");
+        btnRefreshC.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnRefreshC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshCActionPerformed(evt);
             }
         });
 
-        btnCloseC.setText("Close");
-        btnCloseC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseCActionPerformed(evt);
-            }
-        });
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
+        tblCurrentStocks.setBackground(new java.awt.Color(204, 204, 204));
         tblCurrentStocks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -90,103 +109,170 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
                 "Product ID", "Product Code", "Product Name", "Quantity", "Supplier Name", "Stock Status"
             }
         ));
+        tblCurrentStocks.setGridColor(new java.awt.Color(0, 0, 0));
+        tblCurrentStocks.setRowHeight(25);
+        tblCurrentStocks.setShowGrid(false);
+        tblCurrentStocks.setShowHorizontalLines(true);
         jScrollPane2.setViewportView(tblCurrentStocks);
 
+        btnaddquan.setBackground(new java.awt.Color(51, 51, 51));
+        btnaddquan.setForeground(new java.awt.Color(255, 255, 255));
         btnaddquan.setText("Click to Add Quantity");
+        btnaddquan.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnaddquan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnaddquanActionPerformed(evt);
             }
         });
 
+        btnredquan.setBackground(new java.awt.Color(51, 51, 51));
+        btnredquan.setForeground(new java.awt.Color(255, 255, 255));
         btnredquan.setText("Click to Reduce Quantity");
+        btnredquan.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnredquan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnredquanActionPerformed(evt);
             }
         });
 
+        btnCloseC.setBackground(new java.awt.Color(51, 51, 51));
+        btnCloseC.setForeground(new java.awt.Color(255, 255, 255));
+        btnCloseC.setText("Close");
+        btnCloseC.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnCloseC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseCActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(btnaddquan)
+                .addGap(18, 18, 18)
+                .addComponent(btnredquan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCloseC, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCloseC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnredquan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnaddquan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(lblCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 634, Short.MAX_VALUE)
+                .addComponent(lblSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnGoC, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRefreshC, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(lblCurrentStocks))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGoC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRefreshC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1364, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(234, 234, 234)
-                .addComponent(btnaddquan)
-                .addGap(185, 185, 185)
-                .addComponent(btnredquan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCloseC)
-                .addGap(48, 48, 48))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(lblCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnGoC, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
-                .addComponent(btnRefreshC)
-                .addGap(30, 30, 30))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(488, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSearchC)
-                    .addComponent(txtSearchC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGoC)
-                    .addComponent(btnRefreshC))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 524, Short.MAX_VALUE)
-                .addComponent(btnCloseC)
-                .addGap(114, 114, 114))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(lblCurrentStocks)
-                .addGap(69, 69, 69)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnaddquan)
-                    .addComponent(btnredquan))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoCActionPerformed
-        // TODO add your handling code here:
-    String searchQuery = txtSearchC.getText();  
-    searchStocks(searchQuery);  
-    }//GEN-LAST:event_btnGoCActionPerformed
-
     private void btnRefreshCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshCActionPerformed
         // TODO add your handling code here:
-        refreshStocks();      
+        refreshStocks();
     }//GEN-LAST:event_btnRefreshCActionPerformed
+
+    private void btnGoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoCActionPerformed
+        // TODO add your handling code here:
+        String searchQuery = txtSearchC.getText();
+        searchStocks(searchQuery);
+    }//GEN-LAST:event_btnGoCActionPerformed
+
+    private void txtSearchCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchCActionPerformed
 
     private void btnCloseCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseCActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCloseCActionPerformed
 
-    private void btnaddquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddquanActionPerformed
-        // TODO add your handling code here:
-        new Delivery_Page().setVisible(true);
-    }//GEN-LAST:event_btnaddquanActionPerformed
-
     private void btnredquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnredquanActionPerformed
         // TODO add your handling code here:
         new Order_Page().setVisible(true);
     }//GEN-LAST:event_btnredquanActionPerformed
+
+    private void btnaddquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddquanActionPerformed
+        // TODO add your handling code here:
+        new Delivery_Page().setVisible(true);
+    }//GEN-LAST:event_btnaddquanActionPerformed
   private void refreshStocks() {
     DefaultTableModel model = (DefaultTableModel) tblCurrentStocks.getModel();
     model.setRowCount(0); 
@@ -219,7 +305,7 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error loading current stocks: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
     }
-}
+  }
    private void searchStocks(String searchQuery) {
     DefaultTableModel model = (DefaultTableModel) tblCurrentStocks.getModel();
     model.setRowCount(0); // Clear table before adding search results
@@ -309,6 +395,9 @@ public class CurrentStocks_Page extends javax.swing.JFrame {
     private javax.swing.JButton btnRefreshC;
     private javax.swing.JButton btnaddquan;
     private javax.swing.JButton btnredquan;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCurrentStocks;
     private javax.swing.JLabel lblSearchC;
