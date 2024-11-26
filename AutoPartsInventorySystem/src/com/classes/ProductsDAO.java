@@ -149,7 +149,7 @@ public class ProductsDAO {
     // Method to retrieve product data to display in a table
     public ResultSet getQueryResult() {
         try {
-        // Updated query to join products and suppliers to get supplier name along with product details
+        // Query to join products and suppliers to get supplier name along with product details
         String query = "SELECT p.product_id, p.product_code, p.product_name, p.quantity, p.price, p.brand, s.suppliername " +
                        "FROM products p " +
                        "JOIN suppliers s ON p.supplier_id = s.supplierid";
@@ -178,7 +178,7 @@ public class ProductsDAO {
 }
     public void refreshTable(DefaultTableModel tableModel) {
         try {
-        // Updated query to join products and suppliers to get the supplier name
+        // Query to join products and suppliers to get the supplier name
         String query = "SELECT p.product_id, p.product_code, p.product_name, p.quantity, p.price, p.brand, s.suppliername " +
                        "FROM products p " +
                        "JOIN suppliers s ON p.supplier_id = s.supplierid";

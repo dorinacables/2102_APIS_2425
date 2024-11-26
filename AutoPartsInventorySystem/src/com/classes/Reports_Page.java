@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.classes;
-
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;  
+import java.sql.Connection;
+import java.sql.*;
 /**
  *
  * 
@@ -15,6 +18,15 @@ public class Reports_Page extends javax.swing.JFrame {
      */
     public Reports_Page() {
         initComponents();
+        loadProductsTable();
+        loadStocksTable() ;
+        loadSuppliersTable();
+        loadUsersTable();
+        loadInStockTable();
+        loadLowStockTable();
+        loadOutOfStockTable();
+        loadReorderTable();
+       
     }
 
     /**
@@ -27,144 +39,277 @@ public class Reports_Page extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        pnl1Welcome = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProd = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblStocks = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblSupp = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblUsers = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblinstocks = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tbllowstocks = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tbloutofstocks = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tblrestock = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        btnclose = new javax.swing.JButton();
+        btnrefresh = new javax.swing.JButton();
         lblReports = new javax.swing.JLabel();
-        btnCloseR = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel4.setText("Welcome chuchu ito abt sa reports ng inventory");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl1WelcomeLayout = new javax.swing.GroupLayout(pnl1Welcome);
+        pnl1Welcome.setLayout(pnl1WelcomeLayout);
+        pnl1WelcomeLayout.setHorizontalGroup(
+            pnl1WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl1WelcomeLayout.createSequentialGroup()
                 .addGap(173, 173, 173)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(844, Short.MAX_VALUE))
+                .addContainerGap(862, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnl1WelcomeLayout.setVerticalGroup(
+            pnl1WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl1WelcomeLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jLabel4)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab1", jPanel1);
+        jTabbedPane1.addTab("tab1", pnl1Welcome);
 
-        jLabel2.setText("2");
+        tblProd.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Products"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProd);
 
-        jLabel6.setText("no.of products overall, no. of suppliers,  no.of users?");
+        tblStocks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Stocks"
+            }
+        ));
+        jScrollPane2.setViewportView(tblStocks);
+
+        tblSupp.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Suppliers"
+            }
+        ));
+        jScrollPane3.setViewportView(tblSupp);
+
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Users"
+            }
+        ));
+        jScrollPane4.setViewportView(tblUsers);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(976, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(392, 392, 392))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(285, 285, 285)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(151, 151, 151)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(jLabel2)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel6)
-                .addContainerGap(287, Short.MAX_VALUE))
+                .addGap(72, 72, 72)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab2", jPanel2);
 
-        jLabel3.setText("3");
+        tblinstocks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "In Stock"
+            }
+        ));
+        jScrollPane5.setViewportView(tblinstocks);
 
-        jLabel1.setText("total at percent overall ng in, low, saka out of stock na products tas nakaspecify din anong mga products yon?");
+        tbllowstocks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Low Stock"
+            }
+        ));
+        jScrollPane6.setViewportView(tbllowstocks);
+
+        tbloutofstocks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Out of Stock"
+            }
+        ));
+        jScrollPane7.setViewportView(tbloutofstocks);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(974, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(394, 394, 394))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(239, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jLabel3)
-                .addGap(39, 39, 39)
-                .addComponent(jLabel1)
-                .addContainerGap(287, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(85, 85, 85))
         );
 
         jTabbedPane1.addTab("tab3", jPanel3);
 
-        jLabel5.setText("reorder point kineme report?");
+        tblrestock.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Reorder"
+            }
+        ));
+        jScrollPane8.setViewportView(tblrestock);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(225, 225, 225)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(734, Short.MAX_VALUE))
+        jButton1.setText("Click to Restock");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnclose.setText("Close");
+        btnclose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncloseActionPerformed(evt);
+            }
+        });
+
+        btnrefresh.setText("Refresh");
+        btnrefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrefreshActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 786, Short.MAX_VALUE)
+                .addComponent(btnclose)
+                .addGap(82, 82, 82))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(btnrefresh)
+                .addGap(46, 46, 46)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(jLabel5)
-                .addContainerGap(289, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnrefresh))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnclose)
+                .addGap(53, 53, 53))
         );
 
-        jTabbedPane1.addTab("tab4", jPanel4);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1405, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab5", jPanel5);
+        jTabbedPane1.addTab("tab4", jPanel1);
 
         lblReports.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lblReports.setText("Reports");
-
-        btnCloseR.setText("Close");
-        btnCloseR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseRActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,34 +321,369 @@ public class Reports_Page extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addComponent(lblReports, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1405, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1423, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(65, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCloseR)
-                .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(lblReports)
-                .addGap(63, 63, 63)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnCloseR)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGap(111, 111, 111)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCloseRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseRActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new Delivery_Page().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btncloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_btnCloseRActionPerformed
+    }//GEN-LAST:event_btncloseActionPerformed
 
+    private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
+        // TODO add your handling code here:
+        loadReorderTable();
+    }//GEN-LAST:event_btnrefreshActionPerformed
+    
+    private void loadProductsTable() {
+    DefaultTableModel model = (DefaultTableModel) tblProd.getModel();
+    model.setRowCount(0); // Clear the table before adding data
+
+    String query = "SELECT COUNT(*) AS total_products FROM products";
+    String productListQuery = "SELECT product_name FROM products";
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(query);
+         ResultSet rs2 = stmt2.executeQuery(productListQuery)) {
+
+        // Add total products count as the first row
+        if (rs1.next()) {
+            model.addRow(new Object[]{
+                "Total Products: " + rs1.getInt("total_products")
+            });
+        }
+
+        // Add product names as subsequent rows
+        while (rs2.next()) {
+            model.addRow(new Object[]{
+                "- " + rs2.getString("product_name")
+            });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+    private void loadStocksTable() {
+    DefaultTableModel model = (DefaultTableModel) tblStocks.getModel();
+    model.setRowCount(0); // Clear the table before adding data
+
+    String totalStocksQuery = "SELECT SUM(quantity) AS total_stocks FROM products";
+    String stockDetailsQuery = "SELECT product_name, quantity FROM products";
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(totalStocksQuery);
+         ResultSet rs2 = stmt2.executeQuery(stockDetailsQuery)) {
+
+        // Add total number of stocks as the first row
+        if (rs1.next()) {
+            model.addRow(new Object[]{
+                "Total Stocks: " + rs1.getInt("total_stocks")
+            });
+        }
+
+        // Add product name and quantity as subsequent rows
+        while (rs2.next()) {
+            String productName = rs2.getString("product_name");
+            int quantity = rs2.getInt("quantity");
+
+            model.addRow(new Object[]{
+                "- " + productName + " (Quantity: " + quantity + ")"
+            });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+    private void loadSuppliersTable() {
+    DefaultTableModel model = (DefaultTableModel) tblSupp.getModel();
+    model.setRowCount(0); // Clear the table before adding data
+
+    String totalSuppliersQuery = "SELECT COUNT(*) AS total_suppliers FROM suppliers";
+    String supplierNamesQuery = "SELECT suppliername FROM suppliers";
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(totalSuppliersQuery);
+         ResultSet rs2 = stmt2.executeQuery(supplierNamesQuery)) {
+
+        // Add total number of suppliers as the first row
+        if (rs1.next()) {
+            model.addRow(new Object[]{
+                "Total Suppliers: " + rs1.getInt("total_suppliers")
+            });
+        }
+
+        // Add supplier names as subsequent rows
+        while (rs2.next()) {
+            String supplierName = rs2.getString("suppliername");
+
+            model.addRow(new Object[]{
+                "- " + supplierName
+            });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+    private void loadUsersTable() {
+    DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+    model.setRowCount(0); // Clear the table before adding data
+
+    String totalUsersQuery = "SELECT COUNT(*) AS total_users FROM users";
+    String userNamesQuery = "SELECT fullname, usertype FROM users";
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(totalUsersQuery);
+         ResultSet rs2 = stmt2.executeQuery(userNamesQuery)) {
+
+        // Add total number of users as the first row
+        if (rs1.next()) {
+            model.addRow(new Object[]{
+                "Total Users: " + rs1.getInt("total_users")
+            });
+        }
+
+        // Add user names with user type as subsequent rows
+        while (rs2.next()) {
+            String fullName = rs2.getString("fullname");
+            String userType = rs2.getString("usertype");
+
+            model.addRow(new Object[]{
+                "- " + fullName + " (" + userType + ")"
+            });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+ private void loadInStockTable() {
+    DefaultTableModel model = (DefaultTableModel) tblinstocks.getModel();
+    model.setRowCount(0); // Clear the table before adding new data
+
+    String totalProductsQuery = "SELECT COUNT(*) AS total_products FROM products";  // Get total number of products
+    String inStockQuery = "SELECT product_name, quantity FROM products WHERE quantity > 5";  // Get products in stock with quantity > 5
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(totalProductsQuery);
+         ResultSet rs2 = stmt2.executeQuery(inStockQuery)) {
+
+        int totalProducts = 0;
+        int inStockCount = 0;  
+
+        // Get total number of products
+        if (rs1.next()) {
+            totalProducts = rs1.getInt("total_products");
+        }
+
+        // Loop through in-stock products and count them
+        while (rs2.next()) {
+            String productName = rs2.getString("product_name");
+            int quantity = rs2.getInt("quantity");
+
+            inStockCount++;  // Increment the count of in-stock products
+
+            // Add product names and quantities for in-stock products
+            model.addRow(new Object[]{
+                "- " + productName + " (Quantity: " + quantity + ")"
+            });
+        }
+
+        // After processing products, add total in-stock count and percentage as the first two rows
+        double percentageInStock = (totalProducts > 0) ? ((double) inStockCount / totalProducts) * 100 : 0;
+
+        // Add the total in-stock and percentage in the correct rows
+        model.insertRow(0, new Object[]{
+            "Total Products In Stock: " + inStockCount + " out of " + totalProducts
+        });
+        model.insertRow(1, new Object[]{
+            "Percentage of Products In Stock: " + String.format("%.2f", percentageInStock) + "%"
+        });
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+  
+   private void loadLowStockTable() {
+    DefaultTableModel model = (DefaultTableModel) tbllowstocks.getModel();
+    model.setRowCount(0); // Clear the table before adding new data
+
+    String totalProductsQuery = "SELECT COUNT(*) AS total_products FROM products";  // Get total number of products
+    String lowStockQuery = "SELECT product_name, quantity FROM products WHERE quantity <= 5 AND quantity != 0";  // Get products with low stock (quantity <= 5 but not 0)
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(totalProductsQuery);
+         ResultSet rs2 = stmt2.executeQuery(lowStockQuery)) {
+
+        int totalProducts = 0;
+        int lowStockCount = 0;  // This will store the count of low-stock products
+
+        // Get total number of products
+        if (rs1.next()) {
+            totalProducts = rs1.getInt("total_products");
+        }
+
+        // Loop through low-stock products and count them
+        while (rs2.next()) {
+            String productName = rs2.getString("product_name");
+            int quantity = rs2.getInt("quantity");
+
+            lowStockCount++;  // Increment the count of low-stock products
+
+            // Add product names and quantities for low-stock products
+            model.addRow(new Object[]{
+                "- " + productName + " (Quantity: " + quantity + ")"
+            });
+        }
+
+        // After processing products, add total low-stock count and percentage as the first two rows
+        double percentageLowStock = (totalProducts > 0) ? ((double) lowStockCount / totalProducts) * 100 : 0;
+
+        // Add the total low-stock and percentage in the correct rows
+        model.insertRow(0, new Object[]{
+            "Total Low Stock Products: " + lowStockCount + " out of " + totalProducts
+        });
+        model.insertRow(1, new Object[]{
+            "Percentage of Products Low Stock: " + String.format("%.2f", percentageLowStock) + "%"
+        });
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+   
+  private void loadOutOfStockTable() {
+    DefaultTableModel model = (DefaultTableModel) tbloutofstocks.getModel();
+    model.setRowCount(0); // Clear the table before adding new data
+
+    String totalProductsQuery = "SELECT COUNT(*) AS total_products FROM products";  // Get total number of products
+    String outOfStockQuery = "SELECT product_name, quantity FROM products WHERE quantity = 0";  // Get out-of-stock products
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(totalProductsQuery);
+         ResultSet rs2 = stmt2.executeQuery(outOfStockQuery)) {
+
+        int totalProducts = 0;
+        int outOfStockCount = 0;  // This will store the count of out-of-stock products
+
+        // Get total number of products
+        if (rs1.next()) {
+            totalProducts = rs1.getInt("total_products");
+        }
+
+        // Loop through out-of-stock products and count them
+        while (rs2.next()) {
+            String productName = rs2.getString("product_name");
+            int quantity = rs2.getInt("quantity");  // Get the quantity for each out-of-stock product
+            outOfStockCount++;  // Increment the count of out-of-stock products
+
+            // Add product names and quantities for out-of-stock products
+            model.addRow(new Object[] {
+                "- " + productName + " (Quantity: " + quantity + ")"
+            });
+        }
+
+        // Calculate the percentage of out-of-stock products
+        double percentageOutOfStock = (totalProducts > 0) ? ((double) outOfStockCount / totalProducts) * 100 : 0;
+
+        // Add the total out-of-stock count and percentage as the first two rows
+        model.insertRow(0, new Object[] {
+            "Total Products Out of Stock: " + outOfStockCount + " out of " + totalProducts
+        });
+        model.insertRow(1, new Object[] {
+            "Percentage of Products Out of Stock: " + String.format("%.2f", percentageOutOfStock) + "%"
+        });
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    private void loadReorderTable() {
+    DefaultTableModel model = (DefaultTableModel) tblrestock.getModel();
+    model.setRowCount(0); // Clear the table before adding data
+
+    // Define the reorder point
+    int reorderPoint = 5;
+
+    // Query to count products needing reorder
+    String countReorderQuery = "SELECT COUNT(*) AS total_reorder FROM products WHERE quantity <= " + reorderPoint;
+    
+    // Query to get product codes, names, and quantities needing reorder
+    String productsReorderQuery = "SELECT product_code, product_name, quantity FROM products WHERE quantity <= " + reorderPoint;
+
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(countReorderQuery);
+         ResultSet rs2 = stmt2.executeQuery(productsReorderQuery)) {
+
+        // Add reorder point and total products needing reorder as the first two rows
+        if (rs1.next()) {
+            model.addRow(new Object[]{
+                "Reorder Point: " + reorderPoint + " units"
+            });
+            model.addRow(new Object[]{
+                "Total Products Needing Reorder: " + rs1.getInt("total_reorder")
+            });
+        }
+
+        // Add products needing reorder in the specified format
+        while (rs2.next()) {
+            String productCode = rs2.getString("product_code");
+            String productName = rs2.getString("product_name");
+            int quantity = rs2.getInt("quantity");
+            
+            // Display only the products that need reorder (quantity <= reorder point)
+            if (quantity <= reorderPoint) {
+                String productInfo = productCode + " - " + productName + " (Quantity: " + quantity + ")";
+                model.addRow(new Object[]{ "-[" + productInfo + "]" });
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }    
+}
     /**
      * @param args the command line arguments
      */
@@ -240,19 +720,31 @@ public class Reports_Page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCloseR;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnclose;
+    private javax.swing.JButton btnrefresh;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblReports;
+    private javax.swing.JPanel pnl1Welcome;
+    private javax.swing.JTable tblProd;
+    private javax.swing.JTable tblStocks;
+    private javax.swing.JTable tblSupp;
+    private javax.swing.JTable tblUsers;
+    private javax.swing.JTable tblinstocks;
+    private javax.swing.JTable tbllowstocks;
+    private javax.swing.JTable tbloutofstocks;
+    private javax.swing.JTable tblrestock;
     // End of variables declaration//GEN-END:variables
 }

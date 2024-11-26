@@ -80,11 +80,10 @@ public class DBConnector {
 }
 
 // Method to record login time and close any previous active session
-public void recordLoginTime(String username, String fullname, String userType) {
+    public void recordLoginTime(String username, String fullname, String userType) {
     // SQL queries
     String checkQuery = "SELECT * FROM userlogs WHERE username = ? AND outTime IS NULL";  // Check if there's an active session
     String updateQuery = "UPDATE userlogs SET outTime = NOW() WHERE username = ? AND outTime IS NULL"; // Close previous session
-    String insertQuery = "INSERT INTO userlogs (fullname, username, userType, inTime, outTime) VALUES (?, ?, ?, ?, ?)"; // Insert new session
 
     try (Connection conn = getConnection()) {
         // Check if there's an open session (user is already logged in)
@@ -93,28 +92,11 @@ public void recordLoginTime(String username, String fullname, String userType) {
             ResultSet resultSet = checkStmt.executeQuery();
 
             if (resultSet.next()) {
-                // If there is an open session, update the outTime of that session to the current time (logout)
+                // If there is an open session, update the outTime of that session to the current time
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
                     updateStmt.setString(1, username);
                     updateStmt.executeUpdate();  // Set outTime for previous session
                     System.out.println("Closed previous active session for username: " + username);
-                }
-            } else {
-                // If no active session exists, insert a new session for login
-                try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
-                    insertStmt.setString(1, fullname); 
-                    insertStmt.setString(2, username);  
-                    insertStmt.setString(3, userType);  
-
-                    // Set inTime to current time (user is logging in now)
-                    Timestamp inTimeTimestamp = Timestamp.valueOf(LocalDateTime.now());
-                    insertStmt.setTimestamp(4, inTimeTimestamp);
-
-                    // outTime is null for an active session
-                    insertStmt.setNull(5, java.sql.Types.TIMESTAMP);
-
-                    insertStmt.executeUpdate();  // Insert the new session
-                    System.out.println("New login session added for username: " + username);
                 }
             }
         }

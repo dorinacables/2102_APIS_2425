@@ -58,6 +58,8 @@ public class MenuDashboard extends javax.swing.JFrame {
         btnUsers = new javax.swing.JButton();
         btnUserLogs = new javax.swing.JButton();
         btnReports = new javax.swing.JButton();
+        btnDelivery = new javax.swing.JButton();
+        btnOrder = new javax.swing.JButton();
         pnlMenu = new javax.swing.JPanel();
         btnMenu = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -113,6 +115,20 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnDelivery.setText("Delivery");
+        btnDelivery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeliveryActionPerformed(evt);
+            }
+        });
+
+        btnOrder.setText("Order");
+        btnOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlNavigateLayout = new javax.swing.GroupLayout(pnlNavigate);
         pnlNavigate.setLayout(pnlNavigateLayout);
         pnlNavigateLayout.setHorizontalGroup(
@@ -120,37 +136,46 @@ public class MenuDashboard extends javax.swing.JFrame {
             .addGroup(pnlNavigateLayout.createSequentialGroup()
                 .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlNavigateLayout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(btnUsers))
+                    .addGroup(pnlNavigateLayout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnUserLogs)
                             .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnUsers)
+                                .addComponent(btnReports)
                                 .addComponent(btnsSuppliers)
-                                .addComponent(btnReports))))
+                                .addComponent(btnOrder))))
                     .addGroup(pnlNavigateLayout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(btnProducts))
+                        .addGap(72, 72, 72)
+                        .addComponent(btnCurrentStocks))
                     .addGroup(pnlNavigateLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(btnCurrentStocks)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                        .addGap(86, 86, 86)
+                        .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnDelivery)
+                            .addComponent(btnProducts))))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         pnlNavigateLayout.setVerticalGroup(
             pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNavigateLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(15, 15, 15)
                 .addComponent(btnProducts)
-                .addGap(61, 61, 61)
+                .addGap(40, 40, 40)
+                .addComponent(btnDelivery)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(btnCurrentStocks)
-                .addGap(63, 63, 63)
+                .addGap(33, 33, 33)
+                .addComponent(btnOrder)
+                .addGap(42, 42, 42)
                 .addComponent(btnReports)
-                .addGap(70, 70, 70)
+                .addGap(49, 49, 49)
                 .addComponent(btnsSuppliers)
-                .addGap(74, 74, 74)
+                .addGap(71, 71, 71)
                 .addComponent(btnUsers)
-                .addGap(82, 82, 82)
+                .addGap(67, 67, 67)
                 .addComponent(btnUserLogs)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         btnMenu.setText("MENU");
@@ -319,6 +344,16 @@ public class MenuDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Reports_Page().setVisible(true);
     }//GEN-LAST:event_btnReportsActionPerformed
+
+    private void btnDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeliveryActionPerformed
+        // TODO add your handling code here:
+        new Delivery_Page().setVisible(true);
+    }//GEN-LAST:event_btnDeliveryActionPerformed
+
+    private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
+        // TODO add your handling code here:
+        new Order_Page().setVisible(true);
+    }//GEN-LAST:event_btnOrderActionPerformed
     
      public void currentUserSession() {
         Users users = new Users(username, userSelect);
@@ -366,8 +401,10 @@ public class MenuDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCurrentStocks;
+    private javax.swing.JButton btnDelivery;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnOrder;
     private javax.swing.JButton btnProducts;
     private javax.swing.JButton btnReports;
     private javax.swing.JButton btnUserLogs;

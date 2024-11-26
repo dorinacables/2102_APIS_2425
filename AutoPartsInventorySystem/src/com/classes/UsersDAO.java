@@ -298,7 +298,7 @@ public class UsersDAO {
     }
 }
 
-    // Method to add a user (for your sign-up functionality)
+    // Method to add a user (for sign-up functionality)
     public boolean addUser(Users newUsers) {
           String insertQuery = "INSERT INTO users (username, password, phone, location, fullname, userType) VALUES (?, ?, ?, ?, ?, ?)";
     try (Connection conn = DBConnector.getConnection(); 

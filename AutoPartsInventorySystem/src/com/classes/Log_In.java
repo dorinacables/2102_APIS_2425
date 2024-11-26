@@ -3,6 +3,8 @@ package com.classes;
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 import java.time.format.DateTimeFormatter;
 
 
@@ -46,6 +48,7 @@ public class Log_In extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         lblSignUp = new javax.swing.JLabel();
         btnSignUp = new javax.swing.JButton();
+        check = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +62,11 @@ public class Log_In extends javax.swing.JFrame {
         lblPassword.setText("Password: ");
 
         txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
+            }
+        });
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Employee" }));
@@ -91,6 +99,13 @@ public class Log_In extends javax.swing.JFrame {
             }
         });
 
+        check.setText("show");
+        check.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,12 +127,14 @@ public class Log_In extends javax.swing.JFrame {
                                         .addComponent(lblUsername)
                                         .addComponent(lblPassword))
                                     .addGap(48, 48, 48)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtUsername)
-                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtUsername)
+                                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(8, 8, 8)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(check))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(591, 591, 591)
                         .addComponent(lblSignUp)
@@ -136,14 +153,14 @@ public class Log_In extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblUsername))
-                        .addGap(115, 115, 115))
+                        .addGap(75, 75, 75))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(123, 123, 123)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPassword)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(check)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -161,7 +178,7 @@ public class Log_In extends javax.swing.JFrame {
     String userType;
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         // TODO add your handling code here:
-         username = txtUsername.getText();
+    username = txtUsername.getText();
     String password = new String(txtPassword.getPassword());
     userType = (String) jComboBox1.getSelectedItem();
 
@@ -206,6 +223,24 @@ public class Log_In extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Sign_Up().setVisible(true);             
     }//GEN-LAST:event_btnSignUpActionPerformed
+
+    private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
+        // TODO add your handling code here:
+           if(check.isSelected()){
+           txtPassword.setEchoChar((char)0);
+       }else{
+           txtPassword.setEchoChar('*');
+       }
+    
+    }//GEN-LAST:event_checkActionPerformed
+
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
+        // TODO add your handling code here:
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {  // Check if Enter key is pressed
+            // Focus on the password field
+            txtPassword.requestFocus();      
+         }           
+    }//GEN-LAST:event_txtUsernameKeyPressed
        
     /**
      * @param args the command line arguments
@@ -246,6 +281,7 @@ public class Log_In extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogIn;
     private javax.swing.JButton btnSignUp;
+    private javax.swing.JCheckBox check;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblSignUp;

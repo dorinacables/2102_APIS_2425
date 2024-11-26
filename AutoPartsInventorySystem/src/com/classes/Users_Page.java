@@ -292,8 +292,47 @@ public class Users_Page extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "All fields are required!");
         return; // Exit the method if any field is empty
     }
+    
+    // Validate phone number (digits only)
+    if (!phone.matches("[0-9]+")) {  
+        JOptionPane.showMessageDialog(this, "Please enter a valid phone number (only digits allowed).", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Check if the username already exists in the database
+    String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
+    try (Connection conn = new DBConnector().getConnection();
+         PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
+        
+        checkStmt.setString(1, username);
+        
+        try (ResultSet rs = checkStmt.executeQuery()) {
+            if (rs.next() && rs.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(this, "The username already exists. Please choose a different one.", "Duplicate Username", JOptionPane.ERROR_MESSAGE);
+                return; // Exit the method if the username exists
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error checking duplicate username: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error checking for duplicate username. Please try again.");
+        return;
+    }
 
-    // SQL query to insert data into the 'users' table
+    // Show confirmation dialog with the entered data
+    String message = String.format(
+        "Please confirm the following details:\n\nUsername: %s\nPassword: %s\nUser Type: %s\nLocation: %s\nPhone: %s\nFull Name: %s", 
+        username, password, userType, location, phone, fullname);
+    
+    int confirmation = JOptionPane.showConfirmDialog(
+        null, message, "Confirm User Details", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+    if (confirmation == JOptionPane.NO_OPTION) {
+        // User chose "No" to cancel the addition
+        JOptionPane.showMessageDialog(null, "User addition cancelled.");
+        return; // Exit the method if the user cancels the addition
+    }
+
+    // If user confirms, proceed with inserting the data
     String query = "INSERT INTO users (username, password, userType, location, phone, fullname) VALUES (?, ?, ?, ?, ?, ?)";
 
     // Try with resources (auto-close connections)
@@ -313,6 +352,8 @@ public class Users_Page extends javax.swing.JFrame {
 
         // Show success message
         JOptionPane.showMessageDialog(null, "User added successfully!");
+                
+        loadUsersToTable();
 
         // Clear the form after submission 
         txtUsernameU.setText("");
@@ -331,7 +372,9 @@ public class Users_Page extends javax.swing.JFrame {
 
     private void btnDeleteUActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
-          int selectedRow = tblUsers.getSelectedRow(); // Get the selected row index
+          int selectedRow = tblUsers.getSelectedRow(); 
+    
+    // If no row is selected, show an error message and exit
     if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select a user to delete.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -339,39 +382,53 @@ public class Users_Page extends javax.swing.JFrame {
 
     // Fetch the username from the selected row 
     DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
-    String username = model.getValueAt(selectedRow, 0).toString();
+    String username = model.getValueAt(selectedRow, 1).toString();
 
-    // Confirmation dialog
+    // Show a confirmation dialog
     int confirm = JOptionPane.showConfirmDialog(this, 
         "Are you sure you want to delete the user '" + username + "'?", 
         "Confirm Deletion", 
         JOptionPane.YES_NO_OPTION);
     
+    // If "Yes" is selected, proceed with deletion
     if (confirm == JOptionPane.YES_OPTION) {
-        // Proceed with deletion if "Yes" is selected
+        // Create a new instance of the DAO to interact with the database
         UsersDAO usersDAO = new UsersDAO();
+        
+        // Call the delete method and check the result
         boolean isDeleted = usersDAO.deleteUserDAO(username);
 
+        // If deletion is successful, remove the row from the table and show success message
         if (isDeleted) {
-            // Remove the row from the GUI table
-            model.removeRow(selectedRow);
+            model.removeRow(selectedRow);  // Remove the row from the table
             JOptionPane.showMessageDialog(this, "User '" + username + "' deleted successfully.");
         } else {
-            // Error message if deletion fails
-            JOptionPane.showMessageDialog(this, "Failed to delete user.", "Error", JOptionPane.ERROR_MESSAGE);
+            // If deletion fails, show an error message
+            JOptionPane.showMessageDialog(this, "Failed to delete user '" + username + "'.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     } else {
-        // If "No" is selected, show a cancellation message or do nothing
+        // If the user cancels, show a cancellation message
         JOptionPane.showMessageDialog(this, "Deletion cancelled.");
     }
 }
                      
     private void btnEditUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUActionPerformed
         // TODO add your handling code here:
-         int selectedRow = tblUsers.getSelectedRow();
+            int selectedRow = tblUsers.getSelectedRow();
     
     if (selectedRow != -1) {
+        // Get the userID from the selected row 
         int userID = (int) tblUsers.getValueAt(selectedRow, 0);
+        
+        // Get the original values from the selected row in the table
+        String oldUsername = (String) tblUsers.getValueAt(selectedRow, 1); 
+        String oldPassword = (String) tblUsers.getValueAt(selectedRow, 2);
+        String oldUserType = (String) tblUsers.getValueAt(selectedRow, 3);
+        String oldLocation = (String) tblUsers.getValueAt(selectedRow, 4);
+        String oldPhone = (String) tblUsers.getValueAt(selectedRow, 5);
+        String oldFullname = (String) tblUsers.getValueAt(selectedRow, 6);
+        
+        // Get the new input values from the form fields
         String username = txtUsernameU.getText();
         String password = txtPasswordU.getText();
         String userType = (String) cmbbxUsertype.getSelectedItem();  
@@ -379,30 +436,88 @@ public class Users_Page extends javax.swing.JFrame {
         String phone = txtContactNumberU.getText();
         String fullname = txtFullNameU.getText();
 
-        String updateQuery = "UPDATE users SET username = ?, password = ?, userType = ?, location = ?, phone = ?, fullname = ? WHERE userID = ?";
+        // Validate phone number (only digits allowed)
+        if (!phone.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "Phone number must only contain digits.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            return;  // Stop further processing if phone is invalid
+        }
 
-        try (Connection conn = DBConnector.getConnection();
-             PreparedStatement pst = conn.prepareStatement(updateQuery)) {
+        // Prepare the differences with arrows to show changes
+        StringBuilder confirmationMessage = new StringBuilder("Are you sure you want to update the user details?\n\n");
 
-            pst.setString(1, username);
-            pst.setString(2, password);
-            pst.setString(3, userType);
-            pst.setString(4, location);
-            pst.setString(5, phone);
-            pst.setString(6, fullname);
-            pst.setInt(7, userID);
+        // Check each field for changes and add to the confirmation message
+        boolean isAnyChange = false;
 
-            int rowsUpdated = pst.executeUpdate();
+        if (!username.equals(oldUsername)) {
+            confirmationMessage.append("Username: ").append(oldUsername).append(" → ").append(username).append("\n");
+            isAnyChange = true;
+        }
 
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "User updated successfully!");
-                loadUsersToTable(); // Refresh the table after update
+        if (!password.equals(oldPassword)) {
+            confirmationMessage.append("Password: ").append(oldPassword).append(" → ").append(password).append("\n");
+            isAnyChange = true;
+        }
+
+        if (!userType.equals(oldUserType)) {
+            confirmationMessage.append("User Type: ").append(oldUserType).append(" → ").append(userType).append("\n");
+            isAnyChange = true;
+        }
+
+        if (!location.equals(oldLocation)) {
+            confirmationMessage.append("Location: ").append(oldLocation).append(" → ").append(location).append("\n");
+            isAnyChange = true;
+        }
+
+        if (!phone.equals(oldPhone)) {
+            confirmationMessage.append("Phone: ").append(oldPhone).append(" → ").append(phone).append("\n");
+            isAnyChange = true;
+        }
+
+        if (!fullname.equals(oldFullname)) {
+            confirmationMessage.append("Full Name: ").append(oldFullname).append(" → ").append(fullname).append("\n");
+            isAnyChange = true;
+        }
+
+        if (!isAnyChange) {
+            JOptionPane.showMessageDialog(this, "No changes were made.");
+            return;  // Exit if no changes are detected
+        }
+
+        // Show the confirmation dialog with only the changes
+        int confirm = JOptionPane.showConfirmDialog(this, confirmationMessage.toString(), 
+                                                   "Confirm Edit", JOptionPane.YES_NO_OPTION);
+
+        // If "Yes" is selected, proceed with the update
+        if (confirm == JOptionPane.YES_OPTION) {
+            String updateQuery = "UPDATE users SET username = ?, password = ?, userType = ?, location = ?, phone = ?, fullname = ? WHERE userID = ?";
+
+            try (Connection conn = DBConnector.getConnection();
+                 PreparedStatement pst = conn.prepareStatement(updateQuery)) {
+
+                pst.setString(1, username);
+                pst.setString(2, password);
+                pst.setString(3, userType);
+                pst.setString(4, location);
+                pst.setString(5, phone);
+                pst.setString(6, fullname);
+                pst.setInt(7, userID);
+
+                int rowsUpdated = pst.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "User updated successfully!");
+                    loadUsersToTable(); // Refresh the table after update
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } else {
+            // If "No" is selected, show a cancellation message
+            JOptionPane.showMessageDialog(this, "Edit cancelled.");
         }
     } else {
+        // If no row is selected, show an error message
         JOptionPane.showMessageDialog(this, "No user selected for editing.");
     }
 
@@ -443,7 +558,7 @@ public class Users_Page extends javax.swing.JFrame {
     
     String searchSQL = "SELECT userID, username, password, userType, location, phone, fullname " +
                        "FROM users " +
-                       "WHERE username LIKE ? OR userType LIKE ? OR location LIKE ? OR phone LIKE ? OR fullname LIKE ? OR password LIKE ?";
+                       "WHERE userID LIKE ? OR username LIKE ? OR userType LIKE ? OR location LIKE ? OR phone LIKE ? OR fullname LIKE ? OR password LIKE ?";
 
     try (Connection conn = DBConnector.getConnection();
          PreparedStatement pst = conn.prepareStatement(searchSQL)) {
@@ -457,6 +572,7 @@ public class Users_Page extends javax.swing.JFrame {
         pst.setString(4, searchPattern);
         pst.setString(5, searchPattern);
         pst.setString(6, searchPattern); 
+        pst.setString(7, searchPattern); 
 
         ResultSet rs = pst.executeQuery();
 

@@ -6,7 +6,8 @@ package com.classes;
  */
 import javax.swing.*;
 import java.sql.SQLException; 
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 /**
  *
  * 
@@ -44,6 +45,7 @@ public class Sign_Up extends javax.swing.JFrame {
         txtLocationSU = new javax.swing.JTextField();
         lblPhoneSU = new javax.swing.JLabel();
         txtPhoneSU = new javax.swing.JTextField();
+        check = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +59,11 @@ public class Sign_Up extends javax.swing.JFrame {
         lblSignUpName1.setText("Name:  ");
 
         txtSignUpUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSignUpUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSignUpUsernameKeyPressed(evt);
+            }
+        });
 
         txtSignUpPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -100,9 +107,27 @@ public class Sign_Up extends javax.swing.JFrame {
                 txtLocationSUActionPerformed(evt);
             }
         });
+        txtLocationSU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLocationSUKeyPressed(evt);
+            }
+        });
 
         lblPhoneSU.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblPhoneSU.setText("Phone:");
+
+        txtPhoneSU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPhoneSUKeyPressed(evt);
+            }
+        });
+
+        check.setText("show");
+        check.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +151,10 @@ public class Sign_Up extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbbxSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtSignUpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSignUpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtSignUpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(check))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLocation)
@@ -153,17 +181,19 @@ public class Sign_Up extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addComponent(lblSignUp)
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSignUpUsername)
+                    .addComponent(txtSignUpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSignUpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSignUpPassword))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(check)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblSignUpUsername)
-                            .addComponent(txtSignUpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSignUpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSignUpPassword))
-                        .addGap(44, 44, 44)
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSelectUsertype)
                             .addComponent(cmbbxSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -180,7 +210,7 @@ public class Sign_Up extends javax.swing.JFrame {
                             .addComponent(txtSignUpFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSignUpName1))
                         .addGap(282, 282, 282))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,14 +223,15 @@ public class Sign_Up extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        new Log_In().setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnGoSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoSignUpActionPerformed
         // TODO add your handling code here:
-       String username = txtSignUpUsername.getText();
-    String password = new String(txtSignUpPassword.getPassword());  
-    String userType = cmbbxSignUp.getSelectedItem().toString();  
+       // TODO add your handling code here:
+    String username = txtSignUpUsername.getText();
+    String password = new String(txtSignUpPassword.getPassword());
+    String userType = cmbbxSignUp.getSelectedItem().toString();
     String location = txtLocationSU.getText();
     String phone = txtPhoneSU.getText();
     String fullName = txtSignUpFullName.getText();
@@ -211,6 +242,12 @@ public class Sign_Up extends javax.swing.JFrame {
         return;
     }
 
+    // Phone validation: Only digits allowed
+    if (!phone.matches("[0-9]+")) {  
+        JOptionPane.showMessageDialog(this, "Please enter a valid phone number (only digits allowed).", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
     // Check if the username already exists in the database
     UsersDAO userDAO = new UsersDAO();
     if (userDAO.userExists(username)) {
@@ -218,27 +255,74 @@ public class Sign_Up extends javax.swing.JFrame {
         return;
     }
 
-    // Create a new Users object with the data from the form
-    Users newUser = new Users(username, password, userType, location, phone, fullName);
+    // Display confirmation dialog with entered information
+    String message = "Please confirm your details:\n\n" +
+                     "Username: " + username + "\n" +
+                     "Password: " + password + "\n" +                 
+                     "User Type: " + userType + "\n" +
+                     "Location: " + location + "\n" +
+                     "Phone: " + phone + "\n" +
+                     "Full Name: " + fullName ;
 
-    // Try adding the user to the database
-    if (userDAO.addUser(newUser)) {
-        JOptionPane.showMessageDialog(this, "Sign-Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    int option = JOptionPane.showConfirmDialog(this, message, "Confirm Sign-Up", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-       
-        
-        Users users = new Users(username, userType);
-        new MenuDashboard(username, userType, users).setVisible(true);
-        this.dispose();  
+    if (option == JOptionPane.YES_OPTION) {
+        // Create a new Users object with the data from the form
+        Users newUser = new Users(username, password, userType, location, phone, fullName);
+
+        // Try adding the user to the database
+        if (userDAO.addUser(newUser)) {
+            JOptionPane.showMessageDialog(this, "Sign-Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            Users users = new Users(username, userType);
+            new MenuDashboard(username, userType, users).setVisible(true);
+            this.dispose();  
+        } else {
+            JOptionPane.showMessageDialog(this, "Sign-Up Failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     } else {
-        JOptionPane.showMessageDialog(this, "Sign-Up Failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        // If the user clicks "No" in the confirmation dialog
+        JOptionPane.showMessageDialog(this, "Sign-Up Canceled.", "Canceled", JOptionPane.INFORMATION_MESSAGE);
     }
+
+
     }//GEN-LAST:event_btnGoSignUpActionPerformed
 
     private void txtLocationSUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocationSUActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocationSUActionPerformed
-    
+
+    private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
+        // TODO add your handling code here:
+        if(check.isSelected()){
+           txtSignUpPassword.setEchoChar((char)0);
+       }else{
+           txtSignUpPassword.setEchoChar('*');
+       }
+    }//GEN-LAST:event_checkActionPerformed
+
+    private void txtSignUpUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSignUpUsernameKeyPressed
+        // TODO add your handling code here:
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {  // Check if Enter key is pressed
+            // Focus on the password field
+            txtSignUpPassword.requestFocus();    
+         }           
+    }//GEN-LAST:event_txtSignUpUsernameKeyPressed
+
+    private void txtLocationSUKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLocationSUKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {  // Check if Enter key is pressed
+            // Focus on the password field
+            txtPhoneSU.requestFocus();   
+    }//GEN-LAST:event_txtLocationSUKeyPressed
+    }
+    private void txtPhoneSUKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneSUKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {  // Check if Enter key is pressed
+            // Focus on the password field
+            txtSignUpFullName.requestFocus();   
+    }//GEN-LAST:event_txtPhoneSUKeyPressed
+    }
     /**
      * @param args the command line arguments
      */
@@ -277,6 +361,7 @@ public class Sign_Up extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnGoSignUp;
+    private javax.swing.JCheckBox check;
     private javax.swing.JComboBox<String> cmbbxSignUp;
     private javax.swing.JLabel lblLocation;
     private javax.swing.JLabel lblPhoneSU;

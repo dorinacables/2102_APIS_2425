@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.sql.SQLException;  
+
 /**
  *
  *
@@ -20,7 +22,9 @@ public class Products_Page extends javax.swing.JFrame {
     int userID;
     
     
+    
     private DefaultTableModel tableModel;
+    
     private ProductsDAO productsDAO;
     
     public Products_Page(){}
@@ -41,7 +45,10 @@ public class Products_Page extends javax.swing.JFrame {
         model.addColumn("Brand");
         model.addColumn("Supplier Name");
         tblProducts.setModel(model);
-        loadProductsToTable();          
+        loadProductsToTable();
+        
+         refreshTable();   
+         refreshSupplierComboBox();  
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -335,30 +342,42 @@ public class Products_Page extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-    String productName = txtProductName.getText();
-    String productCode = txtProductCode.getText();
-    String priceStr = txtPrice.getText();
-    String quantityStr = txtQuantity.getText();
-    String brand = txtBrand.getText();
-    String supplier = cmbbxSuppliers.getSelectedItem().toString();  
+String productName = txtProductName.getText();
+String productCode = txtProductCode.getText();
+String priceStr = txtPrice.getText();
+String quantityStr = txtQuantity.getText();
+String brand = txtBrand.getText();
+String supplier = cmbbxSuppliers.getSelectedItem().toString();
 
-    // Validate that all fields are filled out and that price and quantity are valid
-    if (productName.isEmpty() || productCode.isEmpty() || priceStr.isEmpty() || quantityStr.isEmpty() || brand.isEmpty() || supplier.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please fill out all fields.");
-        return;  // Exit if any field is empty
-    }
+// Validate that all fields are filled out and that price and quantity are valid
+if (productName.isEmpty() || productCode.isEmpty() || priceStr.isEmpty() || quantityStr.isEmpty() || brand.isEmpty() || supplier.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Please fill out all fields.");
+    return;  // Exit if any field is empty
+}
 
-    // Parsing price and quantity
-    double price = 0;
-    int quantity = 0;
-    try {
-        price = Double.parseDouble(priceStr);
-        quantity = Integer.parseInt(quantityStr);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Please enter valid numbers for price and quantity.");
-        return;  // Exit if price or quantity is invalid
-    }
+// Parsing price and quantity
+double price = 0;
+int quantity = 0;
+try {
+    price = Double.parseDouble(priceStr);
+    quantity = Integer.parseInt(quantityStr);
+} catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(this, "Please enter valid numbers for price and quantity.");
+    return;  // Exit if price or quantity is invalid
+}
 
+// Display confirmation dialog with entered product details
+String message = "Please confirm the product details:\n\n" +
+                 "Product Name: " + productName + "\n" +
+                 "Product Code: " + productCode + "\n" +
+                 "Price: " + price + "\n" +
+                 "Quantity: " + quantity + "\n" +
+                 "Brand: " + brand + "\n" +
+                 "Supplier: " + supplier;
+
+int option = JOptionPane.showConfirmDialog(this, message, "Confirm Product Addition", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+if (option == JOptionPane.YES_OPTION) {
     // Check if the supplier exists in the suppliers table and get the supplier_id
     int supplierId = 0;
     String selectSupplierQuery = "SELECT supplier_id FROM suppliers WHERE suppliername = ?";
@@ -416,6 +435,10 @@ public class Products_Page extends javax.swing.JFrame {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(this, "An error occurred: " + ex.getMessage());
     }
+} else {
+    // If the user cancels, show a message
+    JOptionPane.showMessageDialog(this, "Product addition canceled.");
+}
      
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -440,71 +463,121 @@ public class Products_Page extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        int selectedRow = tblProducts.getSelectedRow();
-if (selectedRow == -1) {
-    JOptionPane.showMessageDialog(this, "Please select a product to edit.", "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
+    int selectedRow = tblProducts.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a product to edit.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-// Get product details from the input fields
-String productCode = txtProductCode.getText().trim();
-String productName = txtProductName.getText().trim();
-String price = txtPrice.getText().trim();
-String brand = txtBrand.getText().trim();
-String supplier = cmbbxSuppliers.getSelectedItem().toString().trim(); 
-String quantity = txtQuantity.getText().trim();
-
-// Validate input fields 
-if (productCode.isEmpty() || productName.isEmpty() || price.isEmpty() || quantity.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Please fill out all required fields.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-
-try {
-    // Get the product_id from the selected row
+    // Get the original (old) product details from the table
     int productId = Integer.parseInt(tblProducts.getValueAt(selectedRow, 0).toString());
+    String oldProductCode = tblProducts.getValueAt(selectedRow, 1).toString();
+    String oldProductName = tblProducts.getValueAt(selectedRow, 2).toString();
+    String oldQuantity = tblProducts.getValueAt(selectedRow, 3).toString();
+    String oldPrice = tblProducts.getValueAt(selectedRow, 4).toString();
+    String oldBrand = tblProducts.getValueAt(selectedRow, 5).toString();
+    String oldSupplier = tblProducts.getValueAt(selectedRow, 6).toString();
+    
+    // Get product details from the input fields
+    String productCode = txtProductCode.getText().trim();
+    String productName = txtProductName.getText().trim();
+    String price = txtPrice.getText().trim();
+    String brand = txtBrand.getText().trim();
+    String supplier = cmbbxSuppliers.getSelectedItem().toString().trim(); 
+    String quantity = txtQuantity.getText().trim();
 
-    // Get the supplier_id from the selected supplier name 
-    int supplierId = getSupplierId(supplier); 
+    // Validate input fields 
+    if (productCode.isEmpty() || productName.isEmpty() || price.isEmpty() || quantity.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill out all required fields.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-    // Update query
-    String updateQuery = "UPDATE products SET product_code = ?, product_name = ?, quantity = ?, price = ?, brand = ?, supplier_id = ? WHERE product_id = ?";
+    // Check if the quantity was changed
+    if (!quantity.equals(oldQuantity)) {
+        JOptionPane.showMessageDialog(this, "You cannot edit the quantity. You can only increase or decrease it through delivery or order processing.", "Invalid Edit", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-    try (Connection conn = DBConnector.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+    // Check if any other details have changed and prepare the changes message
+    boolean hasChanges = false;
+    StringBuilder changesMessage = new StringBuilder("Please confirm the updated product details:\n\n");
 
-        // Set parameters for the query
-        pstmt.setString(1, productCode);
-        pstmt.setString(2, productName);
-        pstmt.setString(3, quantity);
-        pstmt.setString(4, price);
-        pstmt.setString(5, brand);
-        pstmt.setInt(6, supplierId); 
-        pstmt.setInt(7, productId);
+    if (!productCode.equals(oldProductCode)) {
+        hasChanges = true;
+        changesMessage.append("Product Code: " + oldProductCode + " → " + productCode + "\n");
+    }
+    if (!productName.equals(oldProductName)) {
+        hasChanges = true;
+        changesMessage.append("Product Name: " + oldProductName + " → " + productName + "\n");
+    }
+    if (!price.equals(oldPrice)) {
+        hasChanges = true;
+        changesMessage.append("Price: " + oldPrice + " → " + price + "\n");
+    }
+    if (!brand.equals(oldBrand)) {
+        hasChanges = true;
+        changesMessage.append("Brand: " + oldBrand + " → " + brand + "\n");
+    }
+    if (!supplier.equals(oldSupplier)) {
+        hasChanges = true;
+        changesMessage.append("Supplier: " + oldSupplier + " → " + supplier + "\n");
+    }
 
-        // Execute the update
-        int rowsAffected = pstmt.executeUpdate();
+    // If no changes, display a message and return
+    if (!hasChanges) {
+        JOptionPane.showMessageDialog(this, "No changes made to the product details.", "No Changes", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
 
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Product updated successfully!");
+    // Display confirmation dialog with the highlighted changes
+    int option = JOptionPane.showConfirmDialog(this, changesMessage.toString(), "Confirm Product Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-            // Update JTable directly with new values
-            tblProducts.setValueAt(productCode, selectedRow, 1);
-            tblProducts.setValueAt(productName, selectedRow, 2);
-            tblProducts.setValueAt(quantity, selectedRow, 3);
-            tblProducts.setValueAt(price, selectedRow, 4);
-            tblProducts.setValueAt(brand, selectedRow, 5);
-            tblProducts.setValueAt(supplier, selectedRow, 6);
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to update product.", "Error", JOptionPane.ERROR_MESSAGE);
+    if (option == JOptionPane.YES_OPTION) {
+        // Get the supplier_id from the selected supplier name
+        int supplierId = getSupplierId(supplier);
+
+        // Update query
+        String updateQuery = "UPDATE products SET product_code = ?, product_name = ?, quantity = ?, price = ?, brand = ?, supplier_id = ? WHERE product_id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+
+            // Set parameters for the query
+            pstmt.setString(1, productCode);
+            pstmt.setString(2, productName);
+            pstmt.setString(3, quantity);  // This will not be updated since the user cannot edit it
+            pstmt.setString(4, price);
+            pstmt.setString(5, brand);
+            pstmt.setInt(6, supplierId); 
+            pstmt.setInt(7, productId);
+
+            // Execute the update
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Product updated successfully!");
+
+                // Update JTable directly with new values
+                tblProducts.setValueAt(productCode, selectedRow, 1);
+                tblProducts.setValueAt(productName, selectedRow, 2);
+                tblProducts.setValueAt(price, selectedRow, 4);
+                tblProducts.setValueAt(brand, selectedRow, 5);
+                tblProducts.setValueAt(supplier, selectedRow, 6);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update product.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
 
-} catch (SQLException ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(this, "An error occurred: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-}
+    } else {
+        // If the user cancels, show a message
+        JOptionPane.showMessageDialog(this, "Product update cancelled.");
     }
+}
+    
 // Function to get supplier_id based on supplier name
 private int getSupplierId(String supplierName) {
     int supplierId = -1;
@@ -530,36 +603,61 @@ private int getSupplierId(String supplierName) {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        int selectedRow = tblProducts.getSelectedRow();
-    
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(null, "Please select a row to delete.");
-        return;  // Exit if no row is selected
+         if (tblProducts.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No products available to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        return;
     }
 
-    // Get the product code from the selected row in the table
-    String productCode = tblProducts.getValueAt(selectedRow, 1).toString();  
+    // Check if a row is selected
+    int selectedRow = tblProducts.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a product to delete.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-    // Confirm deletion
-    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+    // Retrieve product details for confirmation
+    String productCode = tblProducts.getValueAt(selectedRow, 1).toString(); 
+    String productName = tblProducts.getValueAt(selectedRow, 2).toString(); 
+
+    // Display a confirmation dialog
+    String confirmationMessage = "Are you sure you want to delete the product?\n\n"
+                                + "Product Code: " + productCode + "\n"
+                                + "Product Name: " + productName;
+
+    int confirm = JOptionPane.showConfirmDialog(
+            this, 
+            confirmationMessage, 
+            "Confirm Deletion", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.WARNING_MESSAGE
+    );
+
     if (confirm == JOptionPane.YES_OPTION) {
-        try (Connection conn = new DBConnector().getConnection()) {
-            String query = "DELETE FROM products WHERE product_code=?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+        try (Connection conn = DBConnector.getConnection()) {
+            // Delete query
+            String query = "DELETE FROM products WHERE product_code = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, productCode);
 
-            pstmt.setString(1, productCode);  // Use the product code from the selected row
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Product deleted successfully.");
-                refreshTable();  // Refresh the table after deletion            
-            } else {
-                JOptionPane.showMessageDialog(null, "Error: Product not found.");
+                // Execute the deletion
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Product '" + productName + "' deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    refreshTable();  // Call a method to refresh the JTable after deletion
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: Product not found in the database.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error deleting product: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "An error occurred while deleting the product. Please try again later.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace(); // Log the error for debugging
         }
+    } else {
+        // If the user cancels, show an informational message
+        JOptionPane.showMessageDialog(this, "Product deletion canceled.", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
     }
+
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -578,7 +676,7 @@ private int getSupplierId(String supplierName) {
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
          refreshTable();   
-    refreshSupplierComboBox();  
+         refreshSupplierComboBox();  
 }
 
 // Method to refresh the product table with supplier names

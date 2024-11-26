@@ -22,7 +22,7 @@ public class Suppliers_Page extends javax.swing.JFrame {
     public Suppliers_Page() {
         initComponents();
         
-       DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Supplier ID");
         model.addColumn("Supplier Name");
         model.addColumn("Location");
@@ -30,6 +30,7 @@ public class Suppliers_Page extends javax.swing.JFrame {
         model.addColumn("Email");
         tblSuppliers.setModel(model);
         loadSuppliersToTable();
+        refreshSupplierComboBox();
     }
 
     /**
@@ -281,107 +282,194 @@ public class Suppliers_Page extends javax.swing.JFrame {
     String email = txtEmail.getText().trim();
 
     // Validate mandatory fields
-    if (supplierName.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Supplier Name cannot be empty.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+    if (supplierName.isEmpty() || location.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please fill all fields.", "Validation Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
     
-    // Validate other fields like location, phone, and email
-    if (location.isEmpty() || phone.isEmpty() || email.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "All fields must be filled.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+    // Phone validation: Ensure only digits are entered
+    if (!phone.matches("[0-9]+")) {  
+        JOptionPane.showMessageDialog(this, "Please enter a valid phone number (only digits allowed).", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+     // Validate email format
+    if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+        JOptionPane.showMessageDialog(this, "Invalid email format.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    
+     try (Connection conn = new DBConnector().getConnection()) {
+        String query = "SELECT COUNT(*) FROM suppliers WHERE suppliername = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, supplierName);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next() && rs.getInt(1) > 0) {
+            JOptionPane.showMessageDialog(this, "Duplicate entry detected: A supplier with the name '" + supplierName + "' already exists.", "Duplicate Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error checking for duplicate entry. Please try again later.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
         return;
     }
 
-     try (Connection conn = DBConnector.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement("INSERT INTO suppliers (suppliername, location, phone, email) VALUES (?, ?, ?, ?)")) {
+    // Create a confirmation message
+    String message = "Please confirm the supplier details:\n\n" +
+                     "Supplier Name: " + supplierName + "\n" +
+                     "Location: " + location + "\n" +
+                     "Phone: " + phone + "\n" +
+                     "Email: " + email;
 
-        // Set parameters for the SQL query
-        pstmt.setString(1, supplierName);
-        pstmt.setString(2, location);
-        pstmt.setString(3, phone);
-        pstmt.setString(4, email);
+    // Display a confirmation dialog
+    int option = JOptionPane.showConfirmDialog(this, message, "Confirm Supplier Details", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        // Execute the query
-        int rowsAffected = pstmt.executeUpdate();
+    if (option == JOptionPane.YES_OPTION) {
+        // Proceed with the database insertion if the user clicks "Yes"
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO suppliers (suppliername, location, phone, email) VALUES (?, ?, ?, ?)")) {
 
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Supplier added successfully!");
-            
-            // Refresh ComboBox in ProductPage
-            refreshSupplierComboBox();
-            
-            // Clear text fields after successful addition
-            txtSupplierName.setText("");
-            txtLocation.setText("");
-            txtPhoneS.setText("");
-            txtEmail.setText("");
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to add supplier.", "Error", JOptionPane.ERROR_MESSAGE);
+            // Set parameters for the SQL query
+            pstmt.setString(1, supplierName);
+            pstmt.setString(2, location);
+            pstmt.setString(3, phone);
+            pstmt.setString(4, email);
+
+            // Execute the query
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Supplier added successfully!");
+
+                // Refresh ComboBox in ProductPage
+                refreshSupplierComboBox();
+                loadSuppliersToTable();
+
+                // Clear text fields after successful addition
+                txtSupplierName.setText("");
+                txtLocation.setText("");
+                txtPhoneS.setText("");
+                txtEmail.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to add supplier.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } else {
+        // If the user clicks "No", show a cancellation message
+        JOptionPane.showMessageDialog(this, "Supplier addition canceled.", "Canceled", JOptionPane.INFORMATION_MESSAGE);
     }
+
+
     }//GEN-LAST:event_btnAddSActionPerformed
 
     private void btnEditSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditSActionPerformed
         // TODO add your handling code here:
-         int selectedRow = tblSuppliers.getSelectedRow();
+            int selectedRow = tblSuppliers.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a supplier to edit.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-    if (selectedRow != -1) {
-        // Retrieve the selected supplier ID and the input values
-        int supplierid = Integer.parseInt(tblSuppliers.getValueAt(selectedRow, 0).toString());
-        String supplierName = txtSupplierName.getText().trim();
-        String location = txtLocation.getText().trim();
-        String phone = txtPhoneS.getText().trim();
-        String email = txtEmail.getText().trim();
+    // Retrieve the selected supplier ID and old values from the table
+    int supplierid = Integer.parseInt(tblSuppliers.getValueAt(selectedRow, 0).toString());
+    String oldSupplierName = tblSuppliers.getValueAt(selectedRow, 1).toString();
+    String oldLocation = tblSuppliers.getValueAt(selectedRow, 2).toString();
+    String oldPhone = tblSuppliers.getValueAt(selectedRow, 3).toString();
+    String oldEmail = tblSuppliers.getValueAt(selectedRow, 4).toString();
 
-        // Validate fields
-        if (supplierName.isEmpty() || location.isEmpty() || phone.isEmpty() || email.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "All fields must be filled out.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Get the updated input values
+    String supplierName = txtSupplierName.getText().trim();
+    String location = txtLocation.getText().trim();
+    String phone = txtPhoneS.getText().trim();
+    String email = txtEmail.getText().trim();
 
-        // Create supplier object to pass to DAO
+    // Validate fields
+    if (supplierName.isEmpty() || location.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields must be filled out.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validate phone number (must be numeric)
+    if (!phone.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Phone number must contain only digits.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+   
+    // Check for changes and build the confirmation message
+    boolean hasChanges = false;
+    StringBuilder changesMessage = new StringBuilder("Please confirm the updated supplier details:\n\n");
+
+    if (!supplierName.equals(oldSupplierName)) {
+        hasChanges = true;
+        changesMessage.append("Supplier Name: " + oldSupplierName + " → " + supplierName + "\n");
+    }
+    if (!location.equals(oldLocation)) {
+        hasChanges = true;
+        changesMessage.append("Location: " + oldLocation + " → " + location + "\n");
+    }
+    if (!phone.equals(oldPhone)) {
+        hasChanges = true;
+        changesMessage.append("Phone: " + oldPhone + " → " + phone + "\n");
+    }
+    if (!email.equals(oldEmail)) {
+        hasChanges = true;
+        changesMessage.append("Email: " + oldEmail + " → " + email + "\n");
+    }
+
+    if (!hasChanges) {
+        JOptionPane.showMessageDialog(this, "No changes made to the supplier details.", "No Changes", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    // Display confirmation dialog
+    int option = JOptionPane.showConfirmDialog(this, changesMessage.toString(), "Confirm Supplier Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+    if (option == JOptionPane.YES_OPTION) {
+        // Create a supplier object with updated details
         Suppliers supplier = new Suppliers(supplierid, supplierName, location, phone, email);
         SuppliersDAO suppliersDAO = new SuppliersDAO();
 
-        // Update the supplier in the database
+        // Update supplier in the database
         boolean isUpdated = suppliersDAO.editSupplierDAO(supplier);
 
-        // Check if the update was successful
-         if (isUpdated) {
-            JOptionPane.showMessageDialog(null, "Supplier updated successfully.");
+        if (isUpdated) {
+            JOptionPane.showMessageDialog(this, "Supplier updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            // Refresh the table with updated data
+            // Refresh table and supplier ComboBox in products page
             suppliersDAO.refreshTable((DefaultTableModel) tblSuppliers.getModel());
-        
-            refreshSupplierComboBox();                  
-            
+            refreshSupplierComboBox();
         } else {
-            JOptionPane.showMessageDialog(null, "Error updating supplier.", "Update Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error updating supplier. Please try again.", "Update Error", JOptionPane.ERROR_MESSAGE);
         }
     } else {
-        JOptionPane.showMessageDialog(null, "Please select a supplier to edit.");
-    }      
-
+        JOptionPane.showMessageDialog(this, "Supplier update canceled.", "Canceled", JOptionPane.INFORMATION_MESSAGE);
+   }
+    
     }//GEN-LAST:event_btnEditSActionPerformed
 
     private void btnDeleteSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSActionPerformed
         // TODO add your handling code here:
-        int selectedRow = tblSuppliers.getSelectedRow();
+          int selectedRow = tblSuppliers.getSelectedRow();
 
     if (selectedRow != -1) {
-        // Retrieve the selected supplier ID from the table
-        String supplierIdString = tblSuppliers.getValueAt(selectedRow, 0).toString();
+        // Retrieve the selected supplier's name and ID from the table
+        String supplierName = tblSuppliers.getValueAt(selectedRow, 1).toString(); 
+        String supplierIdString = tblSuppliers.getValueAt(selectedRow, 0).toString(); 
 
         // Convert the supplier ID to an integer
         try {
             int supplierid = Integer.parseInt(supplierIdString);
 
+            // Create the confirmation message with supplier name
+            String message = "Are you sure you want to delete the supplier: " + supplierName + "?";
+
             // Confirm deletion with the user
-            int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this supplier?", 
-                                                              "Delete Supplier", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            int confirmation = JOptionPane.showConfirmDialog(null, message,"Delete Supplier", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
             if (confirmation == JOptionPane.YES_OPTION) {
                 // Create a SuppliersDAO instance to delete the supplier
@@ -395,22 +483,25 @@ public class Suppliers_Page extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Supplier deleted successfully.");
 
                     // Refresh the supplier table to reflect the changes
-                    suppliersDAO.refreshTable((DefaultTableModel) tblSuppliers.getModel());                
+                    suppliersDAO.refreshTable((DefaultTableModel) tblSuppliers.getModel());
+
+                    // Refresh the supplier ComboBox (for product page)
                     refreshSupplierComboBox();
-                    
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error deleting supplier. Please check if there are dependencies.", 
-                                                  "Delete Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error deleting supplier. Please check if there are dependencies.","Delete Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                // If the user clicked "No", show a cancellation message
+                JOptionPane.showMessageDialog(null, "Supplier deletion canceled.", "Cancelled", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NumberFormatException ex) {
             // Handle the case where the supplierId is not a valid integer
-            JOptionPane.showMessageDialog(null, "Error: Invalid supplier ID format.", 
-                                          "Delete Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Invalid supplier ID format.", "Delete Error", JOptionPane.ERROR_MESSAGE);
         }
     } else {
         JOptionPane.showMessageDialog(null, "Please select a supplier to delete.");
-    }    
+    }
+
 
     }//GEN-LAST:event_btnDeleteSActionPerformed
 
