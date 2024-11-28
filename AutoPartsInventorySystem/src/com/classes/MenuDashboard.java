@@ -55,6 +55,9 @@ public class MenuDashboard extends javax.swing.JFrame {
         pnlMenuDashboardBG = new javax.swing.JPanel();
         pnlDahboardHeader = new javax.swing.JPanel();
         lblDashboard = new javax.swing.JLabel();
+        pnlLogOut = new javax.swing.JPanel();
+        lblUsername = new javax.swing.JLabel();
+        btnLogOut = new javax.swing.JButton();
         pnlMenuButton = new javax.swing.JPanel();
         btnMenu = new javax.swing.JButton();
         pnlNavigate = new javax.swing.JPanel();
@@ -78,9 +81,6 @@ public class MenuDashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        pnlLogOut = new javax.swing.JPanel();
-        lblUsername = new javax.swing.JLabel();
-        btnLogOut = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -102,39 +102,80 @@ public class MenuDashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inventory System");
-        setPreferredSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(1350, 750));
 
         pnlMenuDashboardBG.setBackground(new java.awt.Color(196, 197, 197));
-        pnlMenuDashboardBG.setPreferredSize(new java.awt.Dimension(1920, 1080));
+        pnlMenuDashboardBG.setPreferredSize(new java.awt.Dimension(1400, 1080));
 
         pnlDahboardHeader.setBackground(new java.awt.Color(42, 58, 63));
         pnlDahboardHeader.setPreferredSize(new java.awt.Dimension(123, 72));
 
         lblDashboard.setBackground(new java.awt.Color(255, 255, 255));
-        lblDashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblDashboard.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblDashboard.setForeground(new java.awt.Color(255, 255, 255));
-        lblDashboard.setText("DASHBOARD");
+        lblDashboard.setText("Dashboard");
+
+        pnlLogOut.setBackground(new java.awt.Color(42, 58, 63));
+
+        lblUsername.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsername.setText("User: ");
+
+        btnLogOut.setText("Log Out");
+        btnLogOut.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlLogOutLayout = new javax.swing.GroupLayout(pnlLogOut);
+        pnlLogOut.setLayout(pnlLogOutLayout);
+        pnlLogOutLayout.setHorizontalGroup(
+            pnlLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlLogOutLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74)
+                .addComponent(btnLogOut)
+                .addGap(636, 636, 636))
+        );
+        pnlLogOutLayout.setVerticalGroup(
+            pnlLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogOutLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUsername)
+                    .addComponent(btnLogOut))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pnlDahboardHeaderLayout = new javax.swing.GroupLayout(pnlDahboardHeader);
         pnlDahboardHeader.setLayout(pnlDahboardHeaderLayout);
         pnlDahboardHeaderLayout.setHorizontalGroup(
             pnlDahboardHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDahboardHeaderLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(37, 37, 37)
                 .addComponent(lblDashboard)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         pnlDahboardHeaderLayout.setVerticalGroup(
             pnlDahboardHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDahboardHeaderLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(lblDashboard)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(pnlDahboardHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDashboard))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pnlMenuButton.setBackground(new java.awt.Color(196, 197, 197));
 
+        btnMenu.setBackground(new java.awt.Color(42, 58, 63));
         btnMenu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnMenu.setForeground(new java.awt.Color(255, 255, 255));
         btnMenu.setText("MENU");
         btnMenu.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +187,7 @@ public class MenuDashboard extends javax.swing.JFrame {
         pnlNavigate.setBackground(new java.awt.Color(42, 58, 63));
         pnlNavigate.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
+        btnProducts.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnProducts.setText("Products");
         btnProducts.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnProducts.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +196,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnCurrentStocks.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCurrentStocks.setText("Current Stocks");
         btnCurrentStocks.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnCurrentStocks.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +205,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnsSuppliers.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnsSuppliers.setText("Suppliers");
         btnsSuppliers.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnsSuppliers.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +214,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnUsers.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnUsers.setText("Users");
         btnUsers.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnUsers.addActionListener(new java.awt.event.ActionListener() {
@@ -178,6 +223,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnUserLogs.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnUserLogs.setText("User Logs");
         btnUserLogs.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnUserLogs.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +232,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnReports.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnReports.setText("Reports");
         btnReports.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnReports.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +241,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnDelivery.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDelivery.setText("Delivery");
         btnDelivery.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnDelivery.addActionListener(new java.awt.event.ActionListener() {
@@ -202,6 +250,7 @@ public class MenuDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnOrder.setText("Order");
         btnOrder.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnOrder.setPreferredSize(new java.awt.Dimension(100, 45));
@@ -215,39 +264,39 @@ public class MenuDashboard extends javax.swing.JFrame {
         pnlNavigate.setLayout(pnlNavigateLayout);
         pnlNavigateLayout.setHorizontalGroup(
             pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNavigateLayout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUserLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNavigateLayout.createSequentialGroup()
+                .addGap(0, 73, Short.MAX_VALUE)
+                .addGroup(pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnUserLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnsSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(68, 68, 68))
         );
         pnlNavigateLayout.setVerticalGroup(
             pnlNavigateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNavigateLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnsSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUserLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(btnCurrentStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(btnReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
+                .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnsSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnUserLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pnlMessage.setBackground(new java.awt.Color(196, 197, 197));
@@ -278,7 +327,6 @@ public class MenuDashboard extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel3.setText("Manage Orders (Admin and Employee)");
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
@@ -295,39 +343,6 @@ public class MenuDashboard extends javax.swing.JFrame {
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("()");
-
-        pnlLogOut.setBackground(new java.awt.Color(255, 255, 255));
-
-        lblUsername.setText("User: ");
-
-        btnLogOut.setText("Log Out");
-        btnLogOut.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
-        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogOutActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlLogOutLayout = new javax.swing.GroupLayout(pnlLogOut);
-        pnlLogOut.setLayout(pnlLogOutLayout);
-        pnlLogOutLayout.setHorizontalGroup(
-            pnlLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlLogOutLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(btnLogOut)
-                .addGap(636, 636, 636))
-        );
-        pnlLogOutLayout.setVerticalGroup(
-            pnlLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogOutLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUsername)
-                    .addComponent(btnLogOut))
-                .addContainerGap())
-        );
 
         jLabel14.setBackground(new java.awt.Color(0, 0, 0));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -382,19 +397,15 @@ public class MenuDashboard extends javax.swing.JFrame {
                             .addComponent(jLabel18)
                             .addComponent(jLabel19)
                             .addComponent(jLabel20))
-                        .addGap(0, 257, Short.MAX_VALUE))
+                        .addGap(0, 143, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMessageLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addGap(120, 120, 120))))
+                        .addComponent(jLabel12)
+                        .addGap(36, 36, 36))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMessageLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMessageLayout.createSequentialGroup()
-                        .addComponent(pnlLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(36, 36, 36))
+                .addComponent(jLabel5)
+                .addGap(205, 205, 205))
         );
         pnlMessageLayout.setVerticalGroup(
             pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,9 +446,7 @@ public class MenuDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(pnlLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlMenuButtonLayout = new javax.swing.GroupLayout(pnlMenuButton);
@@ -445,61 +454,62 @@ public class MenuDashboard extends javax.swing.JFrame {
         pnlMenuButtonLayout.setHorizontalGroup(
             pnlMenuButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuButtonLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
                 .addGroup(pnlMenuButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlNavigate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlMenuButtonLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                        .addGap(86, 86, 86)
                         .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(90, 90, 90)
+                .addGap(110, 110, 110)
                 .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(927, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlMenuButtonLayout.setVerticalGroup(
             pnlMenuButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuButtonLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlMenuButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMenuButtonLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(pnlNavigate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMenuButtonLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(105, Short.MAX_VALUE))
+                    .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlMenuDashboardBGLayout = new javax.swing.GroupLayout(pnlMenuDashboardBG);
         pnlMenuDashboardBG.setLayout(pnlMenuDashboardBGLayout);
         pnlMenuDashboardBGLayout.setHorizontalGroup(
             pnlMenuDashboardBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlDahboardHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 2139, Short.MAX_VALUE)
             .addGroup(pnlMenuDashboardBGLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(pnlMenuDashboardBGLayout.createSequentialGroup()
+                .addComponent(pnlDahboardHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 1117, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlMenuDashboardBGLayout.setVerticalGroup(
             pnlMenuDashboardBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuDashboardBGLayout.createSequentialGroup()
                 .addComponent(pnlDahboardHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenuDashboardBG, javax.swing.GroupLayout.PREFERRED_SIZE, 1742, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlMenuDashboardBG, javax.swing.GroupLayout.DEFAULT_SIZE, 1123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlMenuDashboardBG, javax.swing.GroupLayout.PREFERRED_SIZE, 1081, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlMenuDashboardBG, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -517,7 +527,7 @@ public class MenuDashboard extends javax.swing.JFrame {
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         // TODO add your handling code here:
-             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout? You will have to login again.", "Confirmation", JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout? You will have to login again.", "Confirmation", JOptionPane.YES_NO_OPTION);
     
     if (option == JOptionPane.YES_OPTION) {
         // Get the current time as the logout time (LocalDateTime)
@@ -529,11 +539,9 @@ public class MenuDashboard extends javax.swing.JFrame {
         
         // Add the logout event to the user logs
         new UsersDAO().addUserLogin(users);
-        
-        // Close the current dashboard window
+              
         dispose();
-        
-        // Open the login page
+              
         Log_In loginPage = new Log_In();
         loginPage.setVisible(true);
     }
@@ -580,7 +588,8 @@ public class MenuDashboard extends javax.swing.JFrame {
         lblUsername.setText("User: " + users.getUsername() + " ("+userSelect+")");
     }
      public void notForEmployee(){
-        pnlNavigate.remove(btnUsers);            
+        pnlNavigate.remove(btnUsers);
+        pnlNavigate.remove(btnUserLogs);
     }
      
     /**

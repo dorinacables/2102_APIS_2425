@@ -58,8 +58,9 @@ public class SuppliersDAO {
         JOptionPane.showMessageDialog(null, "Error adding supplier: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+    
     // Method to edit an existing supplier
-   public boolean editSupplierDAO(Suppliers supplier) {
+    public boolean editSupplierDAO(Suppliers supplier) {
     String queryUpdateSupplier = "UPDATE suppliers SET suppliername = ?, location = ?, phone = ?, email = ? WHERE supplier_id = ?";
 
     // Establish a database connection and prepare the statement
@@ -93,9 +94,10 @@ public class SuppliersDAO {
         return false;  // Return false if an error occurred
     }
 }
+    
     // Method to delete an existing supplier
     public boolean deleteSupplierDAO(int supplierid) {
-          boolean isDeleted = false;
+        boolean isDeleted = false;
     String query = "DELETE FROM suppliers WHERE supplier_id = ?";  
 
     try (Connection conn = new DBConnector().getConnection();
@@ -127,6 +129,7 @@ public class SuppliersDAO {
 
     return resultSet;
 }
+    
     // Method to refresh JTable data
     public void refreshTable(DefaultTableModel tableModel) {
         try {

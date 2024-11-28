@@ -18,9 +18,7 @@ public class UsersDAO {
     Connection conn = null;
     PreparedStatement prepStatement = null;
     Statement statement = null;
-    ResultSet resultSet = null;
-    
-    
+    ResultSet resultSet = null;    
     
     public UsersDAO() {      
         try {
@@ -53,8 +51,7 @@ public class UsersDAO {
             prepStatement.setString(5, users.getPhone());
             prepStatement.setString(6, users.getFullName());
             prepStatement.executeUpdate();
-
-            // Show success message
+      
             JOptionPane.showMessageDialog(null, "User added successfully.");
         }
     } catch (SQLException ex) {
@@ -82,7 +79,7 @@ public class UsersDAO {
     }
 }
 
-    public void addFunction(Users users, String userType) {
+public void addFunction(Users users, String userType) {
         try {
             String username;
             String password = null;
@@ -154,7 +151,7 @@ public class UsersDAO {
 
     // Method to delete existing user
     public boolean deleteUserDAO(String username) {
-        Connection conn = null;
+    Connection conn = null;
     PreparedStatement pstmt = null;
     boolean isDeleted = false;
 
@@ -223,14 +220,9 @@ public class UsersDAO {
         
         // Prepare the statement
         prepStatement = conn.prepareStatement(query);
-        
-        // Set the username
+            
         prepStatement.setString(1, users.getFullName());
-        
-        // Set the fullname
         prepStatement.setString(2, users.getUsername());  
-        
-        // Set the userType
         prepStatement.setString(3, users.getUserType());  
         
         // Convert LocalDateTime to Timestamp for inTime
@@ -283,7 +275,8 @@ public class UsersDAO {
         ex.printStackTrace();
     }
 }
-     public boolean userExists(String username) {    
+    
+    public boolean userExists(String username) {    
     String query = "SELECT * FROM users WHERE username = ?";
     try (Connection conn = DBConnector.getConnection(); 
          PreparedStatement pst = conn.prepareStatement(query)) {
@@ -319,6 +312,7 @@ public class UsersDAO {
         return false;
     }
 }
+    
     // Method to display data set in tabular form
     public DefaultTableModel buildTableModel(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();

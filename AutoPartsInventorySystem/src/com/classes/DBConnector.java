@@ -146,7 +146,7 @@ public void recordLogoutTime(String username) {
 }
    
     public Users getUserDetails(String username) {
-           String query = "SELECT * FROM users WHERE username = ?";
+        String query = "SELECT * FROM users WHERE username = ?";
     try (Connection conn = getConnection(); 
          PreparedStatement stmt = conn.prepareStatement(query)) {
              
@@ -185,7 +185,7 @@ public void recordLogoutTime(String username) {
         e.printStackTrace();
     }
     return null;
-}
+  }
     
 }
        

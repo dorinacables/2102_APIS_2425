@@ -22,6 +22,7 @@ public class Users_Page extends javax.swing.JFrame {
     public Users_Page() {
         initComponents();
         
+        
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("UserID");
         model.addColumn("Username");
@@ -75,7 +76,7 @@ public class Users_Page extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel6.setBackground(new java.awt.Color(6, 71, 71));
+        jPanel6.setBackground(new java.awt.Color(42, 58, 63));
 
         lblUsersTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblUsersTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -112,31 +113,32 @@ public class Users_Page extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(lblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblSearchU, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblSearchU, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearchU, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGoU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(57, 57, 57)
                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearchU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGoU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSearchU))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblUsersTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tblUsers.setBackground(new java.awt.Color(204, 204, 204));
+        tblUsers.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -160,41 +162,51 @@ public class Users_Page extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblUsers);
 
-        jPanel7.setBackground(new java.awt.Color(6, 71, 71));
+        jPanel7.setBackground(new java.awt.Color(42, 58, 63));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Enter User Details");
 
+        lblFullNameU.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblFullNameU.setForeground(new java.awt.Color(255, 255, 255));
         lblFullNameU.setText("Full Name:");
 
         txtFullNameU.setBackground(new java.awt.Color(204, 204, 204));
+        txtFullNameU.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
+        lblLocationU.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblLocationU.setForeground(new java.awt.Color(255, 255, 255));
         lblLocationU.setText("Location:");
 
         txtLocationU.setBackground(new java.awt.Color(204, 204, 204));
+        txtLocationU.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         txtLocationU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLocationUActionPerformed(evt);
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Contact Number:");
 
         txtContactNumberU.setBackground(new java.awt.Color(204, 204, 204));
+        txtContactNumberU.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
+        lblUsernameU.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblUsernameU.setForeground(new java.awt.Color(255, 255, 255));
         lblUsernameU.setText("Username:");
 
         txtUsernameU.setBackground(new java.awt.Color(204, 204, 204));
+        txtUsernameU.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
+        lblPasswordU.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPasswordU.setForeground(new java.awt.Color(255, 255, 255));
         lblPasswordU.setText("Password:");
 
         txtPasswordU.setBackground(new java.awt.Color(204, 204, 204));
+        txtPasswordU.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
         cmbbxUsertype.setBackground(new java.awt.Color(204, 204, 204));
         cmbbxUsertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Employee" }));
@@ -240,72 +252,75 @@ public class Users_Page extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(16, 16, 16)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFullNameU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFullNameU, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblLocationU, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUsernameU, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPasswordU, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPasswordU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(btnAddU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
-                                .addComponent(btnDeleteU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(32, 32, 32)
                                 .addComponent(btnEditU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(btnDeleteU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnClearU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPasswordU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsernameU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFullNameU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFullNameU, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLocationU, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLocationU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtContactNumberU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLocationU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblUsernameU, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsernameU, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPasswordU, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                        .addGap(54, 54, 54)
                         .addComponent(cmbbxUsertype, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFullNameU, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFullNameU, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblLocationU, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtLocationU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContactNumberU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addComponent(lblUsernameU, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsernameU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
                 .addComponent(lblPasswordU, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPasswordU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(cmbbxUsertype, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClearU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnClearU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13))
         );
 
-        btnCloseU.setBackground(new java.awt.Color(102, 102, 102));
+        btnCloseU.setBackground(new java.awt.Color(51, 51, 51));
         btnCloseU.setForeground(new java.awt.Color(255, 255, 255));
         btnCloseU.setText("Close");
         btnCloseU.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
@@ -324,26 +339,25 @@ public class Users_Page extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1011, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCloseU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1011, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnCloseU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCloseU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -365,20 +379,18 @@ public class Users_Page extends javax.swing.JFrame {
     String userType;
     private void btnAddUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUActionPerformed
         // TODO add your handling code here:
-    String username = txtUsernameU.getText();
+         String username = txtUsernameU.getText();
     String password = txtPasswordU.getText();
     String userType = cmbbxUsertype.getSelectedItem().toString(); 
     String location = txtLocationU.getText();
     String phone = txtContactNumberU.getText();
     String fullname = txtFullNameU.getText();
 
-    // Validate input 
     if (username.isEmpty() || password.isEmpty() || userType.isEmpty() || location.isEmpty() || phone.isEmpty() || fullname.isEmpty()) {
         JOptionPane.showMessageDialog(null, "All fields are required!");
         return; // Exit the method if any field is empty
     }
     
-    // Validate phone number (digits only)
     if (!phone.matches("[0-9]+")) {  
         JOptionPane.showMessageDialog(this, "Please enter a valid phone number (only digits allowed).", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
         return;
@@ -403,7 +415,6 @@ public class Users_Page extends javax.swing.JFrame {
         return;
     }
 
-    // Show confirmation dialog with the entered data
     String message = String.format(
         "Please confirm the following details:\n\nUsername: %s\nPassword: %s\nUser Type: %s\nLocation: %s\nPhone: %s\nFull Name: %s", 
         username, password, userType, location, phone, fullname);
@@ -414,9 +425,8 @@ public class Users_Page extends javax.swing.JFrame {
     if (confirmation == JOptionPane.NO_OPTION) {
         // User chose "No" to cancel the addition
         JOptionPane.showMessageDialog(null, "User addition cancelled.");
-        return; // Exit the method if the user cancels the addition
+        return; 
     }
-
     // If user confirms, proceed with inserting the data
     String query = "INSERT INTO users (username, password, userType, location, phone, fullname) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -435,24 +445,21 @@ public class Users_Page extends javax.swing.JFrame {
         // Execute the insert statement
         pstmt.executeUpdate();
 
-        // Show success message
-        JOptionPane.showMessageDialog(null, "User added successfully!");
-                
+        JOptionPane.showMessageDialog(null, "User added successfully!");               
         loadUsersToTable();
-
-        // Clear the form after submission 
+     
         txtUsernameU.setText("");
         txtPasswordU.setText("");
         cmbbxUsertype.setSelectedIndex(0); // Reset combo box to default
         txtLocationU.setText("");
         txtContactNumberU.setText("");
         txtFullNameU.setText("");
+        
     } catch (SQLException e) {
         // Handle database errors
         System.err.println("Error inserting user: " + e.getMessage());
         JOptionPane.showMessageDialog(null, "Error adding user. Please try again.");
-    }
-
+    }  
     }//GEN-LAST:event_btnAddUActionPerformed
 
     private void btnDeleteUActionPerformed(java.awt.event.ActionEvent evt) {                                           
@@ -469,7 +476,7 @@ public class Users_Page extends javax.swing.JFrame {
     DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
     String username = model.getValueAt(selectedRow, 1).toString();
 
-    // Show a confirmation dialog
+ 
     int confirm = JOptionPane.showConfirmDialog(this, 
         "Are you sure you want to delete the user '" + username + "'?", 
         "Confirm Deletion", 
@@ -487,6 +494,14 @@ public class Users_Page extends javax.swing.JFrame {
         if (isDeleted) {
             model.removeRow(selectedRow);  // Remove the row from the table
             JOptionPane.showMessageDialog(this, "User '" + username + "' deleted successfully.");
+            
+        txtUsernameU.setText("");
+        txtPasswordU.setText("");
+        cmbbxUsertype.setSelectedIndex(0); 
+        txtLocationU.setText("");
+        txtContactNumberU.setText("");
+        txtFullNameU.setText("");
+        
         } else {
             // If deletion fails, show an error message
             JOptionPane.showMessageDialog(this, "Failed to delete user '" + username + "'.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -499,7 +514,7 @@ public class Users_Page extends javax.swing.JFrame {
                      
     private void btnEditUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUActionPerformed
         // TODO add your handling code here:
-            int selectedRow = tblUsers.getSelectedRow();
+        int selectedRow = tblUsers.getSelectedRow();
     
     if (selectedRow != -1) {
         // Get the userID from the selected row 
@@ -521,10 +536,9 @@ public class Users_Page extends javax.swing.JFrame {
         String phone = txtContactNumberU.getText();
         String fullname = txtFullNameU.getText();
 
-        // Validate phone number (only digits allowed)
         if (!phone.matches("[0-9]+")) {
             JOptionPane.showMessageDialog(this, "Phone number must only contain digits.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-            return;  // Stop further processing if phone is invalid
+            return;  
         }
 
         // Prepare the differences with arrows to show changes
@@ -568,7 +582,6 @@ public class Users_Page extends javax.swing.JFrame {
             return;  // Exit if no changes are detected
         }
 
-        // Show the confirmation dialog with only the changes
         int confirm = JOptionPane.showConfirmDialog(this, confirmationMessage.toString(), 
                                                    "Confirm Edit", JOptionPane.YES_NO_OPTION);
 
@@ -591,14 +604,20 @@ public class Users_Page extends javax.swing.JFrame {
 
                 if (rowsUpdated > 0) {
                     JOptionPane.showMessageDialog(this, "User updated successfully!");
-                    loadUsersToTable(); // Refresh the table after update
+                    loadUsersToTable(); 
+                    
+        txtUsernameU.setText("");
+        txtPasswordU.setText("");
+        cmbbxUsertype.setSelectedIndex(0); 
+        txtLocationU.setText("");
+        txtContactNumberU.setText("");
+        txtFullNameU.setText("");
                 }
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         } else {
-            // If "No" is selected, show a cancellation message
             JOptionPane.showMessageDialog(this, "Edit cancelled.");
         }
     } else {
@@ -629,18 +648,16 @@ public class Users_Page extends javax.swing.JFrame {
 
     // Check if the search field is empty
     if (!searchQuery.isEmpty()) {
-        // Perform search
         searchUsers(searchQuery);
     } else {
         JOptionPane.showMessageDialog(null, "Please enter a search term.");
         }
     }
-    private void searchUsers(String searchQuery) {
-    DefaultTableModel tableModel = (DefaultTableModel) tblUsers.getModel();
-    // Clear the existing data in the table
-    tableModel.setRowCount(0);
-
     
+private void searchUsers(String searchQuery) {
+    DefaultTableModel tableModel = (DefaultTableModel) tblUsers.getModel();
+    tableModel.setRowCount(0);
+  
     String searchSQL = "SELECT userID, username, password, userType, location, phone, fullname " +
                        "FROM users " +
                        "WHERE userID LIKE ? OR username LIKE ? OR userType LIKE ? OR location LIKE ? OR phone LIKE ? OR fullname LIKE ? OR password LIKE ?";
@@ -648,7 +665,7 @@ public class Users_Page extends javax.swing.JFrame {
     try (Connection conn = DBConnector.getConnection();
          PreparedStatement pst = conn.prepareStatement(searchSQL)) {
         
-        String searchPattern = "%" + searchQuery + "%";  // "%" for partial matches
+        String searchPattern = "%" + searchQuery + "%";  
 
         // Set search parameters
         pst.setString(1, searchPattern);
@@ -671,15 +688,14 @@ public class Users_Page extends javax.swing.JFrame {
             String phone = rs.getString("phone");
             String fullname = rs.getString("fullname");
 
-            // Add the result to the table in the correct column order
+            // Add the result to the table 
             tableModel.addRow(new Object[]{userId, username, password, usertype, location, phone, fullname});
         }
 
     } catch (SQLException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error while searching for users: " + e.getMessage());
-    }
-        
+    }       
     }//GEN-LAST:event_btnGoUActionPerformed
 
     private void btnCloseUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseUActionPerformed
@@ -690,6 +706,7 @@ public class Users_Page extends javax.swing.JFrame {
     private void txtLocationUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocationUActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocationUActionPerformed
+    
     String username;
     private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
@@ -704,8 +721,7 @@ public class Users_Page extends javax.swing.JFrame {
         String location = (String) tblUsers.getValueAt(selectedRow, 4);
         String phone = (String) tblUsers.getValueAt(selectedRow, 5);
         String fullname = (String) tblUsers.getValueAt(selectedRow, 6);
-
-        
+       
         txtUsernameU.setText(username);
         txtPasswordU.setText(password);
         txtLocationU.setText(location);
@@ -716,9 +732,9 @@ public class Users_Page extends javax.swing.JFrame {
         cmbbxUsertype.setSelectedItem(userType);  
     }
 }  
-     private void loadUsersToTable() {
-     DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
-    model.setRowCount(0); // Clear the table
+private void loadUsersToTable() {
+    DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+    model.setRowCount(0); 
     
     String selectQuery = "SELECT * FROM users";
     try (Connection conn = DBConnector.getConnection();
@@ -741,6 +757,7 @@ public class Users_Page extends javax.swing.JFrame {
         ex.printStackTrace();
     }
 }
+
     /**
      * @param args the command line arguments
      */

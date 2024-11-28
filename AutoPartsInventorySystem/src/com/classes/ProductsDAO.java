@@ -176,6 +176,7 @@ public class ProductsDAO {
         return null;
     }
 }
+    
     public void refreshTable(DefaultTableModel tableModel) {
         try {
         // Query to join products and suppliers to get the supplier name
@@ -185,7 +186,7 @@ public class ProductsDAO {
         resultSet = statement.executeQuery(query);
 
         // Build the table model with the updated data
-        tableModel.setRowCount(0); // Clear the existing rows in the table
+        tableModel.setRowCount(0); 
         while (resultSet.next()) {
             Vector<Object> row = new Vector<>();
             row.add(resultSet.getInt("product_id"));
@@ -195,7 +196,7 @@ public class ProductsDAO {
             row.add(resultSet.getDouble("price"));
             row.add(resultSet.getString("brand"));
             row.add(resultSet.getString("suppliername")); 
-            tableModel.addRow(row); // Add each row to the table model
+            tableModel.addRow(row); 
         }
 
     } catch (SQLException e) {
@@ -205,9 +206,9 @@ public class ProductsDAO {
 }
     
     public DefaultTableModel buildTableModel(ResultSet resultSet) throws SQLException {
-    ResultSetMetaData metaData = resultSet.getMetaData();
-    Vector<String> columnNames = new Vector<>();
-    int colCount = metaData.getColumnCount();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        Vector<String> columnNames = new Vector<>();
+        int colCount = metaData.getColumnCount();
 
     // Add columns including quantity and supplier name
     for (int col = 1; col <= colCount; col++) {
@@ -223,5 +224,5 @@ public class ProductsDAO {
         data.add(vector);
     }
     return new DefaultTableModel(data, columnNames);
-}
+ }
 }

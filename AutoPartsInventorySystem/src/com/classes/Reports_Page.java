@@ -26,7 +26,9 @@ public class Reports_Page extends javax.swing.JFrame {
         loadLowStockTable();
         loadOutOfStockTable();
         loadReorderTable();
-       
+        loadDeliveryTable();
+        loadOrderTable();
+            
     }
 
     /**
@@ -65,6 +67,10 @@ public class Reports_Page extends javax.swing.JFrame {
         tblrestock = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         btnrefresh = new javax.swing.JButton();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tbldelivery = new javax.swing.JTable();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        tblorder = new javax.swing.JTable();
         btnclose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,10 +79,10 @@ public class Reports_Page extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setPreferredSize(new java.awt.Dimension(1493, 523));
 
-        jPanel6.setBackground(new java.awt.Color(6, 71, 71));
+        jPanel6.setBackground(new java.awt.Color(42, 58, 63));
 
         lblReports.setBackground(new java.awt.Color(255, 255, 255));
-        lblReports.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblReports.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblReports.setForeground(new java.awt.Color(255, 255, 255));
         lblReports.setText("Reports");
 
@@ -85,16 +91,16 @@ public class Reports_Page extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(27, 27, 27)
                 .addComponent(lblReports, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblReports)
-                .addContainerGap())
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(102, 102, 102));
@@ -216,7 +222,7 @@ public class Reports_Page extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel2);
+        jTabbedPane1.addTab("Totals", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -296,7 +302,7 @@ public class Reports_Page extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab3", jPanel3);
+        jTabbedPane1.addTab("Status", jPanel3);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -336,6 +342,32 @@ public class Reports_Page extends javax.swing.JFrame {
             }
         });
 
+        tbldelivery.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Delivery"
+            }
+        ));
+        jScrollPane9.setViewportView(tbldelivery);
+
+        tblorder.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Order"
+            }
+        ));
+        jScrollPane10.setViewportView(tblorder);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -349,21 +381,28 @@ public class Reports_Page extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10))
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 1071, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 296, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane10)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("tab4", jPanel1);
+        jTabbedPane1.addTab("", jPanel1);
 
         btnclose.setBackground(new java.awt.Color(51, 51, 51));
         btnclose.setForeground(new java.awt.Color(255, 255, 255));
@@ -432,7 +471,7 @@ public class Reports_Page extends javax.swing.JFrame {
         loadReorderTable();
     }//GEN-LAST:event_btnrefreshActionPerformed
     
-    private void loadProductsTable() {
+private void loadProductsTable() {
     DefaultTableModel model = (DefaultTableModel) tblProd.getModel();
     model.setRowCount(0); // Clear the table before adding data
 
@@ -464,9 +503,9 @@ public class Reports_Page extends javax.swing.JFrame {
     }
 }
     
-    private void loadStocksTable() {
+private void loadStocksTable() {
     DefaultTableModel model = (DefaultTableModel) tblStocks.getModel();
-    model.setRowCount(0); // Clear the table before adding data
+    model.setRowCount(0); 
 
     String totalStocksQuery = "SELECT SUM(quantity) AS total_stocks FROM products";
     String stockDetailsQuery = "SELECT product_name, quantity FROM products";
@@ -476,15 +515,13 @@ public class Reports_Page extends javax.swing.JFrame {
          Statement stmt2 = conn.createStatement();
          ResultSet rs1 = stmt1.executeQuery(totalStocksQuery);
          ResultSet rs2 = stmt2.executeQuery(stockDetailsQuery)) {
-
-        // Add total number of stocks as the first row
+     
         if (rs1.next()) {
             model.addRow(new Object[]{
                 "Total Stocks: " + rs1.getInt("total_stocks")
             });
         }
-
-        // Add product name and quantity as subsequent rows
+    
         while (rs2.next()) {
             String productName = rs2.getString("product_name");
             int quantity = rs2.getInt("quantity");
@@ -499,9 +536,9 @@ public class Reports_Page extends javax.swing.JFrame {
     }
 }
     
-    private void loadSuppliersTable() {
+private void loadSuppliersTable() {
     DefaultTableModel model = (DefaultTableModel) tblSupp.getModel();
-    model.setRowCount(0); // Clear the table before adding data
+    model.setRowCount(0); 
 
     String totalSuppliersQuery = "SELECT COUNT(*) AS total_suppliers FROM suppliers";
     String supplierNamesQuery = "SELECT suppliername FROM suppliers";
@@ -511,15 +548,13 @@ public class Reports_Page extends javax.swing.JFrame {
          Statement stmt2 = conn.createStatement();
          ResultSet rs1 = stmt1.executeQuery(totalSuppliersQuery);
          ResultSet rs2 = stmt2.executeQuery(supplierNamesQuery)) {
-
-        // Add total number of suppliers as the first row
+      
         if (rs1.next()) {
             model.addRow(new Object[]{
                 "Total Suppliers: " + rs1.getInt("total_suppliers")
             });
         }
 
-        // Add supplier names as subsequent rows
         while (rs2.next()) {
             String supplierName = rs2.getString("suppliername");
 
@@ -533,9 +568,9 @@ public class Reports_Page extends javax.swing.JFrame {
     }
 }
     
-    private void loadUsersTable() {
+private void loadUsersTable() {
     DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
-    model.setRowCount(0); // Clear the table before adding data
+    model.setRowCount(0); 
 
     String totalUsersQuery = "SELECT COUNT(*) AS total_users FROM users";
     String userNamesQuery = "SELECT fullname, usertype FROM users";
@@ -545,15 +580,13 @@ public class Reports_Page extends javax.swing.JFrame {
          Statement stmt2 = conn.createStatement();
          ResultSet rs1 = stmt1.executeQuery(totalUsersQuery);
          ResultSet rs2 = stmt2.executeQuery(userNamesQuery)) {
-
-        // Add total number of users as the first row
+   
         if (rs1.next()) {
             model.addRow(new Object[]{
                 "Total Users: " + rs1.getInt("total_users")
             });
         }
 
-        // Add user names with user type as subsequent rows
         while (rs2.next()) {
             String fullName = rs2.getString("fullname");
             String userType = rs2.getString("usertype");
@@ -568,12 +601,12 @@ public class Reports_Page extends javax.swing.JFrame {
     }
 }
     
- private void loadInStockTable() {
+private void loadInStockTable() {
     DefaultTableModel model = (DefaultTableModel) tblinstocks.getModel();
-    model.setRowCount(0); // Clear the table before adding new data
+    model.setRowCount(0); 
 
     String totalProductsQuery = "SELECT COUNT(*) AS total_products FROM products";  // Get total number of products
-    String inStockQuery = "SELECT product_name, quantity FROM products WHERE quantity > 5";  // Get products in stock with quantity > 5
+    String inStockQuery = "SELECT product_name, quantity FROM products WHERE quantity > 20";  // Get products in stock with quantity > 20
 
     try (Connection conn = DBConnector.getConnection();
          Statement stmt1 = conn.createStatement();
@@ -618,12 +651,12 @@ public class Reports_Page extends javax.swing.JFrame {
     }
 }
   
-   private void loadLowStockTable() {
+private void loadLowStockTable() {
     DefaultTableModel model = (DefaultTableModel) tbllowstocks.getModel();
-    model.setRowCount(0); // Clear the table before adding new data
+    model.setRowCount(0); 
 
     String totalProductsQuery = "SELECT COUNT(*) AS total_products FROM products";  // Get total number of products
-    String lowStockQuery = "SELECT product_name, quantity FROM products WHERE quantity <= 5 AND quantity != 0";  // Get products with low stock (quantity <= 5 but not 0)
+    String lowStockQuery = "SELECT product_name, quantity FROM products WHERE quantity <= 20 AND quantity != 0";  // Get products with low stock (quantity <= 20 but not 0)
 
     try (Connection conn = DBConnector.getConnection();
          Statement stmt1 = conn.createStatement();
@@ -667,11 +700,10 @@ public class Reports_Page extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
-
-   
-  private void loadOutOfStockTable() {
+  
+private void loadOutOfStockTable() {
     DefaultTableModel model = (DefaultTableModel) tbloutofstocks.getModel();
-    model.setRowCount(0); // Clear the table before adding new data
+    model.setRowCount(0); 
 
     String totalProductsQuery = "SELECT COUNT(*) AS total_products FROM products";  // Get total number of products
     String outOfStockQuery = "SELECT product_name, quantity FROM products WHERE quantity = 0";  // Get out-of-stock products
@@ -683,9 +715,8 @@ public class Reports_Page extends javax.swing.JFrame {
          ResultSet rs2 = stmt2.executeQuery(outOfStockQuery)) {
 
         int totalProducts = 0;
-        int outOfStockCount = 0;  // This will store the count of out-of-stock products
-
-        // Get total number of products
+        int outOfStockCount = 0;  
+        
         if (rs1.next()) {
             totalProducts = rs1.getInt("total_products");
         }
@@ -717,12 +748,13 @@ public class Reports_Page extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
-    private void loadReorderTable() {
+
+private void loadReorderTable() {
     DefaultTableModel model = (DefaultTableModel) tblrestock.getModel();
-    model.setRowCount(0); // Clear the table before adding data
+    model.setRowCount(0); 
 
     // Define the reorder point
-    int reorderPoint = 5;
+    int reorderPoint = 25;
 
     // Query to count products needing reorder
     String countReorderQuery = "SELECT COUNT(*) AS total_reorder FROM products WHERE quantity <= " + reorderPoint;
@@ -763,6 +795,85 @@ public class Reports_Page extends javax.swing.JFrame {
         e.printStackTrace();
     }    
 }
+    
+private void loadDeliveryTable() {
+    DefaultTableModel model = (DefaultTableModel) tbldelivery.getModel();
+    model.setRowCount(0); 
+
+    // Query to count total deliveries made
+    String countDeliveriesQuery = "SELECT COUNT(*) AS total_deliveries FROM deliveries";
+    
+    // Query to get product names, product codes, and the total quantity added for each product
+    String productsDeliveryQuery = "SELECT product_code, product_name, SUM(quantity_delivered) AS total_added FROM deliveries GROUP BY product_code, product_name";
+    
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(countDeliveriesQuery);
+         ResultSet rs2 = stmt2.executeQuery(productsDeliveryQuery)) {
+
+        // Add total deliveries count as the first row
+        if (rs1.next()) {
+            model.addRow(new Object[]{
+                "Total Deliveries Made: " + rs1.getInt("total_deliveries")
+            });
+        }
+
+        // Add products with the total quantity added in the specified format
+        while (rs2.next()) {
+            String productCode = rs2.getString("product_code");
+            String productName = rs2.getString("product_name");
+            int quantityAdded = rs2.getInt("total_added");
+            
+            // Display the product info with quantity added
+            String productInfo = productCode + " - " + productName + " (Quantity Added: " + quantityAdded + ")";
+            model.addRow(new Object[]{ "-[" + productInfo + "]" });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+    
+private void loadOrderTable() {
+    DefaultTableModel model = (DefaultTableModel) tblorder.getModel();
+    model.setRowCount(0); 
+
+    // Query to count total orders made
+    String countOrdersQuery = "SELECT COUNT(*) AS total_orders FROM orders";
+    
+    // Query to get product names, product codes, and the total quantity ordered for each product
+    String productsOrderQuery = "SELECT product_code, product_name, SUM(quantity_ordered) AS total_reduced FROM orders GROUP BY product_code, product_name";
+    
+    try (Connection conn = DBConnector.getConnection();
+         Statement stmt1 = conn.createStatement();
+         Statement stmt2 = conn.createStatement();
+         ResultSet rs1 = stmt1.executeQuery(countOrdersQuery);
+         ResultSet rs2 = stmt2.executeQuery(productsOrderQuery)) {
+
+        // Add total orders count as the first row
+        if (rs1.next()) {
+            model.addRow(new Object[] {
+                "Total Orders Made: " + rs1.getInt("total_orders")
+            });
+        }
+
+        // Add products with the total quantity reduced (ordered)
+        while (rs2.next()) {
+            String productCode = rs2.getString("product_code");
+            String productName = rs2.getString("product_name");
+            int quantityReduced = rs2.getInt("total_reduced");
+            
+            // Display the product info with quantity reduced
+            String productInfo = productCode + " - " + productName + " (Quantity Reduced: " + quantityReduced + ")";
+            model.addRow(new Object[] { "-[" + productInfo + "]" });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -809,6 +920,7 @@ public class Reports_Page extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -816,6 +928,7 @@ public class Reports_Page extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblReports;
     private javax.swing.JPanel pnl1Welcome;
@@ -823,8 +936,10 @@ public class Reports_Page extends javax.swing.JFrame {
     private javax.swing.JTable tblStocks;
     private javax.swing.JTable tblSupp;
     private javax.swing.JTable tblUsers;
+    private javax.swing.JTable tbldelivery;
     private javax.swing.JTable tblinstocks;
     private javax.swing.JTable tbllowstocks;
+    private javax.swing.JTable tblorder;
     private javax.swing.JTable tbloutofstocks;
     private javax.swing.JTable tblrestock;
     // End of variables declaration//GEN-END:variables

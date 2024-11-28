@@ -34,6 +34,7 @@ public class Users {
         this.userType = userType;
         this.phone = phone;
     }  
+    
      public Users(String username, String fullname, String userType, LocalDateTime inTime, LocalDateTime outTime) {
         this.username = username;
         this.fullname = fullname;
@@ -41,7 +42,8 @@ public class Users {
         this.inTime = inTime;
         this.outTime = outTime;
         
-     }
+    }
+     
     public void setUserID(int UserID) {
         this.UserID = UserID;
     }
@@ -70,7 +72,7 @@ public class Users {
         this.userType = userType;
     }
     
-       public void setInTime(LocalDateTime inTime) {   
+    public void setInTime(LocalDateTime inTime) {   
         this.inTime = inTime;
     }
 
@@ -113,7 +115,7 @@ public class Users {
 
     public LocalDateTime getOutTime() {  
         return outTime;
-
     }
+    
 }
 

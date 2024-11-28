@@ -17,7 +17,7 @@ import java.sql.*;
 public class Delivery_Page extends javax.swing.JFrame {     
     
 public Delivery_Page(Connection connection) {
-        // Pass database connection    
+        // To pass database connection    
 }
     /**
      * Creates new form Delivery_Page
@@ -54,7 +54,7 @@ public Delivery_Page(Connection connection) {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(930, 507));
+        setPreferredSize(new java.awt.Dimension(980, 507));
 
         pnlDeliveryBG.setBackground(new java.awt.Color(196, 197, 197));
         pnlDeliveryBG.setPreferredSize(new java.awt.Dimension(930, 507));
@@ -70,6 +70,7 @@ public Delivery_Page(Connection connection) {
         lblprodcode.setForeground(new java.awt.Color(255, 255, 255));
         lblprodcode.setText("Product Code:");
 
+        cmbbxprodcode.setBackground(new java.awt.Color(204, 204, 204));
         cmbbxprodcode.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         cmbbxprodcode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,10 +84,13 @@ public Delivery_Page(Connection connection) {
         lblquandev.setForeground(new java.awt.Color(255, 255, 255));
         lblquandev.setText("Quantity Delivered:");
 
+        txtquandel.setBackground(new java.awt.Color(204, 204, 204));
         txtquandel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
+        txtprodname.setBackground(new java.awt.Color(204, 204, 204));
         txtprodname.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
+        btnadd.setBackground(new java.awt.Color(204, 204, 204));
         btnadd.setText("Proceed");
         btnadd.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED))));
         btnadd.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +99,7 @@ public Delivery_Page(Connection connection) {
             }
         });
 
+        btnclose.setBackground(new java.awt.Color(204, 204, 204));
         btnclose.setText("Close");
         btnclose.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED))));
         btnclose.addActionListener(new java.awt.event.ActionListener() {
@@ -108,11 +113,11 @@ public Delivery_Page(Connection connection) {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(49, 49, 49)
                 .addComponent(btnadd, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnclose, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(32, 32, 32))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,13 +152,15 @@ public Delivery_Page(Connection connection) {
                 .addComponent(lblquandev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtquandel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnadd)
                     .addComponent(btnclose))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
+        tbldelivery.setAutoCreateRowSorter(true);
+        tbldelivery.setBackground(new java.awt.Color(204, 204, 204));
         tbldelivery.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         tbldelivery.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -166,14 +173,16 @@ public Delivery_Page(Connection connection) {
                 "Delivery ID", "Product Code", "Product Name", "Quantity Delivered", "Date"
             }
         ));
+        tbldelivery.setGridColor(new java.awt.Color(0, 0, 0));
         tbldelivery.setRowHeight(23);
+        tbldelivery.setShowHorizontalLines(true);
         jScrollPane1.setViewportView(tbldelivery);
 
         jPanel2.setBackground(new java.awt.Color(42, 58, 63));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("DELIVERIES");
+        jLabel1.setText("Deliveries");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -182,7 +191,7 @@ public Delivery_Page(Connection connection) {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addContainerGap(814, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,15 +205,13 @@ public Delivery_Page(Connection connection) {
         pnlDeliveryBG.setLayout(pnlDeliveryBGLayout);
         pnlDeliveryBGLayout.setHorizontalGroup(
             pnlDeliveryBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDeliveryBGLayout.createSequentialGroup()
+            .addGroup(pnlDeliveryBGLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-            .addGroup(pnlDeliveryBGLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlDeliveryBGLayout.setVerticalGroup(
             pnlDeliveryBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,14 +221,14 @@ public Delivery_Page(Connection connection) {
                 .addGroup(pnlDeliveryBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlDeliveryBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlDeliveryBG, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,13 +241,12 @@ public Delivery_Page(Connection connection) {
     private void cmbbxprodcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbbxprodcodeActionPerformed
         // TODO add your handling code here:
          fetchProductDetails(cmbbxprodcode.getSelectedItem().toString());
-         populateProductCodes();
-          
+         populateProductCodes();         
     }//GEN-LAST:event_cmbbxprodcodeActionPerformed
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
         // TODO add your handling code here:
-           submitDelivery();
+        submitDelivery();
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btncloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseActionPerformed
@@ -248,7 +254,7 @@ public Delivery_Page(Connection connection) {
         this.dispose();
     }//GEN-LAST:event_btncloseActionPerformed
     
-      private void populateProductCodes() {  
+    private void populateProductCodes() {  
     // Fetch product codes directly from the database and populate the ComboBox
     String query = "SELECT product_code FROM products";
     try (Connection conn = DBConnector.getConnection();
@@ -295,10 +301,10 @@ public Delivery_Page(Connection connection) {
     }
 
     // Method to handle form submission
- private void submitDelivery() {
-   String productCode = (String) cmbbxprodcode.getSelectedItem();
-    String productName = txtprodname.getText();
-    String quantityDeliveredText = txtquandel.getText();
+    private void submitDelivery() {
+        String productCode = (String) cmbbxprodcode.getSelectedItem();
+        String productName = txtprodname.getText();
+        String quantityDeliveredText = txtquandel.getText();
 
     // Check if the quantity delivered is a valid number
     if (quantityDeliveredText.isEmpty() || !isNumeric(quantityDeliveredText)) {
@@ -349,11 +355,9 @@ public Delivery_Page(Connection connection) {
                 updateStmt.setString(2, productCode);
                 updateStmt.executeUpdate();
             }
-
-            // Show success message
+           
             JOptionPane.showMessageDialog(this, "Delivery submitted successfully!");
-
-            // Refresh the deliveries table to reflect updated data
+            
             loadDeliveriesTable();  
       
             
@@ -366,7 +370,7 @@ public Delivery_Page(Connection connection) {
     }
 }
 
-       private boolean isNumeric(String str) {
+    private boolean isNumeric(String str) {
     try {
         Integer.parseInt(str); // Try to parse the string as an integer
         return true;
@@ -374,8 +378,9 @@ public Delivery_Page(Connection connection) {
         return false; // If it fails to parse, it's not numeric
     }
 }
+       
     private void loadDeliveriesTable() {
-     try (Connection conn = DBConnector.getConnection()) {
+    try (Connection conn = DBConnector.getConnection()) {
         String query = "SELECT * FROM deliveries";
         PreparedStatement stmt = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();

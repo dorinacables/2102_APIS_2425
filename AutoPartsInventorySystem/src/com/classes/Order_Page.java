@@ -25,7 +25,6 @@ public class Order_Page extends javax.swing.JFrame {
         loadOrdersTable() ;
         
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,7 +72,7 @@ public class Order_Page extends javax.swing.JFrame {
         tblorders.setShowHorizontalLines(true);
         jScrollPane1.setViewportView(tblorders);
 
-        jPanel4.setBackground(new java.awt.Color(6, 71, 71));
+        jPanel4.setBackground(new java.awt.Color(42, 58, 63));
 
         lblTitle.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,11 +170,11 @@ public class Order_Page extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(6, 71, 71));
+        jPanel3.setBackground(new java.awt.Color(42, 58, 63));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Order");
+        jLabel2.setText("Orders");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -200,8 +199,8 @@ public class Order_Page extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -275,7 +274,8 @@ public class Order_Page extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
-     private void fetchProductDetails(String productCode) {
+    
+    private void fetchProductDetails(String productCode) {
         try (Connection conn = DBConnector.getConnection()) {
             String query = "SELECT product_name FROM products WHERE product_code = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -291,9 +291,9 @@ public class Order_Page extends javax.swing.JFrame {
     }
      
     private void submitOrder() {
-      String productCode = (String) cmbbxprodcodO.getSelectedItem();
-    String productName = txtprodnameO.getText();
-    String quantityOrderedText = txtquanord.getText();
+        String productCode = (String) cmbbxprodcodO.getSelectedItem();
+        String productName = txtprodnameO.getText();
+        String quantityOrderedText = txtquanord.getText();
 
     // Check if the quantity ordered is a valid number
     if (quantityOrderedText.isEmpty() || !isNumeric(quantityOrderedText)) {
@@ -321,8 +321,7 @@ public class Order_Page extends javax.swing.JFrame {
 
             // Calculate the new stock quantity
             int newStock = currentStock - quantityOrdered;
-
-            // Show confirmation dialog with current and new stock details
+           
             String message = String.format("You are about to reduce the stock of %s (Product Code: %s) from %d to %d.\nDo you want to proceed with the order?", 
                                           productName, productCode, currentStock, newStock);
             int confirm = JOptionPane.showConfirmDialog(this, message, "Confirm Order", JOptionPane.YES_NO_OPTION);
@@ -342,11 +341,9 @@ public class Order_Page extends javax.swing.JFrame {
                 orderInsertStmt.setString(2, productName);
                 orderInsertStmt.setInt(3, quantityOrdered);
                 orderInsertStmt.executeUpdate();
-
-                // Show success message
+              
                 JOptionPane.showMessageDialog(this, "Order submitted successfully!");
-
-                // Refresh the orders table to reflect updated data
+             
                 loadOrdersTable();
                                          
             } else {
@@ -361,7 +358,7 @@ public class Order_Page extends javax.swing.JFrame {
     }
 }
 
-       private boolean isNumeric(String str) {
+    private boolean isNumeric(String str) {
     try {
         Integer.parseInt(str); // Try to parse the string as an integer
         return true;
@@ -372,7 +369,7 @@ public class Order_Page extends javax.swing.JFrame {
        
     private void loadOrdersTable() {
     try (Connection conn = DBConnector.getConnection()) {
-        String query = "SELECT * FROM orders"; // Update to match your orders table name
+        String query = "SELECT * FROM orders"; 
         PreparedStatement stmt = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 

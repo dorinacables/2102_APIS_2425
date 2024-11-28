@@ -42,12 +42,13 @@ public class UserLogs_Page extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1370, 689));
 
         pnlUserLogsBG.setBackground(new java.awt.Color(196, 197, 197));
         pnlUserLogsBG.setPreferredSize(new java.awt.Dimension(1370, 689));
 
+        tblUserLogs.setBackground(new java.awt.Color(204, 204, 204));
         tblUserLogs.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        tblUserLogs.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblUserLogs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -59,10 +60,12 @@ public class UserLogs_Page extends javax.swing.JFrame {
                 "Log ID", "Full Name", "Username", "User Type", "In Time", "Out Time"
             }
         ));
+        tblUserLogs.setGridColor(new java.awt.Color(0, 0, 0));
         tblUserLogs.setRowHeight(23);
+        tblUserLogs.setShowHorizontalLines(true);
         jScrollPane1.setViewportView(tblUserLogs);
 
-        btnCloseUL.setBackground(new java.awt.Color(42, 58, 63));
+        btnCloseUL.setBackground(new java.awt.Color(51, 51, 51));
         btnCloseUL.setForeground(new java.awt.Color(255, 255, 255));
         btnCloseUL.setText("Close");
         btnCloseUL.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
@@ -76,9 +79,9 @@ public class UserLogs_Page extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(42, 58, 63));
         jPanel1.setPreferredSize(new java.awt.Dimension(123, 72));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("USER LOGS");
+        jLabel1.setText("User Logs");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,31 +97,34 @@ public class UserLogs_Page extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlUserLogsBGLayout = new javax.swing.GroupLayout(pnlUserLogsBG);
         pnlUserLogsBG.setLayout(pnlUserLogsBGLayout);
         pnlUserLogsBGLayout.setHorizontalGroup(
             pnlUserLogsBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1419, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1370, Short.MAX_VALUE)
             .addGroup(pnlUserLogsBGLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlUserLogsBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCloseUL, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGroup(pnlUserLogsBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUserLogsBGLayout.createSequentialGroup()
+                        .addGap(1271, 1271, 1271)
+                        .addComponent(btnCloseUL, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlUserLogsBGLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1339, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         pnlUserLogsBGLayout.setVerticalGroup(
             pnlUserLogsBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlUserLogsBGLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(btnCloseUL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,8 +149,8 @@ public class UserLogs_Page extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCloseULActionPerformed
-      private void loadUserLogs() {
-          String query = "SELECT * FROM userlogs";
+    private void loadUserLogs() {
+        String query = "SELECT * FROM userlogs";
     
     // Get the model of the table
     DefaultTableModel model = (DefaultTableModel) tblUserLogs.getModel();
@@ -154,7 +160,7 @@ public class UserLogs_Page extends javax.swing.JFrame {
          ResultSet resultSet = pstmt.executeQuery()) {
         
         // Clear existing data in the table
-        model.setRowCount(0);  // Clears the previous data in the table
+        model.setRowCount(0);  
 
         // Loop through the result set and add each row to the table model
         while (resultSet.next()) {
@@ -172,6 +178,7 @@ public class UserLogs_Page extends javax.swing.JFrame {
         System.err.println("Error loading user logs: " + ex.getMessage());
     }
 }
+    
     /**
      * @param args the command line arguments
      */
